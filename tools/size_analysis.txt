@@ -1,0 +1,36 @@
+﻿=== MEDIA SIZE ANALYSIS ===
+Total size: 178.3 MB
+
+Videos: 406 files, 170.0 MB
+  Average: 429 KB
+  Largest: ex_0056_video.mp4 (1653 KB)
+  Smallest: ex_0383_video.mp4 (86 KB)
+  Median: ex_0097_video.mp4 (406 KB)
+
+Thumbnails: 413 files, 8.3 MB
+  Average: 21 KB
+  Largest: ex_0262_thumbnail.jpg (36 KB)
+  Smallest: ex_0282_thumbnail.jpg (5 KB)
+
+=== VIDEO SIZE DISTRIBUTION ===
+  0KB-100KB: 1 files (0.1 MB)
+  100KB-200KB: 8 files (1.2 MB)
+  200KB-300KB: 9 files (2.3 MB)
+  300KB-400KB: 152 files (55.5 MB)
+  400KB-500KB: 190 files (77.3 MB)
+  500KB-750KB: 28 files (16.4 MB)
+  750KB-1000KB: 14 files (11.4 MB)
+  1000KB-1500KB: 1 files (1.1 MB)
+  1500KB-2000KB: 3 files (4.8 MB)
+
+=== TOP 10 LARGEST FILES ===
+  ex_0056_video.mp4: 1653 KB
+  ex_0192_video.mp4: 1632 KB
+  ex_0247_video.mp4: 1631 KB
+  ex_0293_video.mp4: 1092 KB
+  ex_0370_video.mp4: 948 KB
+  ex_0087_video.mp4: 895 KB
+  ex_0244_video.mp4: 895 KB
+  ex_0204_video.mp4: 894 KB
+  ex_0360_video.mp4: 833 KB
+  ex_0361_video.mp4: 833 KB

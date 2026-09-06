@@ -1,0 +1,94 @@
+Fields: ['name', 'equipment', 'primary_muscle', 'secondary_muscle', 'video', 'thumbnail', 'howTo']
+Backup fields: ['name', 'equipment', 'primary_muscle', 'secondary_muscle', 'video', 'thumbnail', 'howTo']
+Total exercises: 430
+Total missing entries: 24
+
+Row 24: Air Bike
+  VIDEO MISSING - csv: [None] backup: [None]
+
+Row 53: Boxing
+  VIDEO MISSING - csv: [None] backup: [None]
+
+Row 82: Clean
+  VIDEO MISSING - csv: [None] backup: [None]
+
+Row 93: Dead Hang
+  VIDEO MISSING - csv: [None] backup: [None]
+
+Row 178: Jump Rope
+  VIDEO MISSING - csv: [None] backup: [None]
+
+Row 363: Standing Calf Raise
+  VIDEO MISSING - csv: [None] backup: [None]
+
+Row 413: Aerobics
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 414: Climbing
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 415: Cycling
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 416: HIIT
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 417: Hiking
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 418: Kipping Pull Up
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 419: Pilates
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 420: Press Under
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 421: Side Lying External Rotation
+  VIDEO MISSING - csv: [None] backup: [None]
+
+Row 422: Skating
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 423: Skiing
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 424: Snowboarding
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 425: Sprints
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 426: Stretching
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 427: Swimming
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 428: Walking
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 429: Warm Up
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+
+Row 430: Yoga
+  VIDEO MISSING - csv: [None] backup: [None]
+  THUMB MISSING - csv: [None] backup: [None]
+

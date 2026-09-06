@@ -1,0 +1,229 @@
+import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
+
+class TermsOfServiceScreen extends StatelessWidget {
+  const TermsOfServiceScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Terms of Service', style: TextStyle(fontWeight: FontWeight.bold)),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 40),
+        children: [
+          // Crucial Warning Banner
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: AppColors.error.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.error.withValues(alpha: 0.4), width: 1.5),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 28),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'IMPORTANT DISCLAIMER',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.error,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'REPP is NOT a medical device, medical professional, or certified personal trainer. All AI form evaluations, workout plans, and cues are automated and provided strictly for educational/informational purposes. You assume all risk of injury.',
+                        style: TextStyle(
+                          fontSize: 12,
+                          height: 1.45,
+                          color: isDark ? Colors.white.withValues(alpha: 0.9) : Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          Text(
+            'Last Updated: September 4, 2026',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          _LegalSection(
+            number: '1',
+            title: 'Acceptance of Terms',
+            content:
+                'By downloading, accessing, or using the REPP mobile application ("App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the App.',
+          ),
+
+          _LegalSection(
+            number: '2',
+            title: 'Medical & Physical Fitness Disclaimer',
+            content:
+                'Physical exercise in all forms (including weightlifting, strength training, cardiovascular exercise, and calisthenics) involves an inherent risk of serious physical injury, disability, and death.\n\n'
+                '• Consultation with a Physician: You should always consult with a licensed physician or healthcare provider before beginning any workout regimen or altering your physical training routine.\n'
+                '• No Medical Advice: REPP does not provide medical advice, diagnosis, treatment, or physical therapy. The App and its features are not substitutes for professional medical guidance.\n'
+                '• Stop if Pain Occurs: If you experience faintness, dizziness, shortness of breath, or sharp pain at any time while exercising, you must STOP immediately and seek medical attention.',
+          ),
+
+          _LegalSection(
+            number: '3',
+            title: 'AI Coach & Algorithmic Non-Accountability',
+            content:
+                'REPP includes autonomous, on-device Artificial Intelligence features (powered by machine learning models and computer vision pose tracking algorithms).\n\n'
+                '• No Guarantee of Accuracy: AI models generate responses probabilistically. Form feedback, joint angle evaluations, rep counts, workout routines, and advice may be inaccurate, incomplete, hallucinated, or unsuited for your specific physical condition.\n'
+                '• Absolute Release of AI Liability: Under no circumstances shall REPP, its developers, authors, contributors, or distributors be held liable or legally accountable for any statement, recommendation, routine, form rating, or instruction generated by the AI.\n'
+                '• Sole Responsibility: You bear sole, 100% responsibility for evaluating the safety, suitability, and appropriateness of any routine, weight, or exercise suggested by the AI before performing it.',
+          ),
+
+          _LegalSection(
+            number: '4',
+            title: 'Camera & Pose Estimation Features',
+            content:
+                'The App may request access to your device\'s camera to perform real-time optical pose detection and angle tracking.\n\n'
+                '• Transient Processing: All camera frames are analyzed instantaneously in temporary memory on your device. Video frames are discarded immediately after joint coordinates are calculated.\n'
+                '• Optical Limitations: Camera angle, lighting, clothing, perspective distortion, and phone placement can cause incorrect joint recognition. Never rely on the App\'s pose detector to confirm that a heavy or dangerous lift is safe.\n'
+                '• Environmental Safety: You are solely responsible for ensuring your surroundings are clear of hazards, pets, children, and obstacles when using camera features.',
+          ),
+
+          _LegalSection(
+            number: '5',
+            title: 'Assumption of Risk',
+            content:
+                'YOU VOLUNTARILY, KNOWINGLY, AND EXPRESSLY ASSUME ALL RISKS OF PERSONAL INJURY, ILLNESS, PERMANENT DISABILITY, OR DEATH ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE APP OR ANY EXERCISE SUGGESTED BY THE APP.',
+          ),
+
+          _LegalSection(
+            number: '6',
+            title: 'Limitation of Liability',
+            content:
+                'TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL REPP, ITS DEVELOPERS, OR AFFILIATES BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO PERSONAL INJURY, PAIN AND SUFFERING, EMOTIONAL DISTRESS, PROPERTY DAMAGE, LOSS OF DATA, OR MEDICAL EXPENSES, ARISING OUT OF OR IN ANY WAY CONNECTED WITH THE USE OR INABILITY TO USE THE APP, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.',
+          ),
+
+          _LegalSection(
+            number: '7',
+            title: 'Disclaimer of Warranties',
+            content:
+                'THE APP IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.',
+          ),
+
+          _LegalSection(
+            number: '8',
+            title: 'User Data & Offline Operation',
+            content:
+                'REPP operates offline-first. Your workout history, custom routines, and preferences are stored locally on your device in SQLite. You are solely responsible for maintaining local backups. REPP cannot recover data lost due to device damage, uninstallation, or operating system resets.',
+          ),
+
+          _LegalSection(
+            number: '9',
+            title: 'Modifications to Terms',
+            content:
+                'We reserve the right to update or modify these Terms at any time. Continued use of the App following any changes constitutes your binding acceptance of the updated Terms.',
+          ),
+
+          const SizedBox(height: 16),
+          Center(
+            child: Text(
+              'For legal inquiries: support@repp-app.local',
+              style: TextStyle(
+                fontSize: 12,
+                color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LegalSection extends StatelessWidget {
+  final String number;
+  final String title;
+  final String content;
+
+  const _LegalSection({
+    required this.number,
+    required this.title,
+    required this.content,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCard : AppColors.lightCard,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.lightDivider,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Text(
+                    number,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            content,
+            style: TextStyle(
+              fontSize: 13,
+              height: 1.5,
+              color: isDark ? Colors.grey.shade300 : Colors.grey.shade800,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

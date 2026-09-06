@@ -1,0 +1,7 @@
+{
+  "exerciseId": "bicep_curl__dumbbell_",
+  "keyframes": [
+    {"t": 0.0, "joints": {"shoulder_l":[0.42,0.30],"elbow_l":[0.42,0.50],"wrist_l":[0.42,0.70],"shoulder_r":[0.58,0.30],"elbow_r":[0.58,0.50],"wrist_r":[0.58,0.70]}},
+    {"t": 1.0, "joints": {"shoulder_l":[0.42,0.30],"elbow_l":[0.42,0.50],"wrist_l":[0.42,0.35],"shoulder_r":[0.58,0.30],"elbow_r":[0.58,0.50],"wrist_r":[0.58,0.35]}}
+  ]
+}

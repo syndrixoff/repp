@@ -1,0 +1,7 @@
+{
+  "exerciseId": "bench_press__barbell_",
+  "keyframes": [
+    {"t": 0.0, "joints": {"shoulder_l":[0.38,0.40],"shoulder_r":[0.62,0.40],"elbow_l":[0.30,0.55],"elbow_r":[0.70,0.55],"wrist_l":[0.32,0.45],"wrist_r":[0.68,0.45],"hip_l":[0.44,0.65],"hip_r":[0.56,0.65]}},
+    {"t": 1.0, "joints": {"shoulder_l":[0.38,0.40],"shoulder_r":[0.62,0.40],"elbow_l":[0.28,0.65],"elbow_r":[0.72,0.65],"wrist_l":[0.30,0.55],"wrist_r":[0.70,0.55],"hip_l":[0.44,0.65],"hip_r":[0.56,0.65]}}
+  ]
+}

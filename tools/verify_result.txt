@@ -1,0 +1,29 @@
+﻿=== FILES REFERENCED IN CSV BUT NOT ON DISK ===
+Count: 0
+
+=== EXERCISES WITH NO MEDIA (None/empty in CSV) ===
+Count: 24
+  Row 24 [Air Bike]: no video
+  Row 53 [Boxing]: no video
+  Row 82 [Clean]: no video
+  Row 93 [Dead Hang]: no video
+  Row 178 [Jump Rope]: no video
+  Row 363 [Standing Calf Raise]: no video
+  Row 413 [Aerobics]: no video+thumbnail
+  Row 414 [Climbing]: no video+thumbnail
+  Row 415 [Cycling]: no video+thumbnail
+  Row 416 [HIIT]: no video+thumbnail
+  Row 417 [Hiking]: no video+thumbnail
+  Row 418 [Kipping Pull Up]: no video+thumbnail
+  Row 419 [Pilates]: no video+thumbnail
+  Row 420 [Press Under]: no video+thumbnail
+  Row 421 [Side Lying External Rotation]: no video
+  Row 422 [Skating]: no video+thumbnail
+  Row 423 [Skiing]: no video+thumbnail
+  Row 424 [Snowboarding]: no video+thumbnail
+  Row 425 [Sprints]: no video+thumbnail
+  Row 426 [Stretching]: no video+thumbnail
+  Row 427 [Swimming]: no video+thumbnail
+  Row 428 [Walking]: no video+thumbnail
+  Row 429 [Warm Up]: no video+thumbnail
+  Row 430 [Yoga]: no video+thumbnail

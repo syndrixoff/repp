@@ -1,0 +1,1257 @@
+﻿=== BACKUP CSV ANALYSIS ===
+Total rows: 430
+Rows with HTTP URLs: 413
+Rows with local paths: 0
+Rows with None/empty: 17
+
+HTTP URL rows:
+  Row 1: Bench Press (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00251201-Barbell-Bench-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00251201-Barbell-Bench-Press_Chest_thumbnail@3x.jpg
+  Row 2: Bench Press (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02891201-Dumbbell-Bench-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02891201-Dumbbell-Bench-Press_Chest_thumbnail@3x.jpg
+  Row 3: Bent Over Row (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00271201-Barbell-Bent-Over-Row_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00271201-Barbell-Bent-Over-Row_Back_thumbnail@3x.jpg
+  Row 4: Bicep Curl (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02941201-Dumbbell-Biceps-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02941201-Dumbbell-Biceps-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 5: Cable Fly Crossovers
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/12691201-Cable-Standing-Up-Straight-Crossovers_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/12691201-Cable-Standing-Up-Straight-Crossovers_Chest_thumbnail@3x.jpg
+  Row 6: Deadlift (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00321201-Barbell-Deadlift_Hips-FIX.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00321201-Barbell-Deadlift_Hips-FIX_thumbnail@3x.jpg
+  Row 7: Face Pull
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/77441201-Cable-Standing-Supinated-Face-Pull-(with-rope)_Sho.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/77441201-Cable-Standing-Supinated-Face-Pull-(with-rope)_Sho_thumbnail_@3x.jpg
+  Row 8: Hammer Curl (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03121201-Dumbbell-Hammer-Curl-(version-2)_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03121201-Dumbbell-Hammer-Curl-(version-2)_Upper-Arms_thumbnail@3x.jpg
+  Row 9: Incline Bench Press (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03141201-Dumbbell-Incline-Bench-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03141201-Dumbbell-Incline-Bench-Press_Chest_thumbnail@3x.jpg
+  Row 10: Lat Pulldown (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01501201-Cable-Bar-Lateral-Pulldown_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01501201-Cable-Bar-Lateral-Pulldown_Back_thumbnail@3x.jpg
+  Row 11: Lateral Raise (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03341201-Dumbbell-Lateral-Raise_shoulder.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03341201-Dumbbell-Lateral-Raise_shoulder_thumbnail@3x.jpg
+  Row 12: Leg Extension (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05851201-Lever-Leg-Extension_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05851201-Lever-Leg-Extension_Thighs_thumbnail@3x.jpg
+  Row 13: Leg Press (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07391201-Sled-45-Leg-Press_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/07391201-Sled-45-Leg-Press_Hips_thumbnail@3x.jpg
+  Row 14: Lying Leg Curl (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05861201-Lever-Lying-Leg-Curl_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05861201-Lever-Lying-Leg-Curl_Thighs_thumbnail@3x.jpg
+  Row 15: Seated Cable Row - V Grip (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/26611201-Cable-Seated-Row-with-V-bar_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/26611201-Cable-Seated-Row-with-V-bar_Back_thumbnail_@3x.jpg
+  Row 16: Seated Leg Curl (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05991201-Lever-Seated-Leg-Curl_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05991201-Lever-Seated-Leg-Curl_Thighs_thumbnail@3x.jpg
+  Row 17: Shoulder Press (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04051201-Dumbbell-Seated-Shoulder-Press_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04051201-Dumbbell-Seated-Shoulder-Press_Shoulders_thumbnail@3x.jpg
+  Row 18: Squat (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00431201-Barbell-Full-Squat_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00431201-Barbell-Full-Squat_Thighs_thumbnail@3x.jpg
+  Row 19: Triceps Pushdown
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02011201-Cable-Pushdown_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02011201-Cable-Pushdown_Upper-Arms_thumbnail@3x.jpg
+  Row 20: Triceps Rope Pushdown
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/24381201-Cable-Pushdown-(with-rope-attachment)-(female)_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/24381201-Cable-Pushdown-(with-rope-attachment)-(female)_Upper-Arms_thumbnail_@3x.jpg
+  Row 21: 21s Bicep Curl
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00311201-Barbell-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00311201-Barbell-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 22: Ab Scissors
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/62141201-Lying-Scissors-Cross-(male)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/62141201-Lying-Scissors-Cross-(male)_Hips_thumbnail_@3x.jpg
+  Row 23: Ab Wheel
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08571201-Wheel-Rollout_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08571201-Wheel-Rollout_Waist_thumbnail@3x.jpg
+  Row 24: Air Bike
+    video: None
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/38931101-Assault-Bike-Run_Cardio_small_thumbnail_@3x.jpg
+  Row 25: Arnold Press (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02871201-Dumbbell-Arnold-Press-II_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02871201-Dumbbell-Arnold-Press-II_Shoulders_thumbnail@3x.jpg
+  Row 26: Around The World
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02881201-Dumbbell-Around-Pullover_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02881201-Dumbbell-Around-Pullover_Chest_thumbnail@3x.jpg
+  Row 27: Assisted Pistol Squats
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/23751201-Single-Leg-Squat-with-Support-(female)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/23751201-Single-Leg-Squat-with-Support-(female)_Thighs_thumbnail_@3x.jpg
+  Row 28: Back Extension (Hyperextension)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/18601201-Hyperextension-(VERSION-2)_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/18601201-Hyperextension-(VERSION-2)_Hips_thumbnail@3x.jpg
+  Row 29: Back Extension (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05731201-Lever-Back-Extension_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05731201-Lever-Back-Extension_Waist_thumbnail@3x.jpg
+  Row 30: Back Extension (Weighted Hyperextension)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/57821201-Weighted-Hyperextension-(female)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/57821201-Weighted-Hyperextension-(female)_Hips_thumbnail_@3x.jpg
+  Row 31: Ball Slams
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/75351201-Medicine-Ball-Slam-(VERSION-2)-(male)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/75351201-Medicine-Ball-Slam-(VERSION-2)-(male)_Waist_thumbnail_@3x.jpg
+  Row 32: Band Pullaparts
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/45681201-Resistance-Band-Pull-Apart_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/45681201-Resistance-Band-Pull-Apart_Shoulders_thumbnail_@3x.jpg
+  Row 33: Battle Ropes
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01281201-Battling-Ropes.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01281201-Battling-Ropes_thumbnail@3x.jpg
+  Row 34: Behind the Back Bicep Wrist Curl (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/63651201-EZ-Barbell-Standing-Back-Wrist-Curl_Forearms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/63651201-EZ-Barbell-Standing-Back-Wrist-Curl_Forearms_thumbnail_@3x.jpg
+  Row 35: Behind the Back Curl (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/48381201-Cable-Unilateral-Bicep-Curl_Upper-Arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/48381201-Cable-Unilateral-Bicep-Curl_Upper-Arms_thumbnail_@3x.jpg
+  Row 36: Belt Squat (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/29501201-Lever-Belt-Squat_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/29501201-Lever-Belt-Squat_Thighs_thumbnail_@3x.jpg
+  Row 37: Bench Dip
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/13991201-Bench-dip-on-floor_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/13991201-Bench-dip-on-floor_Upper-Arms_thumbnail@3x.jpg
+  Row 38: Bench Press (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01511201-Cable-Bench-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01511201-Cable-Bench-Press_Chest_thumbnail@3x.jpg
+  Row 39: Bench Press (Smith Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07481201-Smith-Bench-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/07481201-Smith-Bench-Press_Chest_thumbnail@3x.jpg
+  Row 40: Bench Press - Close Grip (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00301201-Barbell-Close-Grip-Bench-Press_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00301201-Barbell-Close-Grip-Bench-Press_Upper-Arms_thumbnail@3x.jpg
+  Row 41: Bench Press - Wide Grip (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01221201-Barbell-Wide-Bench-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01221201-Barbell-Wide-Bench-Press_Chest_thumbnail@3x.jpg
+  Row 42: Bent Over Row (Band)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/38991201-Band-bent-over-row-(male)_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/38991201-Band-bent-over-row-(male)_Back_thumbnail_@3x.jpg
+  Row 43: Bent Over Row (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02931201-Dumbbell-Bent-Over-Row_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02931201-Dumbbell-Bent-Over-Row_Back_thumbnail@3x.jpg
+  Row 44: Bicep Curl (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00311201-Barbell-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00311201-Barbell-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 45: Bicep Curl (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01561201-Cable-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01561201-Cable-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 46: Bicep Curl (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10321201-Lever-Alternate-Biceps-Curl_Upper-Arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10321101-Lever-Alternate-Biceps-Curl_Upper-Arms_small_thumbnail@3x.jpg
+  Row 47: Bicep Curl (Suspension)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10701201-Suspender-Arm-Curl-(female)_Upper-Arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10701201-Suspender-Arm-Curl-(female)_Upper-Arms_thumbnail_@3x.jpg
+  Row 48: Bicycle Crunch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00031201-air-bike-m_waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00031201-air-bike-m_waist_thumbnail@3x.jpg
+  Row 49: Bicycle Crunch Raised Legs
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01471201-Bycicle-Twisting-Crunch_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01471201-Bycicle-Twisting-Crunch_Waist_thumbnail@3x.jpg
+  Row 50: Bird Dog
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/51821201-Bird-Dog-(VERSION-2)-(female)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/51821201-Bird-Dog-(VERSION-2)-(female)_Back_thumbnail_@3x.jpg
+  Row 51: Box Jump
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/71591201-Jump-Box-(female)_Plyometrics_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/71591201-Jump-Box-(female)_Plyometrics_thumbnail_@3x.jpg
+  Row 52: Box Squat (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/49621201-Barbell-Box-Squat_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/49621201-Barbell-Box-Squat_Hips_thumbnail_@3x.jpg
+  Row 53: Boxing
+    video: None
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/22731101-Boxing-Right-Cross_small_thumbnail@3x.jpg
+  Row 54: Bulgarian Split Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/22901201-Dumbbell-Bulgarian-Split-Squat-(female)_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/22901101-Dumbbell-Bulgarian-Split-Squat-(female)_Thighs_small_thumbnail@3x.jpg
+  Row 55: Burpee
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/11601201-Burpee_Cardio.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/11601201-Burpee_Cardio_thumbnail@3x.jpg
+  Row 56: Burpee Over the Bar
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/101811201-Burpee-Over-the-Bar-(male)_Plyometrics_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/101811201-Burpee-Over-the-Bar-(male)_Plyometrics_thumbnail_@3x.jpg
+  Row 57: Butterfly (Pec Deck)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10301201-Lever-Pec-Deck-Fly_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10301201-Lever-Pec-Deck-Fly_Chest_thumbnail@3x.jpg
+  Row 58: Cable Core Palloff Press
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/12021201-Cable-horizontal-Pallof-Press_waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/12021201-Cable-horizontal-Pallof-Press_waist_thumbnail@3x.jpg
+  Row 59: Cable Crunch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01751201-Cable-Kneeling-Crunch_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01751201-Cable-Kneeling-Crunch_Waist_thumbnail@3x.jpg
+  Row 60: Cable Pull Through
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/12061201-Cable-pull-through_hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/12061201-Cable-pull-through_hips_thumbnail@3x.jpg
+  Row 61: Cable Twist (Down to up)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/12071201-Cable-twist-(down-up)_waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/12071201-Cable-twist-(down-up)_waist_thumbnail@3x.jpg
+  Row 62: Cable Twist (Up to down)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08621201-Cable-twist-(up-down)_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08621201-Cable-twist-(up-down)_Waist_thumbnail@3x.jpg
+  Row 63: Calf Extension (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/23151201-Lever-Rotary-Calf_Calves.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/23151201-Lever-Rotary-Calf_Calves_thumbnail@3x.jpg
+  Row 64: Calf Press (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07381201-Sled-45-Calf-Press_Calves.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/07381201-Sled-45-Calf-Press_Calves_thumbnail@3x.jpg
+  Row 65: Chest Dip
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02511201-Chest-Dip_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02511201-Chest-Dip_Chest_thumbnail@3x.jpg
+  Row 66: Chest Dip (Assisted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00091201-Assisted-Chest-Dip-(kneeling)_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00091201-Assisted-Chest-Dip-(kneeling)_Chest_thumbnail@3x.jpg
+  Row 67: Chest Dip (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/17551201-Weighted-Tricep-Dips_Upper-Arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/17551201-Weighted-Tricep-Dips_Upper-Arms_thumbnail_@3x.jpg
+  Row 68: Chest Fly (Band)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/09131201-Band-Middle-Fly-(female)_Chest_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/09131201-Band-Middle-Fly-(female)_Chest_thumbnail_@3x.jpg
+  Row 69: Chest Fly (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03081201-Dumbbell-Fly_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03081201-Dumbbell-Fly_Chest_thumbnail@3x.jpg
+  Row 70: Chest Fly (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05961201-Lever-Seated-Fly_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05961201-Lever-Seated-Fly_Chest_thumbnail@3x.jpg
+  Row 71: Chest Fly (Suspension)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/57371201-Suspension-Fly_Chest-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/57371201-Suspension-Fly_Chest-FIX_thumbnail_@3x.jpg
+  Row 72: Chest Press (Band)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/09201201-Band-Standing-Chest-Press-(female)_Chest_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/09201201-Band-Standing-Chest-Press-(female)_Chest_thumbnail_@3x.jpg
+  Row 73: Chest Press (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05771201-Lever-Chest-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05771201-Lever-Chest-Press_Chest_thumbnail@3x.jpg
+  Row 74: Chest Supported Incline Row (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03271201-Dumbbell-Incline-Row_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03271201-Dumbbell-Incline-Row_Back_thumbnail@3x.jpg
+  Row 75: Chest Supported Reverse Fly (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03831201-Dumbbell-Reverse-Fly_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03831201-Dumbbell-Reverse-Fly_Shoulders_thumbnail@3x.jpg
+  Row 76: Chest Supported Y Raise (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/35411201-Dumbbell-Incline-Y-Raise_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/35411201-Dumbbell-Incline-Y-Raise_Shoulders__thumbnail_@3x.jpg
+  Row 77: Chin Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/13261201-Chin-Up_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/13261201-Chin-Up_Back_thumbnail@3x.jpg
+  Row 78: Chin Up (Assisted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05721201-Lever-Assisted-Chin-Up_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05721301-assisted-chin-up_small_thumbnail@3x.jpg
+  Row 79: Chin Up (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/41811201-Weighted-Hang-Chin-Up_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/29871101-Weighted-Close-Grip-Chin-up-on-Dip-Cage_Back_small_thumbnail@3x.jpg
+  Row 80: Clamshell
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/98491201-Side-Plank-Clamshell-(male)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/98491201-Side-Plank-Clamshell-(male)_Hips_thumbnail_@3x.jpg
+  Row 81: Clap Push Ups
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/12731201-Clap-Push-Up_Plyometrics_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/12731101-Clap-Push-Up_Plyometrics_Chest_small_thumbnail@3x.jpg
+  Row 82: Clean
+    video: None
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/15211101-Barbell-Hang-Clean-Below-the-Knees_Weightlifts_small_thumbnail@3x.jpg
+  Row 83: Clean and Jerk
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00281201-Barbell-Clean-and-Press_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00281201-Barbell-Clean-and-Press_Shoulders_thumbnail@3x.jpg
+  Row 84: Clean and Press
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00281201-Barbell-Clean-and-Press_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00281201-Barbell-Clean-and-Press_Shoulders_thumbnail@3x.jpg
+  Row 85: Clean Pull
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/15171201-Barbell-Clean-Pull_Weightlifts_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/15171101-Barbell-Clean-Pull_Weightlifts_small_thumbnail@3x.jpg
+  Row 86: Concentration Curl
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02971201-Dumbbell-Concentration-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02971201-Dumbbell-Concentration-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 87: Cross Body Hammer Curl
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/16571201-Dumbbell-Cross-Body-Hammer-Curl-(Version-2)_Upper-Arms-FIX.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02981101-Dumbbell-Cross-Body-Hammer-Curl_Forearms_small_thumbnail@3x.jpg
+  Row 88: Crunch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02741201-Crunch-Floor-m_waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02741201-Crunch-Floor-m_waist_thumbnail@3x.jpg
+  Row 89: Crunch (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05951201-Lever-Seated-Crunch-(chest-pad).mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05951201-Lever-Seated-Crunch-(chest-pad)_thumbnail@3x.jpg
+  Row 90: Crunch (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/66031201-Weighted-Plate-Lying-Crunch-(male)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/66031201-Weighted-Plate-Lying-Crunch-(male)_Waist_thumbnail_@3x.jpg
+  Row 91: Curtsy Lunge (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08811201-Dumbbell-Curtsey-lunge-(female)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08811201-Dumbbell-Curtsey-lunge-(female)_Thighs_thumbnail_@3x.jpg
+  Row 92: Dead Bug
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/78391201-Dead-Bug-(VERSION-3)-(female)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/78391201-Dead-Bug-(VERSION-3)-(female)_Waist_thumbnail_@3x.jpg
+  Row 93: Dead Hang
+    video: None
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/50551101-Dead-Hang-Stretch_Stretching_small_thumbnail_@3x.jpg
+  Row 94: Deadlift (Band)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08951201-Band-Deadlift-(female)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08951201-Band-Deadlift-(female)_Hips_thumbnail_@3x.jpg
+  Row 95: Deadlift (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03001201-Dumbbell-Deadlift_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03001201-Dumbbell-Deadlift_Hips_thumbnail_@3x.jpg
+  Row 96: Deadlift (Smith Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07521201-Smith-Deadlift_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/07521201-Smith-Deadlift_Hips_thumbnail@3x.jpg
+  Row 97: Deadlift (Trap bar)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08111201-Trap-Bar-Deadlift_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08111201-Trap-Bar-Deadlift_Thighs_thumbnail@3x.jpg
+  Row 98: Deadlift High Pull
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/11991201-Sumo-Deadlift-High-Pull_Thighs_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/11991201-Sumo-Deadlift-High-Pull_Thighs_Shoulders_thumbnail@3x.jpg
+  Row 99: Decline Bench Press (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00331201-Barbell-Decline-Bench-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00331201-Barbell-Decline-Bench-Press_Chest_thumbnail@3x.jpg
+  Row 100: Decline Bench Press (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03011201-Dumbbell-Decline-Bench-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03011201-Dumbbell-Decline-Bench-Press_Chest_thumbnail@3x.jpg
+  Row 101: Decline Bench Press (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/13001201-Lever-Decline-Chest-Press_Chest-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/13001201-Lever-Decline-Chest-Press_Chest-FIX__thumbnail_@3x.jpg
+  Row 102: Decline Bench Press (Smith Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07531201-Smith-Decline-Bench-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/07531201-Smith-Decline-Bench-Press_Chest_thumbnail@3x.jpg
+  Row 103: Decline Chest Fly (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03021201-Dumbbell-Decline-Fly_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03021201-Dumbbell-Decline-Fly_Chest_thumbnail@3x.jpg
+  Row 104: Decline Crunch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02771201-Decline-Crunch_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02771201-Decline-Crunch_Waist_thumbnail@3x.jpg
+  Row 105: Decline Crunch (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/21301201-Weighted-decline-crunch_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/21301201-Weighted-decline-crunch_Waist_thumbnail@3x.jpg
+  Row 106: Decline Push Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02791201-Decline-Push-Up_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02791201-Decline-Push-Up_Chest_thumbnail@3x.jpg
+  Row 107: Diamond Push Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02831201-Diamond-Push-up_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02831101-Diamond-Push-up_Upper-Arms_small_thumbnail@3x.jpg
+  Row 108: Downward Dog
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/52511201-Downward-Facing-Dog-(female)_Stretching_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/09491101-Downward-Facing-Dog-Adho-Mukha-Svanasana_small_thumbnail@3x.jpg
+  Row 109: Drag Curl
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00381201-Barbell-Drag-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00381201-Barbell-Drag-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 110: Dragon Flag
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/40581201-Leg-Raise-Dragon-Flag_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/40581201-Leg-Raise-Dragon-Flag_Waist_thumbnail_@3x.jpg
+  Row 111: Dragonfly
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/40581201-Leg-Raise-Dragon-Flag_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/40581201-Leg-Raise-Dragon-Flag_Waist_thumbnail_@3x.jpg
+  Row 112: Dumbbell Row
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02921201-Dumbbell-Bent-over-Row_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02921201-Dumbbell-Bent-over-Row_Back_thumbnail@3x.jpg
+  Row 113: Dumbbell Snatch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/38881201-Dumbbell-One-Arm-Snatch_Weightlifting_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/38881101-Dumbbell-One-Arm-Snatch_small_thumbnail@3x.jpg
+  Row 114: Dumbbell Squeeze Press
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/36811201-Dumbbell-Squeeze-Bench-Press_Chest-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/36811201-Dumbbell-Squeeze-Bench-Press_Chest-FIX__thumbnail_@3x.jpg
+  Row 115: Dumbbell Step Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/58261201-Dumbbell-Step-up-(VERSION-2)-(male)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04311101-Dumbbell-Step-up_Hips_small_thumbnail@3x.jpg
+  Row 116: Elbow to Knee
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/23121201-Lying-Elbow-to-Knee_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/23121201-Lying-Elbow-to-Knee_Waist_thumbnail@3x.jpg
+  Row 117: Elliptical Trainer
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/21921201-Elliptical-Machine-Walk_Cardio.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/21921201-Elliptical-Machine-Walk_Cardio_thumbnail@3x.jpg
+  Row 118: EZ Bar Biceps Curl
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04471201-EZ-Barbell-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04471201-EZ-Barbell-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 119: Farmers Walk
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/21331201-Farmers-walk_Cardio.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/21331201-Farmers-walk_Cardio_thumbnail@3x.jpg
+  Row 120: Feet Up Bench Press (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/62701201-Barbell-Larsen-Press-(male)_Chest_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/62701201-Barbell-Larsen-Press-(male)_Chest_thumbnail_@3x.jpg
+  Row 121: Fire Hydrants
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/14751201-Bent-Leg-Side-Kick-(kneeling)-(female)_Hips-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/14751201-Bent-Leg-Side-Kick-(kneeling)-(female)_Hips-FIX_thumbnail_@3x.jpg
+  Row 122: Floor Press (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/37241201-Barbell-Floor-Chest-Press_Chest_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/37241201-Barbell-Floor-Chest-Press_Chest_thumbnail_@3x.jpg
+  Row 123: Floor Press (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/36681201-Dumbbell-Lying-on-Floor-Chest-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/36681201-Dumbbell-Lying-on-Floor-Chest-Press_Chest_thumbnail_@3x.jpg
+  Row 124: Floor Triceps Dip
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08151201-Triceps-Dips-Floor_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08151201-Triceps-Dips-Floor_Upper-Arms_thumbnail@3x.jpg
+  Row 125: Flutter Kicks
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/12441201-Flutter-Kicks-(version-3)_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/12441201-Flutter-Kicks-(version-3)_Hips_thumbnail_@3x.jpg
+  Row 126: Frog Jumps
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/101651201-Frog-Jump_Plyometrics_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/101651201-Frog-Jump_Plyometrics_thumbnail_@3x.jpg
+  Row 127: Frog Pumps (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/61601201-Dumbbell-Frog-Hip-Thrust-(male)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/61601201-Dumbbell-Frog-Hip-Thrust-(male)_Hips_thumbnail_@3x.jpg
+  Row 128: Front Lever Hold
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/72511201-Hanging-Front-Lever-Raise-(male)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/72511201-Hanging-Front-Lever-Raise-(male)_Waist_thumbnail_@3x.jpg
+  Row 129: Front Lever Raise
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/72511201-Hanging-Front-Lever-Raise-(male)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/72511201-Hanging-Front-Lever-Raise-(male)_Waist_thumbnail_@3x.jpg
+  Row 130: Front Raise (Band)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/09781201-Band-front-raise_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/09781201-Band-front-raise_Shoulders_thumbnail_@3x.jpg
+  Row 131: Front Raise (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00411101-Barbell-Front-Raise_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00411101-Barbell-Front-Raise_Shoulders_thumbnail@3x.jpg
+  Row 132: Front Raise (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01621201-Cable-Front-Raise_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01621201-Cable-Front-Raise_Shoulders_thumbnail@3x.jpg
+  Row 133: Front Raise (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03101201-Dumbbell-Front-Raise_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03101201-Dumbbell-Front-Raise_Shoulders_thumbnail@3x.jpg
+  Row 134: Front Raise (Suspension)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10751201-Suspender-Front-Raise-(female)_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10751201-Suspender-Front-Raise-(female)_Shoulders_thumbnail_@3x.jpg
+  Row 135: Front Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00421201-Barbell-Front-Squat_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00421201-Barbell-Front-Squat_Hips_thumbnail@3x.jpg
+  Row 136: Full Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00431201-Barbell-Full-Squat_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00431201-Barbell-Full-Squat_Thighs_thumbnail@3x.jpg
+  Row 137: Glute Bridge
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/101801201-Hamstring-Bridge-(VERSION-2)-(female)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/101801201-Hamstring-Bridge-(VERSION-2)-(female)_Hips_thumbnail_@3x.jpg
+  Row 138: Glute Ham Raise
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/57771201-Glute-Ham-Raise-(VERSION-2)-(female)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/57771201-Glute-Ham-Raise-(VERSION-2)-(female)_Thighs_thumbnail_@3x.jpg
+  Row 139: Glute Kickback (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10371201-Lever-Standing-Rear-Kick_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10371201-Lever-Standing-Rear-Kick_Hips_thumbnail@3x.jpg
+  Row 140: Glute Kickback on Floor
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/14741201-Bent-Leg-Kickback-(kneeling)_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/14741201-Bent-Leg-Kickback-(kneeling)_Hips_thumbnail@3x.jpg
+  Row 141: Goblet Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/22811201-Dumbbell-Goblet-Squat-(female)_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/22811201-Dumbbell-Goblet-Squat-(female)_Thighs_thumbnail@3x.jpg
+  Row 142: Good Morning (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00441201-Barbell-Good-Morning_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00441201-Barbell-Good-Morning_Thighs_thumbnail@3x.jpg
+  Row 143: Gorilla Row (Kettlebell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/72301201-Kettlebell-Gorilla-Row-(male)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/72301201-Kettlebell-Gorilla-Row-(male)_Back__thumbnail_@3x.jpg
+  Row 144: Hack Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00461201-Barbell-Hack-Squat_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00461201-Barbell-Hack-Squat_Hips_thumbnail@3x.jpg
+  Row 145: Hack Squat (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07431201-Sled-Hack-Squat_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/07431201-Sled-Hack-Squat_Hips_thumbnail@3x.jpg
+  Row 146: Hammer Curl (Band)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/46191201-Band-Standing-Hammer-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/46191201-Band-Standing-Hammer-Curl_Upper-Arms_thumbnail_@3x.jpg
+  Row 147: Hammer Curl (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01661201-Cable-Hammer-Curl_Forearm.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01661201-Cable-Hammer-Curl_Forearm_thumbnail@3x.jpg
+  Row 148: Handstand Hold
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/33021201-Handstand_Upper-arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/33021101-Handstand_Upper-arms_small_thumbnail@3x.jpg
+  Row 149: Handstand Push Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04711201-Handstand-Push-Up_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04711201-Handstand-Push-Up_Shoulders_thumbnail_@3x.jpg
+  Row 150: Hang Clean
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/15201201-Barbell-Hang-Clean_Weightlifts-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/15201201-Barbell-Hang-Clean_Weightlifts-FIX_thumbnail_@3x.jpg
+  Row 151: Hang Snatch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/15231201-Barbell-Hang-Snatch-Below-the-Knees_Weightlifts_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/15221101-Barbell-Hang-Snatch_Weightlifts_small_thumbnail@3x.jpg
+  Row 152: Hanging Knee Raise
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/98191201-Hanging-Knee-Raise-(male)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/98191201-Hanging-Knee-Raise-(male)_Waist_thumbnail_@3x.jpg
+  Row 153: Hanging Leg Raise
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/17641201-Hanging-Leg-Hip-Raise_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/17641201-Hanging-Leg-Hip-Raise_Waist_thumbnail@3x.jpg
+  Row 154: Heel Taps
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00061201-Alternate-Heel-Touchers_waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00061101-Alternate-Heel-Touchers_waist-FIX_small_thumbnail@3x.jpg
+  Row 155: Hex Press (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/36811201-Dumbbell-Squeeze-Bench-Press_Chest-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/36811201-Dumbbell-Squeeze-Bench-Press_Chest-FIX__thumbnail_@3x.jpg
+  Row 156: High Knee Skips
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/30911201-High-Knee-Skips-(male)_Cardio-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/30911201-High-Knee-Skips-(male)_Cardio-FIX_thumbnail_@3x.jpg
+  Row 157: High Knees
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/30911201-High-Knee-Skips-(male)_Cardio-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/30911201-High-Knee-Skips-(male)_Cardio-FIX_thumbnail_@3x.jpg
+  Row 158: Hip Abduction (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05971201-Lever-Seated-Hip-Abduction_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05971201-Lever-Seated-Hip-Abduction_Hips_thumbnail@3x.jpg
+  Row 159: Hip Adduction (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05981201-Lever-Seated-Hip-Adduction_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05981201-Lever-Seated-Hip-Adduction_Thighs_thumbnail@3x.jpg
+  Row 160: Hip Thrust
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/80151201-Glute-Bridge-from-Bench-(male)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/80151201-Glute-Bridge-from-Bench-(male)_Hips_thumbnail_@3x.jpg
+  Row 161: Hip Thrust (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10601201-Barbell-Hip-Thrust_Hips-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10601101-Barbell-Hip-Thrust_Hips_small_thumbnail@3x.jpg
+  Row 162: Hip Thrust (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/21461201-Lever-Hip-Thrust_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/21461201-Lever-Hip-Thrust_Hips_thumbnail_@3x.jpg
+  Row 163: Hip Thrust (Smith Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/57611201-Smith-Hip-Thrust-(female)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/57611201-Smith-Hip-Thrust-(female)_Hips_thumbnail_@3x.jpg
+  Row 164: Hollow Rock
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/56491201-Hollow-Rock-(male)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/56491201-Hollow-Rock-(male)_Waist_thumbnail_@3x.jpg
+  Row 165: Incline Bench Press (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00471201-Barbell-Incline-Bench-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00471201-Barbell-Incline-Bench-Press_Chest_thumbnail@3x.jpg
+  Row 166: Incline Bench Press (Smith Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07571201-Smith-Incline-Bench-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/07571201-Smith-Incline-Bench-Press_Chest_thumbnail@3x.jpg
+  Row 167: Incline Chest Fly (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03191201-Dumbbell-Incline-Fly_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03191201-Dumbbell-Incline-Fly_Chest_thumbnail@3x.jpg
+  Row 168: Incline Chest Press (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/14791201-Lever-Incline-Chest-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/14791201-Lever-Incline-Chest-Press_Chest_thumbnail@3x.jpg
+  Row 169: Incline Push Ups
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/37851201-Incline-Push-Up-(on-box).mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/37851201-Incline-Push-Up-(on-box)_thumbnail@3x.jpg
+  Row 170: Inverted Row
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04991201-Inverted-Row_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04991201-Inverted-Row_Back_thumbnail@3x.jpg
+  Row 171: Iso-Lateral Chest Press (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05761201-Lever-Chest-Press-(plate-loaded)_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05761201-Lever-Chest-Press-(plate-loaded)_Chest_thumbnail@3x.jpg
+  Row 172: Iso-Lateral High Row (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/43781201-Lever-Reverse-Grip-High-Row-(plate-loaded)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05811101-Lever-High-Row-(plate-loaded)_Back_small_thumbnail@3x.jpg
+  Row 173: Iso-Lateral Low Row
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/42141201-Lever-Low-Row-(plate-loaded)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/42141201-Lever-Low-Row-(plate-loaded)_Back__thumbnail_@3x.jpg
+  Row 174: Iso-Lateral Row (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05881201-Lever-Neutral-Grip-Seated-Row-(plate-loaded)_Back-.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05881201-Lever-Neutral-Grip-Seated-Row-(plate-loaded)_Back-_thumbnail_@3x.jpg
+  Row 175: Jack Knife (Suspension)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10821201-Suspender-Jack-knife-(female)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10821201-Suspender-Jack-knife-(female)_Waist_thumbnail_@3x.jpg
+  Row 176: Jackknife Sit Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/38841201-Jack-knife-Sit-up-(female)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/38841201-Jack-knife-Sit-up-(female)_Waist_thumbnail_@3x.jpg
+  Row 177: JM Press (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00521201-Barbell-JM-Bench-Press_Upper-Arms-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00521201-Barbell-JM-Bench-Press_Upper-Arms-FIX_-2_thumbnail_@3x.jpg
+  Row 178: Jump Rope
+    video: None
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05111101-Jump-Rope_Cardio_small_thumbnail@3x.jpg
+  Row 179: Jump Shrug
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/49641201-Jump-Shrug_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/49641201-Jump-Shrug_Thighs_thumbnail_@3x.jpg
+  Row 180: Jump Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05141201-Jump-Squat_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05141201-Jump-Squat_Thighs_thumbnail@3x.jpg
+  Row 181: Jumping Jack
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/30941201-Jumping-Jack-(male)_Cardio.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/30941201-Jumping-Jack-(male)_Cardio_thumbnail_@3x.jpg
+  Row 182: Jumping Lunge
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/11661201-Jump-Split-m_Plyometrics.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/11661201-Jump-Split-m_Plyometrics_thumbnail@3x.jpg
+  Row 183: Kettlebell Around the World
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/45341201-Kettlebell-Standing-Slingshots-(female)_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/45341201-Kettlebell-Standing-Slingshots-(female)_Shoulders_thumbnail_@3x.jpg
+  Row 184: Kettlebell Clean
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/45301201-Kettlebell-Single-Arm-Clean-(female)_Weightlifts_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/45301201-Kettlebell-Single-Arm-Clean-(female)_Weightlifts_thumbnail_@3x.jpg
+  Row 185: Kettlebell Curl
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/69331201-Kettlebell-Biceps-Curl-(female)_Upper-Arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/69331201-Kettlebell-Biceps-Curl-(female)_Upper-Arms_thumbnail_@3x.jpg
+  Row 186: Kettlebell Goblet Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/23561201-Kettlebell-Goblet-Squat-(female)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/23561201-Kettlebell-Goblet-Squat-(female)_Thighs_thumbnail_@3x.jpg
+  Row 187: Kettlebell Halo
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/29391201-Kettlebell-Around-Head-Rotation_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/29391201-Kettlebell-Around-Head-Rotation_Back_thumbnail_@3x.jpg
+  Row 188: Kettlebell High Pull
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05481201-Kettlebell-Sumo-High-Pull_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05481101-Kettlebell-Sumo-High-Pull_back_small_thumbnail@3x.jpg
+  Row 189: Kettlebell Shoulder Press
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/99571201-Kettlebell-Single-Arm-Shoulder-Press-(male)_Should.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/99571201-Kettlebell-Single-Arm-Shoulder-Press-(male)_Should_thumbnail_@3x.jpg
+  Row 190: Kettlebell Snatch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05421201-Kettlebell-One-Arm-Snatch_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05421101-Kettlebell-One-Arm-Snatch_Shoulders_small_thumbnail@3x.jpg
+  Row 191: Kettlebell Swing
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05491201-Kettlebell-Swing_Hips-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05491201-Kettlebell-Swing_Hips-FIX_thumbnail_@3x.jpg
+  Row 192: Kettlebell Turkish Get Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05511201-Kettlebell-Turkish-Get-Up-(Squat-style)_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05511101-Kettlebell-Turkish-Get-Up-(Squat-style)_Thighs_small_thumbnail@3x.jpg
+  Row 193: Knee Raise Parallel Bars
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/21261201-Captains-chair-leg-raise_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/21261201-Captains-chair-leg-raise_Hips_thumbnail@3x.jpg
+  Row 194: Kneeling Pulldown (band)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/43581201-Band-Knelling-Lat-Pulldown_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/43581201-Band-Knelling-Lat-Pulldown_Back_thumbnail_@3x.jpg
+  Row 195: Kneeling Push Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/32111201-Kneeling-Push-up-(male)_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/32111101-Kneeling-Push-up-(male)_small_thumbnail@3x.jpg
+  Row 196: L-Sit Hold
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/14021201-L-sit_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/14021201-L-sit_Waist_thumbnail@3x.jpg
+  Row 197: Landmine 180
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05621201-Landmine-180_waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05621201-Landmine-180_waist_thumbnail@3x.jpg
+  Row 198: Landmine Row
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/32001201-Lever-Bent-over-Row-with-V-bar-(plate-loaded)_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/32001201-Lever-Bent-over-Row-with-V-bar-(plate-loaded)_Back_thumbnail_@3x.jpg
+  Row 199: Landmine Squat and Press
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/29761201-Landmine-Squat-and-Press_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/29761301-Landmine-Squat-and-Press_360_thumbnail@3x.jpg
+  Row 200: Lat Pulldown (Band)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/31161201-Band-Fixed-Back-Underhand-Pulldown_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/09741101-Band-close-grip-pulldown_Back_small_thumbnail@3x.jpg
+  Row 201: Lat Pulldown (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05791201-Lever-Front-Pulldown_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05791201-Lever-Front-Pulldown_Back_thumbnail@3x.jpg
+  Row 202: Lat Pulldown - Close Grip (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/63921201-Cable-Lateral-Pulldown-with-Mag-Grip_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/63921201-Cable-Lateral-Pulldown-with-Mag-Grip_Back_thumbnail_@3x.jpg
+  Row 203: Lateral Band Walks
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/24601201-Resistance-Band-Lateral-Walk-(female)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/24601101-Resistance-Band-Lateral-Walk_Hips_small_thumbnail@3x.jpg
+  Row 204: Lateral Box Jump
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05641201-Lateral-Box-Jump-(female)_Plyometrics-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05641201-Lateral-Box-Jump-(female)_Plyometrics-FIX_thumbnail_@3x.jpg
+  Row 205: Lateral Leg Raises
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/86421201-Standing-Single-Side-Leg-Raise-Chair-Supported-(fe.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/86421201-Standing-Single-Side-Leg-Raise-Chair-Supported-(fe_thumbnail_@3x.jpg
+  Row 206: Lateral Lunge
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/29721201-Side-Lunge_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/29721201-Side-Lunge_Thighs_thumbnail_@3x.jpg
+  Row 207: Lateral Raise (Band)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/09071201-Band-Lateral-Raise-(female)_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/09071101-Band-lateral-raise_Shoulders_small_thumbnail@3x.jpg
+  Row 208: Lateral Raise (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01781201-Cable-Lateral-Raise_shoulder.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01781201-Cable-Lateral-Raise_shoulder_thumbnail@3x.jpg
+  Row 209: Lateral Raise (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05841201-Lever-Lateral-Raise_shoulder.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05841201-Lever-Lateral-Raise_shoulder_thumbnail@3x.jpg
+  Row 210: Lateral Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/69241201-Side-Step-Deep-Squat-(male)_Plyometrics_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/69241201-Side-Step-Deep-Squat-(male)_Plyometrics_thumbnail_@3x.jpg
+  Row 211: Leg Press Horizontal (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/22671201-Lever-Seated-Leg-Press_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/22671201-Lever-Seated-Leg-Press_Thighs_thumbnail@3x.jpg
+  Row 212: Leg Raise Parallel Bars
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/29631201-Captains-Chair-Straight-Leg-Raise_Waist-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/29631101-Captains-Chair-Straight-Leg-Raise_Waist_small_thumbnail@3x.jpg
+  Row 213: Low Cable Fly Crossovers
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01791201-Cable-Low-Fly_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01791201-Cable-Low-Fly_Chest_thumbnail@3x.jpg
+  Row 214: Low Row (Suspension)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10921201-Suspender-Row-(female)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10921101-Suspender-Row_Back_small_thumbnail@3x.jpg
+  Row 215: Lunge
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/14601201-Walking-Lunge-Male_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/14601201-Walking-Lunge-Male_Hips_thumbnail@3x.jpg
+  Row 216: Lunge (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00541201-Barbell-Lunge_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00541201-Barbell-Lunge_Thighs_thumbnail@3x.jpg
+  Row 217: Lunge (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03361201-Dumbbell-Lunge_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03361201-Dumbbell-Lunge_Hips_thumbnail@3x.jpg
+  Row 218: Lying Knee Raise
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/81941201-Lying-Knee-Raise-(male)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/81941201-Lying-Knee-Raise-(male)_Waist_thumbnail_@3x.jpg
+  Row 219: Lying Leg Raise
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/11631201-Lying-Leg-Raise_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/11631201-Lying-Leg-Raise_Waist_thumbnail@3x.jpg
+  Row 220: Lying Neck Curls
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/101661201-Lying-Neck-Flexion_Neck_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/101661201-Lying-Neck-Flexion_Neck_thumbnail_@3x.jpg
+  Row 221: Lying Neck Curls (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10431201-Weighted-Lying-Neck-Flexion_neck.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10431201-Weighted-Lying-Neck-Flexion_neck_thumbnail_@3x.jpg
+  Row 222: Lying Neck Extension
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/101671201-Lying-Neck-Extension_Neck_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/101671201-Lying-Neck-Extension_Neck_thumbnail_@3x.jpg
+  Row 223: Lying Neck Extension (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10421201-Weighted-Lying-Neck-Extension_Neck_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10421101-Weighted-Lying-Neck-Extension_neck_small_thumbnail_@3x.jpg
+  Row 224: Meadows Rows (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/40381201-Landmine-One-Arm-Bent-Over-Row_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/40381201-Landmine-One-Arm-Bent-Over-Row_Back_thumbnail_@3x.jpg
+  Row 225: Mountain Climber
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/75311201-Plank-Alternate-Knee-Tuck-(female)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/75311201-Plank-Alternate-Knee-Tuck-(female)_Waist_thumbnail_@3x.jpg
+  Row 226: Muscle Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/51941201-Bodyweight-Muscle-Up-(VERSION-2)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/51941201-Bodyweight-Muscle-Up-(VERSION-2)_Back_thumbnail_@3x.jpg
+  Row 227: Negative Pull Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/47741201-Pull-up-(negative)-(female)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/47741201-Pull-up-(negative)-(female)_Back__thumbnail_@3x.jpg
+  Row 228: Nordic Hamstrings Curls
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/77461201-Nordic-Hamstring-Curl-(male)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/77461201-Nordic-Hamstring-Curl-(male)_Thighs_thumbnail_@3x.jpg
+  Row 229: Oblique Crunch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06351201-Oblique-Crunches-Floor_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06351201-Oblique-Crunches-Floor_Waist_thumbnail@3x.jpg
+  Row 230: One Arm Push Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07251201-Single-Arm-Push-up_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/07251201-Single-Arm-Push-up_Chest_thumbnail@3x.jpg
+  Row 231: Overhead Curl (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/16361201-Cable-Overhead-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/16361201-Cable-Overhead-Curl_Upper-Arms_thumbnail_@3x.jpg
+  Row 232: Overhead Dumbbell Lunge
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/50761201-Dumbbell-Overhead-Lunge_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/50761201-Dumbbell-Overhead-Lunge_Thighs_thumbnail_@3x.jpg
+  Row 233: Overhead Plate Raise
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/101141201-Weighted-Plate-LU-Raise-(male)_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/101141201-Weighted-Plate-LU-Raise-(male)_Shoulders_thumbnail_@3x.jpg
+  Row 234: Overhead Press (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/11651201-Barbell-Standing-Military-Press-(without-rack)_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/11651201-Barbell-Standing-Military-Press-(without-rack)_Shoulders_thumbnail@3x.jpg
+  Row 235: Overhead Press (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04261201-Dumbbell-Standing-Overhead-Press_shoulder.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04261201-Dumbbell-Standing-Overhead-Press_shoulder_thumbnail@3x.jpg
+  Row 236: Overhead Press (Smith Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/12241201-Smith-Standing-Shoulder-Press_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/12241201-Smith-Standing-Shoulder-Press_Shoulders_thumbnail@3x.jpg
+  Row 237: Overhead Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00691201-Barbell-Overhead-Squat_Thighs-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00691201-Barbell-Overhead-Squat_Thighs-FIX_thumbnail_@3x.jpg
+  Row 238: Overhead Triceps Extension (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01941201-Cable-Overhead-Triceps-Extension-(rope-attachment)_Upper-Arms-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01941201-Cable-Overhead-Triceps-Extension-(rope-attachment)_Upper-Arms-FIX_thumbnail_@3x.jpg
+  Row 239: Partial Glute Bridge (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/54511201-Barbell-KAS-Glute-Bridge-(female)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/54511201-Barbell-KAS-Glute-Bridge-(female)_Hips_thumbnail_@3x.jpg
+  Row 240: Pause Squat (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/50161201-Barbell-Pause-Full-Squat_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/50161201-Barbell-Pause-Full-Squat_Thighs__thumbnail_@3x.jpg
+  Row 241: Pendlay Row (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/30171201-Barbell-Pendlay-Row_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/30171201-Barbell-Pendlay-Row_Back_thumbnail_@3x.jpg
+  Row 242: Pendulum Squat (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/49511201-Lever-Pendulum-Squat-(plate-loaded)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/49511201-Lever-Pendulum-Squat-(plate-loaded)_Thighs__thumbnail_@3x.jpg
+  Row 243: Pike Pushup
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/29211201-Pike-Push-up_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/29211101-Pike-Push-up_Chest_small_thumbnail@3x.jpg
+  Row 244: Pinwheel Curl (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/16571201-Dumbbell-Cross-Body-Hammer-Curl-(Version-2)_Upper-Arms-FIX.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/16571201-Dumbbell-Cross-Body-Hammer-Curl-(Version-2)_Upper-Arms-FIX_thumbnail_@3x.jpg
+  Row 245: Pistol Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/17591201-Single-Leg-Squat-(pistol)-(male)_Thighs-FIX2_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/17591101-Single-Leg-Squat-(pistol)-male_Thighs_small_thumbnail@3x.jpg
+  Row 246: Plank
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04631201-Front-Plank-m_waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04631201-Front-Plank-m_waist_thumbnail@3x.jpg
+  Row 247: Plank Pushup
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/29781201-Elbow-Up-and-Down-Dynamic-Plank.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/29781201-Elbow-Up-and-Down-Dynamic-Plank_thumbnail_@3x.jpg
+  Row 248: Plate Curl
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/66981201-Weighted-Plate-Standing-Biceps-Curl-(male)_Forearm.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/66981201-Weighted-Plate-Standing-Biceps-Curl-(male)_Forearm_thumbnail_@3x.jpg
+  Row 249: Plate Front Raise
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08341201-Weighted-Front-Raise_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08341201-Weighted-Front-Raise_Shoulders_thumbnail@3x.jpg
+  Row 250: Plate Press
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/12251201-Standing-Plate-Press_Chest_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/12251101-Standing-Plate-Presses_Shoulders_small_thumbnail@3x.jpg
+  Row 251: Plate Squeeze (Svend Press)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08561201-Weighted-Svend-Press_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08561201-Weighted-Svend-Press_Chest_thumbnail@3x.jpg
+  Row 252: Power Clean
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06481201-Power-Clean_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06481201-Power-Clean_Thighs_thumbnail@3x.jpg
+  Row 253: Power Snatch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/15301201-Barbell-Power-Snatch_Weightlifts_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/15301101-Barbell-Power-Snatch_Weightlifts_small_thumbnail@3x.jpg
+  Row 254: Preacher Curl (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00701201-Barbell-Preacher-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00701201-Barbell-Preacher-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 255: Preacher Curl (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04021201-Dumbbell-Seated-Preacher-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04021201-Dumbbell-Seated-Preacher-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 256: Preacher Curl (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05921201-Lever-Preacher-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05921201-Lever-Preacher-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 257: Pull Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06521201-Pull-up_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06521201-Pull-up_Back_thumbnail@3x.jpg
+  Row 258: Pull Up (Assisted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00171201-Assisted-Pull-up_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00171201-Assisted-Pull-up_Back_thumbnail@3x.jpg
+  Row 259: Pull Up (Band)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/38441201-Band-Assisted-Pull-Up-(VERSION-3)-(female)_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/38441201-Band-Assisted-Pull-Up-(VERSION-3)-(female)_Back_thumbnail_@3x.jpg
+  Row 260: Pull Up (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08411201-Weighted-Pull-Up_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08411201-Weighted-Pull-Up_Back_thumbnail_@3x.jpg
+  Row 261: Pullover (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03751201-Dumbbell-Pullover_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03751201-Dumbbell-Pullover_Chest_thumbnail@3x.jpg
+  Row 262: Pullover (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/22851201-Lever-Pullover-(plate-loaded)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/22851201-Lever-Pullover-(plate-loaded)_Back__thumbnail_@3x.jpg
+  Row 263: Push Press
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/12001201-Push-Press_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/12001201-Push-Press_Shoulders_thumbnail@3x.jpg
+  Row 264: Push Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06621201-Push-up-m_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06621201-Push-up-m_Chest_thumbnail@3x.jpg
+  Row 265: Push Up (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/11721201-Assisted-Weighted-Push-up_Chest.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/11721201-Assisted-Weighted-Push-up_Chest_thumbnail@3x.jpg
+  Row 266: Push Up - Close Grip
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02591201-Close-Grip-Push-up_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02591201-Close-Grip-Push-up_Upper-Arms_thumbnail@3x.jpg
+  Row 267: Rack Pull
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00741201-Barbell-Rack-Pull_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00741101-Barbell-Rack-Pull_Hips-FIX_thumbnail@3x.jpg
+  Row 268: Rear Delt Reverse Fly (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02251201-Cable-Standing-Cross-over-High-Reverse-Fly_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02251201-Cable-Standing-Cross-over-High-Reverse-Fly_Shoulders_thumbnail_@3x.jpg
+  Row 269: Rear Delt Reverse Fly (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/24871201-Dumbbell-Rear-Delt-Fly-(female)_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/24871101-Dumbbell-Rear-Delt-Fly-(female)_Shoulders_small_thumbnail@3x.jpg
+  Row 270: Rear Delt Reverse Fly (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06021201-Lever-Seated-Reverse-Fly_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06021201-Lever-Seated-Reverse-Fly_Shoulders_thumbnail@3x.jpg
+  Row 271: Rear Kick (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/99041201-Lever-Pure-Rear-Kick-(female)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/99041201-Lever-Pure-Rear-Kick-(female)_Hips_thumbnail_@3x.jpg
+  Row 272: Renegade Row (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/29811201-Dumbbell-Renegade-Row-(female)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/29811201-Dumbbell-Renegade-Row-(female)_Back_thumbnail_@3x.jpg
+  Row 273: Reverse Crunch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08721201-Reverse-Crunch-m_waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08721201-Reverse-Crunch-m_waist_thumbnail@3x.jpg
+  Row 274: Reverse Curl (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00801201-Barbell-Reverse-Curl_Forearm.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00801201-Barbell-Reverse-Curl_Forearm_thumbnail@3x.jpg
+  Row 275: Reverse Curl (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02061201-Cable-Reverse-Curl_Forearm.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02061201-Cable-Reverse-Curl_Forearm_thumbnail_@3x.jpg
+  Row 276: Reverse Curl (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03821201-Dumbbell-Revers-grip-Biceps-Curl_Forearms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03821201-Dumbbell-Revers-grip-Biceps-Curl_Forearms_thumbnail@3x.jpg
+  Row 277: Reverse Fly Single Arm (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/98681201-Cable-45-degrees-Single-Arm-Reverse-Fly-(male)_Sho.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/98681201-Cable-45-degrees-Single-Arm-Reverse-Fly-(male)_Sho_thumbnail_@3x.jpg
+  Row 278: Reverse Grip Concentration Curl
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04031201-Dumbbell-Seated-Revers-grip-Concentration-Curl_Forearms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04031201-Dumbbell-Seated-Revers-grip-Concentration-Curl_Forearms_thumbnail_@3x.jpg
+  Row 279: Reverse Grip Lat Pulldown (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02081201-Cable-Reverse-grip-Straight-Back-Seated-High-Row_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02081201-Cable-Reverse-grip-Straight-Back-Seated-High-Row_Back_thumbnail@3x.jpg
+  Row 280: Reverse Hyperextension
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05931201-Lever-Reverse-Hyperextension-(plate-loaded)_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05931201-Lever-Reverse-Hyperextension-(plate-loaded)_Hips_thumbnail@3x.jpg
+  Row 281: Reverse Lunge
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/63881201-Bodyweight-Reverse-Lunge-(female)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/63881201-Bodyweight-Reverse-Lunge-(female)_Thighs_thumbnail_@3x.jpg
+  Row 282: Reverse Lunge (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/22261201-Barbell-Rear-Lunge-(female)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/22261201-Barbell-Rear-Lunge-(female)_Thighs_thumbnail_@3x.jpg
+  Row 283: Reverse Lunge (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03811201-Dumbbell-Rear-Lunge_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03811201-Dumbbell-Rear-Lunge_Thighs_thumbnail@3x.jpg
+  Row 284: Reverse Plank
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08671201-Reverse-plank_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08671201-Reverse-plank_Back_thumbnail@3x.jpg
+  Row 285: Ring Dips
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06771201-Ring-Dip_Upper-Arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06771201-Ring-Dip_Upper-Arms_thumbnail_@3x.jpg
+  Row 286: Ring Pull Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/55221201-Ring-Pull-Up_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/55221201-Ring-Pull-Up_Back_1_thumbnail_@3x.jpg
+  Row 287: Ring Push Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08061201-Suspended-Push-Up_Chest_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08061201-Suspended-Push-Up_Chest_thumbnail_@3x.jpg
+  Row 288: Romanian Deadlift (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00851201-Barbell-Romanian-Deadlift_Hips-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00851201-Barbell-Romanian-Deadlift_Hips-FIX_thumbnail_@3x.jpg
+  Row 289: Romanian Deadlift (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/14591201-Dumbbell-Romanian-Deadlift_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/14591201-Dumbbell-Romanian-Deadlift_Hips_thumbnail@3x.jpg
+  Row 290: Rope Cable Curl
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01651201-Cable-Hammer-Curl-(with-rope)-(male)_Forearms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01651201-Cable-Hammer-Curl-(with-rope)-(male)_Forearms_thumbnail_@3x.jpg
+  Row 291: Rope Straight Arm Pulldown
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02371201-Cable-Straight-Arm-Pulldown-(with-rope)_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02371201-Cable-Straight-Arm-Pulldown-(with-rope)_Back_thumbnail@3x.jpg
+  Row 292: Rowing Machine
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/22701201-Rowing-Straight-Back-(with-rowing-machine)-(female)_Cardio.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/22701201-Rowing-Straight-Back-(with-rowing-machine)-(female)_Cardio_thumbnail@3x.jpg
+  Row 293: Running
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/21961201-Run-(female)_Cardio.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/21961201-Run-(female)_Cardio_thumbnail@3x.jpg
+  Row 294: Russian Twist (Bodyweight)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06871201-Russian-Twist_waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06871201-Russian-Twist_waist_thumbnail@3x.jpg
+  Row 295: Russian Twist (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/23711201-Weighted-Russian-Twist_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/23711201-Weighted-Russian-Twist_Waist_thumbnail@3x.jpg
+  Row 296: Scapular Pull Ups
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06881201-Scapular-Pull-Up_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06881201-Scapular-Pull-Up_Back_thumbnail_@3x.jpg
+  Row 297: Seated Cable Row - Bar Grip
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01801201-Cable-Low-Seated-Row_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01801201-Cable-Low-Seated-Row_Back_thumbnail@3x.jpg
+  Row 298: Seated Cable Row - Bar Wide Grip
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02181201-Cable-Seated-Wide-grip-Row_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02181201-Cable-Seated-Wide-grip-Row_Back_thumbnail@3x.jpg
+  Row 299: Seated Calf Raise
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05941201-Lever-Seated-Calf-Raise-(plate-loaded).mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05941201-Lever-Seated-Calf-Raise-(plate-loaded)_thumbnail@3x.jpg
+  Row 300: Seated Chest Flys (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/38691201-Cable-Seated-Chest-Fly_Chest_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/38691101-Cable-Seated-Chest-Fly_Chest_small_thumbnail_@3x.jpg
+  Row 301: Seated Dip Machine
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/14511201-Lever-Seated-Dip_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/14511201-Lever-Seated-Dip_Upper-Arms_thumbnail@3x.jpg
+  Row 302: Seated Incline Curl (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03151201-Dumbbell-Incline-Biceps-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03151201-Dumbbell-Incline-Biceps-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 303: Seated Lateral Raise (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03961201-Dumbbell-Seated-Lateral-Raise_shoulder.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03961201-Dumbbell-Seated-Lateral-Raise_shoulder_thumbnail@3x.jpg
+  Row 304: Seated Overhead Press (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/68771201-Barbell-Incline-Shoulders-Press-(inside-squat-cage.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/68771201-Barbell-Incline-Shoulders-Press-(inside-squat-cage_thumbnail_@3x.jpg
+  Row 305: Seated Overhead Press (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02901201-Dumbbell-Bench-Seated-Press_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02901201-Dumbbell-Bench-Seated-Press_Shoulders_thumbnail@3x.jpg
+  Row 306: Seated Palms Up Wrist Curl
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/26331201-Dumbbell-Seated-Palms-Up-Wrist-Curl-(female)_Forea.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/26331201-Dumbbell-Seated-Palms-Up-Wrist-Curl-(female)_Forea_thumbnail_@3x.jpg
+  Row 307: Seated Row (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/22651201-Lever-Seated-Row-(version-2)_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/22651201-Lever-Seated-Row-(version-2)_Back_thumbnail@3x.jpg
+  Row 308: Seated Shoulder Press (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/14541201-Lever-Seated-Shoulder-Press_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/14541201-Lever-Seated-Shoulder-Press_Shoulders_thumbnail@3x.jpg
+  Row 309: Seated Triceps Press
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/18711201-Lever-Triceps-Dip-(plate-loaded)_Upper-Arms-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/18711201-Lever-Triceps-Dip-(plate-loaded)_Upper-Arms-FIX_thumbnail_@3x.jpg
+  Row 310: Seated Wrist Extension (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00791201-Barbell-Revers-Wrist-Curl-II_Forearms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00791201-Barbell-Revers-Wrist-Curl-II_Forearms_thumbnail@3x.jpg
+  Row 311: Shoulder Press (Machine Plates)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05871201-Lever-Military-Press-(plate-loaded)_shoulder.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05871201-Lever-Military-Press-(plate-loaded)_shoulder_thumbnail_@3x.jpg
+  Row 312: Shoulder Taps
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06991201-Shoulder-Tap-Push-up_Plyometrics.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06991201-Shoulder-Tap-Push-up_Plyometrics_thumbnail@3x.jpg
+  Row 313: Shrug (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00951201-Barbell-Shrug_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00951201-Barbell-Shrug_Back_thumbnail@3x.jpg
+  Row 314: Shrug (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02201201-Cable-Shrug_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02201201-Cable-Shrug_Back_thumbnail@3x.jpg
+  Row 315: Shrug (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04061201-Dumbbell-Shrug_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04061201-Dumbbell-Shrug_Back_thumbnail@3x.jpg
+  Row 316: Shrug (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06041201-Lever-Shrug-(plate-loaded)_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06041201-Lever-Shrug-(plate-loaded)_Back_thumbnail_@3x.jpg
+  Row 317: Shrug (Smith Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07461201-Smith-Back-Shrug_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/07461201-Smith-Back-Shrug_Back_thumbnail@3x.jpg
+  Row 318: Side Bend
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00021201-45-Side-Bend_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00021201-45-Side-Bend_Waist_thumbnail@3x.jpg
+  Row 319: Side Bend (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04071201-Dumbbell-Side-Bend_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04071201-Dumbbell-Side-Bend_Waist_thumbnail@3x.jpg
+  Row 320: Side Plank
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07151201-Side-Plank-m_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/07151201-Side-Plank-m_Waist_thumbnail@3x.jpg
+  Row 321: Single Arm Cable Crossover
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/62191201-Cable-Standing-Single-Arm-Fly_Chest_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/62191201-Cable-Standing-Single-Arm-Fly_Chest_thumbnail_@3x.jpg
+  Row 322: Single Arm Cable Row
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/75641201-Cable-Split-Stance-Single-Arm-Row-(male)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/75641201-Cable-Split-Stance-Single-Arm-Row-(male)_Back_thumbnail_@3x.jpg
+  Row 323: Single Arm Curl (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01901201-Cable-One-Arm-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01901201-Cable-One-Arm-Curl_Upper-Arms_thumbnail_@3x.jpg
+  Row 324: Single Arm Landmine Press (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/50941201-Landmine-Single-Arm-Press_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/50941201-Landmine-Single-Arm-Press_Shoulders_thumbnail_@3x.jpg
+  Row 325: Single Arm Lat Pulldown
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/12041201-Cable-one-arm-lat-pulldown_back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/12041101-Cable-one-arm-lat-pulldown_back_small_thumbnail@3x.jpg
+  Row 326: Single Arm Lateral Raise (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01921201-Cable-One-Arm-Lateral-Raise_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01921201-Cable-One-Arm-Lateral-Raise_Shoulders-3_thumbnail_@3x.jpg
+  Row 327: Single Arm Tricep Extension (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03621201-Dumbbell-One-Arm-Triceps-Extension-(on-bench)_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03621201-Dumbbell-One-Arm-Triceps-Extension-(on-bench)_Upper-Arms_thumbnail@3x.jpg
+  Row 328: Single Arm Triceps Pushdown (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/50331201-Cable-Single-Arm-Triceps-Pushdown-(rope-attachment.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/50331201-Cable-Single-Arm-Triceps-Pushdown-(rope-attachment_thumbnail_@3x.jpg
+  Row 329: Single Leg Extensions
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/71081201-Lever-Seated-Leg-Extension-(VERSION-2)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/71081201-Lever-Seated-Leg-Extension-(VERSION-2)_Thighs_thumbnail_@3x.jpg
+  Row 330: Single Leg Glute Bridge
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/60001201-Single-Leg-Bridge-with-Outstretched-Leg-(left)-(ma.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/60001201-Single-Leg-Bridge-with-Outstretched-Leg-(left)-(ma_thumbnail_@3x.jpg
+  Row 331: Single Leg Hip Thrust
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/20711201-Single-Leg%20_Hip-Thrusts_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/20711101-Single-Leg_Hip-Thrusts_Hips_small_thumbnail@3x.jpg
+  Row 332: Single Leg Hip Thrust (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/80751201-Dumbbell-Single-Leg-Hip-Thrust_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/47551101-Dumbbell-Single-Leg-Hip-Thrust_Hips_small_thumbnail_@3x.jpg
+  Row 333: Single Leg Press (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08831201-Lever-Horizontal-One-leg-Press_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08831201-Lever-Horizontal-One-leg-Press_Hips_thumbnail@3x.jpg
+  Row 334: Single Leg Romanian Deadlift (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/17561201-Barbell-Single-Leg-Deadlift_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/17561201-Barbell-Single-Leg-Deadlift_Hips_thumbnail_@3x.jpg
+  Row 335: Single Leg Romanian Deadlift (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/97541201-Dumbbell-Single-Leg-Romanian-Deadlift-Leg-Raise-(m.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/97541201-Dumbbell-Single-Leg-Romanian-Deadlift-Leg-Raise-(m_thumbnail_@3x.jpg
+  Row 336: Single Leg Standing Calf Raise
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/50521201-Single-Leg-Calf-Raise-Off-Step_Calves_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/50521201-Single-Leg-Calf-Raise-Off-Step_Calves_thumbnail_@3x.jpg
+  Row 337: Single Leg Standing Calf Raise (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/101691201-Barbell-Standing-Single-Leg-Calf-Raise_Calves_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/101691201-Barbell-Standing-Single-Leg-Calf-Raise_Calves_thumbnail_@3x.jpg
+  Row 338: Single Leg Standing Calf Raise (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/39731201-Dumbbell-Single-Leg-Calf-Raise-(female)-(VERSION-2)_Calves.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/39731201-Dumbbell-Single-Leg-Calf-Raise-(female)-(VERSION-2)_Calves_thumbnail_@3x.jpg
+  Row 339: Single Leg Standing Calf Raise (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/100761201-Lever-Standing-Single-Leg-Calf-Raise_Calves_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/100761201-Lever-Standing-Single-Leg-Calf-Raise_Calves_thumbnail_@3x.jpg
+  Row 340: Sissy Squat (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08511201-Weighted-Sissy-Squat_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08511201-Weighted-Sissy-Squat_Thighs_thumbnail@3x.jpg
+  Row 341: Sit Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00011201-3-4-Sit-up_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00011201-3-4-Sit-up_Waist_thumbnail@3x.jpg
+  Row 342: Sit Up (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/47561201-Dumbbell-Sit-up_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/47561201-Dumbbell-Sit-up_Waist_thumbnail_@3x.jpg
+  Row 343: Skullcrusher (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00601201-Barbell-Lying-Triceps-Extension-Skull-Crusher_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00601201-Barbell-Lying-Triceps-Extension-Skull-Crusher_Upper-Arms_thumbnail_@3x.jpg
+  Row 344: Skullcrusher (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/22511201-Dumbbell-Lying-Triceps-Extension-(female)_Upper-Arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/22511201-Dumbbell-Lying-Triceps-Extension-(female)_Upper-Arms_thumbnail_@3x.jpg
+  Row 345: Sled Push
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/25241201-Power-Sled-Push-(female)_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/25241201-Power-Sled-Push-(female)_Thighs_thumbnail@3x.jpg
+  Row 346: Snatch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/15331201-Barbell-Snatch_Weightlifts_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/15331101-Barbell-Snatch_Weightlifts_small_thumbnail@3x.jpg
+  Row 347: Spider Curl (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00721201-Barbell-Prone-Incline-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00721201-Barbell-Prone-Incline-Curl_Upper-Arms_thumbnail@3x.jpg
+  Row 348: Spider Curl (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03741201-Dumbbell-Prone-Incline-Curl_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03741201-Dumbbell-Prone-Incline-Curl_Upper-Arms_thumbnail_@3x.jpg
+  Row 349: Spiderman
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/48791201-Spiderman-Plank_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/48791201-Spiderman-Plank_Waist_thumbnail_@3x.jpg
+  Row 350: Spinning
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/22791201-Stationary-Bike-Run-(version-4)_Cardio.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/22791201-Stationary-Bike-Run-(version-4)_Cardio_thumbnail@3x.jpg
+  Row 351: Split Jerk
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/15381201-Barbell-Split-Jerk_Weightlifts_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/15381101-Barbell-Split-Jerk_Weightlifts_small_thumbnail@3x.jpg
+  Row 352: Split Squat (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/29601201-Dumbbell-Split-Squat_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/29601201-Dumbbell-Split-Squat_Thighs_thumbnail@3x.jpg
+  Row 353: Squat (Band)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/57491201-Band-squat-(female)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/57491201-Band-squat-(female)_Hips_thumbnail_@3x.jpg
+  Row 354: Squat (Bodyweight)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/11971201-Squat-m_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/11971201-Squat-m_Thighs_thumbnail@3x.jpg
+  Row 355: Squat (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04131201-Dumbbell-Squat_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04131201-Dumbbell-Squat_Hips_thumbnail_@3x.jpg
+  Row 356: Squat (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/57881201-Lever-Squat-(plate-loaded)-(female)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/57881201-Lever-Squat-(plate-loaded)-(female)_Thighs_thumbnail_@3x.jpg
+  Row 357: Squat (Smith Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/07501201-Smith-Chair-Squat_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/07501201-Smith-Chair-Squat_Thighs_thumbnail@3x.jpg
+  Row 358: Squat (Suspension)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/11431201-Suspender-Squat-(female)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/11431101-Suspender-Squat_Thighs_small_thumbnail@3x.jpg
+  Row 359: Squat Row
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/17171201-Cable-Squat-Row-(with-rope-attachment)_Back_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/17171201-Cable-Squat-Row-(with-rope-attachment)_Back_Thighs_thumbnail_@3x.jpg
+  Row 360: Stair Machine (Floors)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/23111201-Walking-on-Stepmill_Cardio.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/23111201-Walking-on-Stepmill_Cardio_thumbnail@3x.jpg
+  Row 361: Stair Machine (Steps)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/23111201-Walking-on-Stepmill_Cardio.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/23111201-Walking-on-Stepmill_Cardio_thumbnail@3x.jpg
+  Row 362: Standing Cable Glute Kickbacks
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/60401201-Cable-Donkey-Kickback-(male)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/60401201-Cable-Donkey-Kickback-(male)_Hips_thumbnail_@3x.jpg
+  Row 363: Standing Calf Raise
+    video: None
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/13731101-Bodyweight-Standing-Calf-Raise_Calves_small_thumbnail@3x.jpg
+  Row 364: Standing Calf Raise (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01081201-Barbell-Standing-Leg-Calf-Raise_Calves.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01081101-Barbell-Standing-Leg-Calf-Raise_Calf_small_thumbnail@3x.jpg
+  Row 365: Standing Calf Raise (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04171201-Dumbbell-Standing-Calf-Raise_Calves.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04171201-Dumbbell-Standing-Calf-Raise_Calves_thumbnail@3x.jpg
+  Row 366: Standing Calf Raise (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06051201-Lever-Standing-Calf-Raise_Calves.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06051201-Lever-Standing-Calf-Raise_Calves_thumbnail@3x.jpg
+  Row 367: Standing Calf Raise (Smith)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/11641201-Smith-Calf-Raise-(version-2)_Calves.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/11641101-Smith-Calf-Raise-(version-2)_Calves_small_thumbnail_@3x.jpg
+  Row 368: Standing Leg Curls
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/51811201-Lever-Standing-Single-Leg-Curl-(plate-loaded)_Thig.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/51811201-Lever-Standing-Single-Leg-Curl-(plate-loaded)_Thig_thumbnail_@3x.jpg
+  Row 369: Standing Military Press (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/11651201-Barbell-Standing-Military-Press-(without-rack)_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/11651201-Barbell-Standing-Military-Press-(without-rack)_Shoulders_thumbnail@3x.jpg
+  Row 370: Step Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/94901201-Step-Up-on-Box_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/94901201-Step-Up-on-Box_Thighs_thumbnail_@3x.jpg
+  Row 371: Sternum Pull up (Gironda)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04661201-Sternum-Pull-up-(Gironda)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04661201-Sternum-Pull-up-(Gironda)_Back_thumbnail_@3x.jpg
+  Row 372: Straight Arm Lat Pulldown (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02381201-Cable-Straight-Arm-Pulldown_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02381201-Cable-Straight-Arm-Pulldown_Back_thumbnail@3x.jpg
+  Row 373: Straight Leg Deadlift
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01161201-Barbell-Straight-Leg-Deadlift_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01161201-Barbell-Straight-Leg-Deadlift_Thighs_thumbnail@3x.jpg
+  Row 374: Sumo Deadlift
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01171201-Barbell-Sumo-Deadlift_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01171201-Barbell-Sumo-Deadlift_Hips_thumbnail@3x.jpg
+  Row 375: Sumo Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10641201-Sumo-Squat-(male)_Thighs-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10641201-Sumo-Squat-(male)_Thighs-FIX__thumbnail_@3x.jpg
+  Row 376: Sumo Squat (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10631201-Barbell-sumo-squat_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10631201-Barbell-sumo-squat_Thighs_thumbnail@3x.jpg
+  Row 377: Sumo Squat (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/23221201-Dumbbell-Sumo-Squat-(female)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/23221201-Dumbbell-Sumo-Squat-(female)_Thighs__thumbnail_@3x.jpg
+  Row 378: Sumo Squat (Kettlebell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/50731201-Kettlebell-Sumo-Squat-(VERSION-2)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/50731201-Kettlebell-Sumo-Squat-(VERSION-2)_Hips_thumbnail_@3x.jpg
+  Row 379: Superman
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/68861201-Superman-Hold-(male)_Hips_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/68861201-Superman-Hold-(male)_Hips_thumbnail_@3x.jpg
+  Row 380: T Bar Row
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/06061201-Lever-T-bar-Row-(plate-loaded)_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/06061201-Lever-T-bar-Row-(plate-loaded)_Back_thumbnail@3x.jpg
+  Row 381: Thruster (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/33051201-Barbell-Thruster_Weightlifting_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/33051201-Barbell-Thruster_Weightlifting_thumbnail_@3x.jpg
+  Row 382: Thruster (Kettlebell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/05501201-Kettlebell-Thruster_Shoulders-FIX_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/05501101-Kettlebell-Thruster_Shoulders_small_thumbnail@3x.jpg
+  Row 383: Toe Touch
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/52751201-Lying-Toe-Touch_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/52751201-Lying-Toe-Touch_Waist_thumbnail_@3x.jpg
+  Row 384: Toes to Bar
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04741201-Hanging-Straight-Leg-Hip-Raise_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04741201-Hanging-Straight-Leg-Hip-Raise_Waist_thumbnail@3x.jpg
+  Row 385: Torso Rotation
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/100651201-Lever-Torso-Rotation-(male)_Waist_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/100651201-Lever-Torso-Rotation-(male)_Waist_thumbnail_@3x.jpg
+  Row 386: Treadmill
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/21971201-Run-on-Treadmill-(female)_Cardio.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/21971201-Run-on-Treadmill-(female)_Cardio_thumbnail@3x.jpg
+  Row 387: Triceps Dip
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08141201-Triceps-Dip_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08141201-Triceps-Dip_Upper-Arms_thumbnail@3x.jpg
+  Row 388: Triceps Dip (Assisted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00191201-Assisted-Triceps-Dip-(kneeling)_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00191201-Assisted-Triceps-Dip-(kneeling)_Upper-Arms_thumbnail@3x.jpg
+  Row 389: Triceps Dip (Weighted)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/17551201-Weighted-Tricep-Dips_Upper-Arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/17551201-Weighted-Tricep-Dips_Upper-Arms_thumbnail_@3x.jpg
+  Row 390: Triceps Extension (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/00921201-Barbell-Seated-Overhead-Triceps-Extension_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/00921201-Barbell-Seated-Overhead-Triceps-Extension_Upper-Arms_thumbnail@3x.jpg
+  Row 391: Triceps Extension (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01491201-Cable-Alternate-Triceps-Extension_Upper-Arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01491201-Cable-Alternate-Triceps-Extension_Upper-Arms_thumbnail_@3x.jpg
+  Row 392: Triceps Extension (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04301201-Dumbbell-Standing-Triceps-Extension_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04301201-Dumbbell-Standing-Triceps-Extension_Upper-Arms_thumbnail@3x.jpg
+  Row 393: Triceps Extension (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/10331201-Lever-Triceps-Extension_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/10331201-Lever-Triceps-Extension_Upper-Arms_thumbnail@3x.jpg
+  Row 394: Triceps Extension (Suspension)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/58761201-Suspension-Triceps-Extension-(male)_Upper-Arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/58761201-Suspension-Triceps-Extension-(male)_Upper-Arms_thumbnail_@3x.jpg
+  Row 395: Triceps Kickback (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/45661201-Cable-Neutral-Grip-Kickback_Upper-arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/45661101-Cable-Neutral-Grip-Kickback_Upper-arms_small_thumbnail_@3x.jpg
+  Row 396: Triceps Kickback (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/03331201-Dumbbell-Kickback_Upper-Arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/03331201-Dumbbell-Kickback_Upper-Arms_thumbnail@3x.jpg
+  Row 397: Triceps Pressdown
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/16051201-Cable-Triceps-Pushdown-(SZ-bar)_Upper-arms.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/16051201-Cable-Triceps-Pushdown-(SZ-bar)_Upper-arms_thumbnail_@3x.jpg
+  Row 398: Upright Row (Barbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/01211201-Barbell-Upright-Row_Shoulders.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/01211201-Barbell-Upright-Row_Shoulders_thumbnail@3x.jpg
+  Row 399: Upright Row (Cable)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/02461201-Cable-Upright-Row_shoulder.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/02461201-Cable-Upright-Row_shoulder_thumbnail@3x.jpg
+  Row 400: Upright Row (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04371201-Dumbbell-Upright-Row_shoulder.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04371201-Dumbbell-Upright-Row_shoulder_thumbnail@3x.jpg
+  Row 401: V Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08251201-V-up_Waist.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08251201-V-up_Waist_thumbnail@3x.jpg
+  Row 402: Vertical Traction (Machine)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/71791201-Lever-Cross-Lat-Pulldown-(VERSION-2)-(male)_Back_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/71791201-Lever-Cross-Lat-Pulldown-(VERSION-2)-(male)_Back_thumbnail_@3x.jpg
+  Row 403: Waiter Curl (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/52011201-Dumbbell-Waiter-Biceps-Curl_Upper-Arms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/52011201-Dumbbell-Waiter-Biceps-Curl_Upper-Arms_thumbnail_@3x.jpg
+  Row 404: Walking Lunge
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/14601201-Walking-Lunge-Male_Hips.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/14601201-Walking-Lunge-Male_Hips_thumbnail@3x.jpg
+  Row 405: Walking Lunge (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/15571201-Dumbbell-Walking-Lunges_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/15571201-Dumbbell-Walking-Lunges_Thighs___thumbnail_@3x.png
+  Row 406: Wall Ball
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/51611201-Medicine-Ball-Throw-Squat-with-Wall_Shoulders_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/51611201-Medicine-Ball-Throw-Squat-with-Wall_Shoulders_thumbnail_@3x.jpg
+  Row 407: Wall Sit
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/66961201-Sit-(wall)-(female)_Thighs_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/66961201-Sit-(wall)-(female)_Thighs_thumbnail_@3x.jpg
+  Row 408: Wide Pull Up
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/14291201-Wide-Grip-Pull-Up_Back.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/14291201-Wide-Grip-Pull-Up_Back_thumbnail@3x.jpg
+  Row 409: Wide-Elbow Triceps Press (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04361201-Dumbbell-Tate-Press_Triceps.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04361201-Dumbbell-Tate-Press_Triceps_thumbnail_@3x.jpg
+  Row 410: Wrist Roller
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/08591201-Wrist-Roller_Forearms_.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/08591101-Wrist-Roller_Forearms_small_thumbnail@3x.jpg
+  Row 411: Zercher Squat
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/15451201-Barbell-full-Zercher-Squat_Thighs.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/15451101-Barbell-full-Zercher-Squat_Thighs_small_thumbnail@3x.jpg
+  Row 412: Zottman Curl (Dumbbell)
+    video: https://d2l9nsnmtah87f.cloudfront.net/exercise-assets/04391201-Dumbbell-Zottman-Curl_Upper-Arms-FIX.mp4
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/exercise-thumbnails/04391201-Dumbbell-Zottman-Curl_Upper-Arms-FIX_thumbnail@3x.jpg
+  Row 421: Side Lying External Rotation
+    video: None
+    thumb: https://d2l9nsnmtah87f.cloudfront.net/profile-images/ar336-cbc1b643-2436-412e-a8f3-af0f83e064d3.jpg
+
+=== CURRENT CSV ANALYSIS ===
+Total rows: 430
+HTTP URLs: 0
+Local paths: 406
+None/empty: 24
+
+=== FILES ON DISK ===
+Total files: 819
+Videos (.mp4): 406
+Thumbnails (.jpg/.png): 413

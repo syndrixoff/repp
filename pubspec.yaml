@@ -1,0 +1,78 @@
+name: repp
+description: "Repp - Workout Tracker & Exercise Library"
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # UI & Icons
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.0.10+1
+
+  # State Management
+  provider: ^6.1.2
+
+  # Local Database
+  sqflite: ^2.4.2
+  path: ^1.9.1
+  path_provider: ^2.1.5
+
+  # AI & Multimodal Local Inference (Genkit Flutter Gemma)
+  genkit_flutter_gemma: ^0.6.0
+  flutter_gemma: ^1.7.0
+  flutter_gemma_litertlm: ^1.6.1
+  genkit: ^0.16.1
+  background_downloader: ^9.5.9
+  google_mlkit_pose_detection: ^0.16.1
+  camera: ^0.12.1
+  record: ^7.1.1
+  just_audio: ^0.10.6
+  permission_handler: ^13.0.1
+  device_info_plus: ^13.2.0
+  crypto: ^3.0.6
+
+  # CSV Parsing
+  csv: ^6.0.0
+
+  # Media
+  video_player: ^2.9.3
+
+  # Charts for Progress Tracking
+  fl_chart: ^0.70.2
+
+  # Date & Time
+  intl: ^0.20.2
+
+  # UUID for unique IDs
+  uuid: ^4.5.1
+
+  # Shared Preferences for settings
+  shared_preferences: ^2.3.5
+  flutter_markdown: ^0.7.7+1
+  image_picker: ^1.2.3
+  http: ^1.6.0
+  html: ^0.15.7
+  speech_to_text: ^7.4.0
+  flutter_tts: ^4.2.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  generate: true
+  uses-material-design: true
+
+  assets:
+    - assets/data/
+    - assets/media/exercises/
+    - assets/pose_templates/

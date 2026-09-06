@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Hevy Exercise Scraper",
+  "version": "1.0",
+  "description": "Scrapes exercise data from Hevy.com",
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://hevy.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://hevy.com/exercise*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Scrape Hevy Exercises"
+  }
+}
