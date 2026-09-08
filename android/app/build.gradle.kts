@@ -40,6 +40,16 @@ kotlin {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
+
+    packaging {
+        jniLibs {
+            // onnxruntime ships twice: the onnxruntime plugin's bundled copy
+            // and the vad package's onnxruntime-android 1.22.0. The ORT C API
+            // is backward compatible by design, so keep one (the newer one
+            // wins ordering-independently for our API-versioned calls).
+            pickFirsts.add("lib/**/libonnxruntime.so")
+        }
+    }
 }
 
 flutter {
