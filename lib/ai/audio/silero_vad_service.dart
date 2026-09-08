@@ -40,6 +40,9 @@ class SileroVadService {
   bool _isLiveListening = false;
   bool get isLiveListening => _isLiveListening;
 
+  String? lastError;
+  String? get error => lastError;
+
   // Context for manual chunk evaluation
   Float32List _context = Float32List(contextSize);
 
@@ -57,15 +60,35 @@ class SileroVadService {
   void Function(Uint8List utterancePcm)? onSpeechEnd;
   void Function(double probability, double soundLevel)? onFrameEvaluated;
 
-  final StreamController<double> _probController = StreamController<double>.broadcast();
+  StreamController<double> _probController = StreamController<double>.broadcast();
   Stream<double> get speechProbabilityStream => _probController.stream;
 
-  final StreamController<bool> _speakingStateController = StreamController<bool>.broadcast();
+  StreamController<bool> _speakingStateController = StreamController<bool>.broadcast();
   Stream<bool> get speakingStateStream => _speakingStateController.stream;
 
+  void _ensureControllers() {
+    if (_probController.isClosed) {
+      _probController = StreamController<double>.broadcast();
+    }
+    if (_speakingStateController.isClosed) {
+      _speakingStateController = StreamController<bool>.broadcast();
+    }
+  }
+
+  void _safeAddProb(double prob) {
+    if (!_probController.isClosed) _probController.add(prob);
+  }
+
+  void _safeAddSpeaking(bool speaking) {
+    if (!_speakingStateController.isClosed) {
+      _speakingStateController.add(speaking);
+    }
+  }
+
   Future<void> initialize() async {
-    if (_initialized) return;
-    _initialized = true;
+    if (_initialized && _vadHandler != null) return;
+    _ensureControllers();
+    lastError = null;
 
     resetState();
 
@@ -74,20 +97,20 @@ class SileroVadService {
 
       _subStart = _vadHandler!.onSpeechStart.listen((_) {
         _isSpeaking = true;
-        _speakingStateController.add(true);
+        _safeAddSpeaking(true);
         onSpeechStart?.call();
       });
 
       _subFrame = _vadHandler!.onFrameProcessed.listen((frameData) {
         final prob = frameData.isSpeech;
-        _probController.add(prob);
+        _safeAddProb(prob);
         final level = prob >= defaultSpeechThreshold ? prob : 0.0;
         onFrameEvaluated?.call(prob, level);
       });
 
       _subEnd = _vadHandler!.onSpeechEnd.listen((samples) {
         _isSpeaking = false;
-        _speakingStateController.add(false);
+        _safeAddSpeaking(false);
         onSpeechEndSamples?.call(samples);
 
         // Convert Float samples [-1.0, 1.0] to 16kHz 16-bit PCM bytes
@@ -105,15 +128,21 @@ class SileroVadService {
       });
 
       debugPrint('[SileroVadService] VadHandler initialized (Option 2: Local Assets).');
+      _initialized = true;
     } catch (e) {
+      lastError = e.toString();
       debugPrint('[SileroVadService] Error creating VadHandler: $e');
+      _initialized = false;
     }
   }
 
   /// Starts live listening using Silero V5 ONNX loaded offline from assets/models/
   Future<bool> startLiveDetection() async {
     await initialize();
-    if (_vadHandler == null) return false;
+    if (_vadHandler == null) {
+      lastError ??= 'VAD handler unavailable';
+      return false;
+    }
 
     try {
       await _vadHandler!.startListening(
@@ -126,6 +155,7 @@ class SileroVadService {
       debugPrint('[SileroVadService] Live Silero V5 detection active via assets/models/silero_vad_v5.onnx');
       return true;
     } catch (e) {
+      lastError = e.toString();
       debugPrint('[SileroVadService] Failed to start live VAD: $e');
       return false;
     }
@@ -188,7 +218,7 @@ class SileroVadService {
     // 2. Speech State Machine with Hangover Debounce
     _handleSpeechStateTransition(prob, pcmBytes, acousticMetrics.rmsEnergy);
 
-    _probController.add(prob);
+    _safeAddProb(prob);
     onFrameEvaluated?.call(prob, acousticMetrics.normalizedLevel);
 
     return prob;
@@ -206,7 +236,7 @@ class SileroVadService {
 
       if (!_isSpeaking && _consecutiveSpeechChunks >= onsetMinSpeechChunks) {
         _isSpeaking = true;
-        _speakingStateController.add(true);
+        _safeAddSpeaking(true);
         debugPrint('[SileroVadService] SPEECH START (Prob: ${prob.toStringAsFixed(2)}, Energy: ${energy.toStringAsFixed(3)})');
         onSpeechStart?.call();
       }
@@ -222,7 +252,7 @@ class SileroVadService {
 
         if (_consecutiveSilenceChunks >= hangoverChunkCount) {
           _isSpeaking = false;
-          _speakingStateController.add(false);
+          _safeAddSpeaking(false);
           debugPrint('[SileroVadService] SPEECH END: Utterance length: ${_utterancePcmBuffer.length} bytes');
 
           final completedUtterance = _utterancePcmBuffer.takeBytes();
@@ -296,14 +326,26 @@ class SileroVadService {
   void dispose() {
     stopLiveDetection();
     _subStart?.cancel();
+    _subStart = null;
     _subRealStart?.cancel();
+    _subRealStart = null;
     _subFrame?.cancel();
+    _subFrame = null;
     _subEnd?.cancel();
+    _subEnd = null;
     _subErr?.cancel();
+    _subErr = null;
     _vadHandler?.dispose();
     _vadHandler = null;
-    _probController.close();
-    _speakingStateController.close();
+    _initialized = false;
+    // NOTE: broadcast controllers are intentionally left open so the
+    // singleton can be re-initialized after the 5-min voice unload.
+    // Call disposeControllers() only on full app shutdown.
+  }
+
+  void disposeControllers() {
+    if (!_probController.isClosed) _probController.close();
+    if (!_speakingStateController.isClosed) _speakingStateController.close();
   }
 }
 

@@ -93,10 +93,20 @@ class QwenTtsBridge(private val context: Context) : MethodChannel.MethodCallHand
                     executor.execute {
                         try {
                             val pcm = nativeSynthesize(text, voicePrompt)
-                            result.success(pcm)
+                            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                                try {
+                                    result.success(pcm)
+                                } catch (e: Exception) {
+                                    Log.w(TAG, "Failed to deliver synthesize result: ${e.message}")
+                                }
+                            }
                         } catch (e: Exception) {
                             Log.e(TAG, "Native synthesize error: ${e.message}")
-                            result.success(null)
+                            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                                try {
+                                    result.success(null)
+                                } catch (_: Exception) {}
+                            }
                         }
                     }
                 } else {

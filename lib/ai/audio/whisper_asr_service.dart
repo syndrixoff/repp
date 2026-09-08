@@ -17,12 +17,15 @@ class WhisperAsrService {
   bool _initialized = false;
   bool get isLoaded => _engine != null;
 
+  String? lastError;
+  String? get error => lastError;
+
   bool _isRecognizing = false;
   bool get isRecognizing => _isRecognizing;
 
   Future<void> initialize() async {
     if (_initialized && _engine != null) return;
-    _initialized = true;
+    lastError = null;
 
     try {
       final asrFile = await ModelDownloadService().asrFile;
@@ -31,13 +34,19 @@ class WhisperAsrService {
           asrFile.path,
           config: const WhisperConfig(useGpu: true),
         );
+        _initialized = true;
         debugPrint('[WhisperAsrService] whisper.cpp engine loaded from ${asrFile.path}');
       } else {
+        lastError = 'Whisper model missing at ${asrFile.path} — download ASR step first';
         debugPrint('[WhisperAsrService] Whisper model file not found at ${asrFile.path}');
+        _engine = null;
+        _initialized = false;
       }
     } catch (e) {
+      lastError = e.toString();
       debugPrint('[WhisperAsrService] whisper.cpp engine load notice: $e');
       _engine = null;
+      _initialized = false;
     }
   }
 
@@ -66,13 +75,17 @@ class WhisperAsrService {
   /// Transcribes Float32 16kHz mono audio via whisper.cpp
   Future<String> transcribeFloat32(Float32List floatSamples) async {
     if (floatSamples.isEmpty) return '';
+    if (_isRecognizing) {
+      debugPrint('[WhisperAsrService] Already recognizing — dropping overlapping request.');
+      return '';
+    }
 
     if (_engine == null) {
       await initialize();
     }
 
     if (_engine == null) {
-      debugPrint('[WhisperAsrService] whisper.cpp engine not loaded. Returning empty transcript.');
+      debugPrint('[WhisperAsrService] whisper.cpp engine not loaded (${lastError ?? 'unknown'}). Returning empty transcript.');
       return '';
     }
 

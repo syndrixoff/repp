@@ -78,6 +78,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
         await provider.send(
           prompt,
           imageBytes: img != null ? [img] : null,
+          onChunk: onChunk,
         );
       },
     );
@@ -198,7 +199,14 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
       _liveSpokenText = '';
       _currentSoundLevel = 0.0;
     });
-    await _omniController.startDuplexMode();
+    final ok = await _omniController.startDuplexMode();
+    if (!ok && mounted) {
+      setState(() => _isOmniVoiceActive = false);
+      final err = _omniController.error ?? 'Could not start voice mode';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(err)),
+      );
+    }
   }
 
   Future<void> _speak(String messageId, String text) async {
@@ -1411,7 +1419,13 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
                     await _omniController.stopDuplexMode();
                     if (mounted) setState(() => _isListening = false);
                   } else {
-                    await _omniController.startDuplexMode();
+                    final ok = await _omniController.startDuplexMode();
+                    if (!ok && context.mounted) {
+                      final err = _omniController.error ?? 'Could not start voice mode';
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(err)),
+                      );
+                    }
                   }
                 },
                 child: Container(

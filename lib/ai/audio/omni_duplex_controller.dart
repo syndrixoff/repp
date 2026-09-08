@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'speech_normalizer_service.dart';
 import 'silero_vad_service.dart';
 import 'whisper_asr_service.dart';
@@ -32,18 +33,45 @@ class OmniDuplexController {
   OmniDuplexState get state => _state;
 
   bool isTtsMuted = false;
+  String? lastError;
+  String? get error => lastError;
+  bool _wired = false;
 
-  final StreamController<OmniDuplexState> _stateController =
+  StreamController<OmniDuplexState> _stateController =
       StreamController<OmniDuplexState>.broadcast();
   Stream<OmniDuplexState> get stateStream => _stateController.stream;
 
-  final StreamController<double> _soundLevelController =
+  StreamController<double> _soundLevelController =
       StreamController<double>.broadcast();
   Stream<double> get soundLevelStream => _soundLevelController.stream;
 
-  final StreamController<String> _liveSpokenTextController =
+  StreamController<String> _liveSpokenTextController =
       StreamController<String>.broadcast();
   Stream<String> get liveSpokenTextStream => _liveSpokenTextController.stream;
+
+  void _ensureControllers() {
+    if (_stateController.isClosed) {
+      _stateController = StreamController<OmniDuplexState>.broadcast();
+    }
+    if (_soundLevelController.isClosed) {
+      _soundLevelController = StreamController<double>.broadcast();
+    }
+    if (_liveSpokenTextController.isClosed) {
+      _liveSpokenTextController = StreamController<String>.broadcast();
+    }
+  }
+
+  void _safeAddState(OmniDuplexState s) {
+    if (!_stateController.isClosed) _stateController.add(s);
+  }
+
+  void _safeAddLevel(double v) {
+    if (!_soundLevelController.isClosed) _soundLevelController.add(v);
+  }
+
+  void _safeAddText(String v) {
+    if (!_liveSpokenTextController.isClosed) _liveSpokenTextController.add(v);
+  }
 
   final List<String> _pendingUtterances = [];
   Timer? _coalesceDispatchTimer;
@@ -58,7 +86,10 @@ class OmniDuplexController {
   void initialize({
     required Future<void> Function(String prompt, void Function(String chunk) onChunk) sendPromptHandler,
   }) {
+    _ensureControllers();
     onSendPrompt = sendPromptHandler;
+    if (_wired) return;
+    _wired = true;
 
     _tts.onSpeakingStateChanged = (isSpeaking) {
       if (isTtsMuted) return;
@@ -87,35 +118,26 @@ class OmniDuplexController {
       final words = await _whisper.transcribeSamples(samples);
       if (words.isNotEmpty && words != _lastProcessedUtterance) {
         _lastProcessedUtterance = words;
-        _liveSpokenTextController.add(words);
+        _safeAddText(words);
         _enqueueUserUtterance(words);
       } else if (_state == OmniDuplexState.userSpeaking) {
         _setState(OmniDuplexState.listening);
       }
     };
 
-    _vad.onSpeechEnd = (utterancePcm) async {
-      debugPrint('[OmniDuplex] Silero VAD detected speech end (${utterancePcm.length} bytes). Transcribing via whisper.cpp...');
-      if (_state == OmniDuplexState.idle) return;
-
-      final words = await _whisper.transcribePcm(utterancePcm);
-      if (words.isNotEmpty && words != _lastProcessedUtterance) {
-        _lastProcessedUtterance = words;
-        _liveSpokenTextController.add(words);
-        _enqueueUserUtterance(words);
-      } else if (_state == OmniDuplexState.userSpeaking) {
-        _setState(OmniDuplexState.listening);
-      }
-    };
+    // NOTE: onSpeechEnd (PCM-bytes variant) intentionally NOT wired.
+    // SileroVadService fires both onSpeechEndSamples + onSpeechEnd for the
+    // same utterance — wiring both caused double transcription + duplicate
+    // prompts. Single path (float samples) keeps one transcript per turn.
 
     _vad.onFrameEvaluated = (probability, soundLevel) {
       if (_state == OmniDuplexState.userSpeaking) {
-        _soundLevelController.add(soundLevel);
+        _safeAddLevel(soundLevel);
       } else if (_state == OmniDuplexState.listening) {
         if (probability >= SileroVadService.defaultSpeechThreshold) {
-          _soundLevelController.add(soundLevel);
+          _safeAddLevel(soundLevel);
         } else {
-          _soundLevelController.add(0.0);
+          _safeAddLevel(0.0);
         }
       }
     };
@@ -124,11 +146,28 @@ class OmniDuplexController {
   void _setState(OmniDuplexState newState) {
     if (_state == newState) return;
     _state = newState;
-    _stateController.add(_state);
+    _safeAddState(_state);
   }
 
   Future<bool> startDuplexMode() async {
-    // 1. Cancel any active 5-minute keep-alive unload timer
+    _ensureControllers();
+    lastError = null;
+    // 1. Mic permission is mandatory — VadHandler/record cannot start without it.
+    try {
+      var mic = await Permission.microphone.status;
+      if (!mic.isGranted) {
+        mic = await Permission.microphone.request();
+      }
+      if (!mic.isGranted) {
+        lastError = 'Microphone permission denied — enable mic access to use voice mode';
+        debugPrint('[OmniDuplex] $lastError');
+        return false;
+      }
+    } catch (e) {
+      lastError = 'Mic permission check failed: $e';
+      debugPrint('[OmniDuplex] $lastError');
+      return false;
+    }
     if (_voiceUnloadTimer != null) {
       debugPrint('[OmniDuplex] Re-entering voice chat within 5 mins. Voice models are still hot!');
       _voiceUnloadTimer?.cancel();
@@ -141,12 +180,29 @@ class OmniDuplexController {
 
     await _vad.initialize();
     await _whisper.initialize();
+    try {
+      await _tts.initialize();
+    } catch (e) {
+      debugPrint('[OmniDuplex] TTS init notice: $e');
+    }
+
+    if (!_whisper.isLoaded) {
+      lastError = _whisper.error ??
+          'Whisper ASR model not ready — download the Voice Input step first';
+      debugPrint('[OmniDuplex] $lastError');
+      // Still allow VAD to start so orb/levels work, but transcription will
+      // be empty. Return false so UI can surface the missing-model state.
+      // Continue to start VAD for live feedback.
+    }
 
     final started = await _vad.startLiveDetection();
     if (!started) {
-      debugPrint('[OmniDuplex] Failed to start live Silero VAD.');
+      lastError = _vad.error ?? 'Failed to start live Silero VAD.';
+      debugPrint('[OmniDuplex] $lastError');
       return false;
     }
+
+    if (!_whisper.isLoaded) return false;
 
     _setState(OmniDuplexState.listening);
     debugPrint('[OmniDuplex] Silero V5 VAD (Option 2: Local Assets) + whisper.cpp active (Zero OS fallbacks).');
@@ -168,8 +224,8 @@ class OmniDuplexController {
     await _vad.stopLiveDetection();
     _vad.resetState();
 
-    _soundLevelController.add(0.0);
-    _liveSpokenTextController.add('');
+    _safeAddLevel(0.0);
+    _safeAddText('');
 
     // 2. Start 5-minute keep-alive grace period before unloading voice models
     _scheduleVoiceUnloadTimer();
@@ -229,7 +285,7 @@ class OmniDuplexController {
     _pendingUtterances.clear();
 
     debugPrint('[OmniDuplex] Dispatching to Gemma: "$fullPrompt"');
-    _liveSpokenTextController.add(fullPrompt);
+    _safeAddText(fullPrompt);
 
     bool isCancelled = false;
     _cancelGeneration = () {
@@ -269,12 +325,17 @@ class OmniDuplexController {
   void dispose() {
     _voiceUnloadTimer?.cancel();
     _voiceUnloadTimer = null;
-    stopDuplexMode();
+    // Fire-and-forget stop; controllers stay open for singleton reuse.
+    unawaited(stopDuplexMode());
     _vad.dispose();
     _whisper.dispose();
     _tts.dispose();
-    _stateController.close();
-    _soundLevelController.close();
-    _liveSpokenTextController.close();
+  }
+
+  void disposeControllers() {
+    if (!_stateController.isClosed) _stateController.close();
+    if (!_soundLevelController.isClosed) _soundLevelController.close();
+    if (!_liveSpokenTextController.isClosed) _liveSpokenTextController.close();
+    _vad.disposeControllers();
   }
 }

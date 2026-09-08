@@ -34,6 +34,8 @@ class Qwen3TtsService {
   bool get isNativeEngineAvailable => _nativeEngineAvailable;
 
   Future<void> initialize({String? tokenizerPath, String? talkerPath}) async {
+    // Allow re-init after soft dispose (5-min voice unload).
+    _isDisposed = false;
     if (!_initialized) {
       _initialized = true;
 
@@ -277,7 +279,18 @@ class Qwen3TtsService {
   void dispose() {
     if (_isDisposed) return;
     _isDisposed = true;
-    stop();
-    _audioPlayer.dispose();
+    // Soft dispose: stop playback + clear queue but keep AudioPlayer alive
+    // so the singleton can be re-initialized on next voice session.
+    unawaited(stop());
+    _initialized = false;
+    _engineInitialized = false;
+    _nativeEngineAvailable = false;
+  }
+
+  void disposePlayer() {
+    dispose();
+    try {
+      _audioPlayer.dispose();
+    } catch (_) {}
   }
 }
