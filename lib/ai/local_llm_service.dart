@@ -529,7 +529,20 @@ class ModelDownloadService {
 
   Future<File> getEntryFile(LiteRtModelEntry entry) async {
     final d = await entryDir(entry);
-    return File('${d.path}/${entry.filename}');
+    final fresh = File('${d.path}/${entry.filename}');
+    // Legacy fallback: on devices that deny the move (no all-files access),
+    // keep using the valid flat-layout file instead of re-downloading GBs.
+    try {
+      if (!await fresh.exists()) {
+        final models = await modelDir;
+        final legacy = File('${models.path}/${entry.filename}');
+        if (await legacy.exists() &&
+            await legacy.length() >= (entry.sizeBytes * 0.95)) {
+          return legacy;
+        }
+      }
+    } catch (_) {}
+    return fresh;
   }
 
   /// Per-model subfolder: models/gemma-4-e2b/, models/moonshine-tiny/, …
@@ -978,7 +991,9 @@ class ModelDownloadService {
         final dir = await modelDir;
         final sttDir = Directory('${dir.path}/moonshine-tiny');
         if (!await sttDir.exists()) await sttDir.create(recursive: true);
-        // Migrate legacy flat files into the subfolder.
+        // Migrate legacy flat files into the subfolder (best-effort: on
+        // devices without all-files access the move fails and callers
+        // below fall back to the legacy flat paths).
         for (final legacyName in [
           'moonshine_tiny_5s_f32.tflite',
           'moonshine_tiny_tokenizer.json',
@@ -991,10 +1006,25 @@ class ModelDownloadService {
             }
           } catch (_) {}
         }
-        final modelFile = File(
-          '${sttDir.path}/moonshine_tiny_5s_f32.tflite',
+        Future<File> sttLocal(String name, int minBytes) async {
+          final fresh = File('${sttDir.path}/$name');
+          try {
+            if (await fresh.exists() && await fresh.length() >= minBytes) {
+              return fresh;
+            }
+            final legacy = File('${dir.path}/$name');
+            if (await legacy.exists() && await legacy.length() >= minBytes) {
+              return legacy;
+            }
+          } catch (_) {}
+          return fresh;
+        }
+
+        final modelFile = await sttLocal(
+          'moonshine_tiny_5s_f32.tflite',
+          (109373140 * 0.95).round(),
         );
-        final tokFile = File('${sttDir.path}/moonshine_tiny_tokenizer.json');
+        final tokFile = await sttLocal('moonshine_tiny_tokenizer.json', 1024);
         const modelBytes = 109373140;
         await _fetchUrl(
           WhisperAsrService.modelUrl,

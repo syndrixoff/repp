@@ -173,7 +173,17 @@ class S1CleanupService {
         done += spec.sizeBytes;
         onProgress?.call(done, totalBytes);
         if (!await _verifyFile(spec)) {
-          lastError = 'SHA256 mismatch after download: ${spec.name}';
+          final bad = await fileFor(spec);
+          var detail = 'missing';
+          try {
+            if (await bad.exists()) {
+              final len = await bad.length();
+              final digest = await sha256.bind(bad.openRead()).first;
+              detail = 'len=$len sha=$digest';
+            }
+          } catch (_) {}
+          lastError =
+              'SHA256 mismatch after download: ${spec.name} ($detail, want sha=${spec.sha256})';
           debugPrint('[S1CleanupService] $lastError');
           return false;
         }
