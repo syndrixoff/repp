@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import '../local_llm_service.dart';
+import 'crisp_tts_service.dart';
 
 /// Qwen3-TTS On-Device Speech Synthesis Service.
 /// Communicates with native Qwen3-TTS engine via MethodChannel and streams
@@ -180,9 +181,15 @@ class Qwen3TtsService {
     final sentence = _sentenceQueue.removeAt(0);
 
     try {
-      // 1. Synthesize audio via native Qwen3-TTS / Android bridge
+      // 1. Preferred: crispasr TTS (TTS-only engine, Qwen3-TTS GGUF pair).
+      // 2. Legacy: native Qwen3-TTS Android bridge (stub .so for now).
       Uint8List? pcmBytes;
-      if (Platform.isAndroid) {
+      try {
+        pcmBytes = await CrispTtsService().synthesizePcm(sentence);
+      } catch (e) {
+        debugPrint('[Qwen3TtsService] crispasr TTS notice: $e');
+      }
+      if ((pcmBytes == null || pcmBytes.isEmpty) && Platform.isAndroid) {
         final result = await _channel.invokeMethod<Uint8List>('synthesize', {
           'text': sentence,
           'voicePrompt': gymTrainerVoicePrompt,
@@ -193,7 +200,7 @@ class Qwen3TtsService {
       if (pcmBytes != null && pcmBytes.isNotEmpty) {
         await _playPcmBytes(pcmBytes);
       } else {
-        debugPrint('[Qwen3TtsService] Native synthesis returned null. 0 fallbacks allowed.');
+        debugPrint('[Qwen3TtsService] Both crispasr + native synthesis unavailable — skipping sentence.');
         _isPlaying = false;
         _playNext();
       }
@@ -282,6 +289,9 @@ class Qwen3TtsService {
     // Soft dispose: stop playback + clear queue but keep AudioPlayer alive
     // so the singleton can be re-initialized on next voice session.
     unawaited(stop());
+    try {
+      CrispTtsService().dispose();
+    } catch (_) {}
     _initialized = false;
     _engineInitialized = false;
     _nativeEngineAvailable = false;

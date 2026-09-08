@@ -7,6 +7,7 @@ import 'package:repp/ai/audio/silero_vad_service.dart';
 import 'package:repp/ai/audio/whisper_asr_service.dart';
 import 'package:repp/ai/audio/omni_duplex_controller.dart';
 import 'package:repp/ai/tts/qwen3_tts_service.dart';
+import 'package:repp/ai/tts/crisp_tts_service.dart';
 import 'package:repp/ai/local_llm_service.dart';
 
 void main() {
@@ -143,6 +144,19 @@ void main() {
       tts.appendChunk('<thought>Evaluating form</thought>Keep your chest up!');
       tts.finish();
       expect(tts, isNotNull);
+    });
+  });
+
+  group('CrispTtsService tests', () {
+    final tts = CrispTtsService();
+
+    test('returns null for empty text without touching native lib', () async {
+      expect(await tts.synthesizePcm(''), isNull);
+      expect(await tts.synthesizePcm('   '), isNull);
+    });
+
+    test('singleton starts unavailable until model + native lib present', () {
+      expect(tts.isAvailable, isFalse);
     });
   });
 
