@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_gemma/flutter_gemma.dart';
-import 'speech_normalizer_service.dart';
 
 /// Automatic Speech Recognition (ASR) via the shared flutter_gemma engine
 /// (moonshine-tiny LiteRT, accelerated + iOS-capable).
@@ -19,7 +18,6 @@ class WhisperAsrService {
   /// Moonshine fixed input window: 5 s @ 16 kHz.
   static const int windowSamples = 80000;
 
-  final SpeechNormalizerService _normalizer = SpeechNormalizerService();
   SpeechRecognizer? _recognizer;
   bool _installAttempted = false;
 
@@ -118,9 +116,9 @@ class WhisperAsrService {
         if (end >= floatSamples.length) break;
       }
       final rawText = parts.join(' ').trim();
-      final normalized = _normalizer.normalize(rawText);
-      debugPrint('[WhisperAsrService] Transcribed: "$rawText" -> Normalized: "$normalized"');
-      return normalized;
+      // Raw transcript — thinking cleanup is S1's job, not regex.
+      debugPrint('[WhisperAsrService] Transcribed: "$rawText"');
+      return rawText;
     } catch (e) {
       lastError = e.toString();
       debugPrint('[WhisperAsrService] Transcription error: $e');

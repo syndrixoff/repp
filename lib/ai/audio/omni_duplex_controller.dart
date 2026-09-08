@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'speech_normalizer_service.dart';
 import 'silero_vad_service.dart';
 import 'whisper_asr_service.dart';
 import '../tts/coach_tts_service.dart';
@@ -24,7 +23,6 @@ class OmniDuplexController {
   factory OmniDuplexController() => _instance;
   OmniDuplexController._internal();
 
-  final SpeechNormalizerService _normalizer = SpeechNormalizerService();
   final CoachTtsService _tts = CoachTtsService();
   final SileroVadService _vad = SileroVadService();
   final WhisperAsrService _whisper = WhisperAsrService();
@@ -249,16 +247,17 @@ class OmniDuplexController {
   }
 
   void _enqueueUserUtterance(String rawUtterance) {
-    final normalized = _normalizer.normalize(rawUtterance);
-    if (normalized.trim().isEmpty) {
+    // Raw transcript — thinking cleanup is S1's job (see dispatch), not regex.
+    final text = rawUtterance.trim();
+    if (text.isEmpty) {
       if (_state == OmniDuplexState.userSpeaking) {
         _setState(OmniDuplexState.listening);
       }
       return;
     }
 
-    debugPrint('[OmniDuplex] Enqueueing utterance: "$normalized"');
-    _pendingUtterances.add(normalized);
+    debugPrint('[OmniDuplex] Enqueueing utterance: "$text"');
+    _pendingUtterances.add(text);
     _scheduleCoalescedDispatch();
   }
 

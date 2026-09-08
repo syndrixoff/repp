@@ -2,7 +2,6 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:repp/ai/audio/speech_normalizer_service.dart';
 import 'package:repp/ai/audio/silero_vad_service.dart';
 import 'package:repp/ai/audio/whisper_asr_service.dart';
 import 'package:repp/ai/audio/omni_duplex_controller.dart';
@@ -93,34 +92,10 @@ void main() {
   });
 
   group('SpeechNormalizerService tests', () {
-    final normalizer = SpeechNormalizerService();
-
-    test('normalizes phonetic RPE terms accurately', () {
-      expect(normalizer.normalize('that was our p e 8'), 'That was RPE 8');
-      expect(normalizer.normalize('rbe 9 bench press'), 'RPE 9 bench press');
-      expect(normalizer.normalize('rate of perceived exertion was high'), 'RPE was high');
-    });
-
-    test('normalizes AMRAP and rep maxes', () {
-      expect(normalizer.normalize('do an am rap set'), 'Do an AMRAP set');
-      expect(normalizer.normalize('my one rep max is 100 kilos'), 'My 1RM is 100 kg');
-      expect(normalizer.normalize('3 rep max deadlift'), '3RM deadlift');
-    });
-
-    test('strips filler words and cleans whitespace', () {
-      expect(
-        normalizer.normalize('um i did uh 3 sets of 10'),
-        'I did 3x10 reps',
-      );
-      expect(
-        normalizer.normalize('ah like give me dumbbell curl feedback'),
-        'Give me dumbbell curl feedback',
-      );
-    });
-
-    test('handles empty and whitespace input safely', () {
-      expect(normalizer.normalize(''), '');
-      expect(normalizer.normalize('   '), '');
+    // Regex normalizer removed — S1 (thinking cleanup) owns this now.
+    // Placeholder keeps group structure until S1 tests land.
+    test('placeholder', () {
+      expect(true, isTrue);
     });
   });
 
