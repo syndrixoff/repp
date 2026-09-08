@@ -6,6 +6,7 @@ import 'package:genkit/genkit.dart';
 import 'package:genkit_flutter_gemma/genkit_flutter_gemma.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:background_downloader/background_downloader.dart';
+import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 import 'audio/whisper_asr_service.dart' show WhisperAsrService;
 import 'audio/s1_cleanup_service.dart' show S1CleanupService;
@@ -527,8 +528,52 @@ class ModelDownloadService {
   }
 
   Future<File> getEntryFile(LiteRtModelEntry entry) async {
-    final d = await modelDir;
+    final d = await entryDir(entry);
     return File('${d.path}/${entry.filename}');
+  }
+
+  /// Per-model subfolder: models/gemma-4-e2b/, models/moonshine-tiny/, …
+  Future<Directory> entryDir(LiteRtModelEntry entry) async {
+    final d = await modelDir;
+    final sub = _subdirFor(entry.id);
+    final dir = Directory('${d.path}/$sub');
+    if (!await dir.exists()) await dir.create(recursive: true);
+    return dir;
+  }
+
+  static String _subdirFor(String entryId) {
+    switch (entryId) {
+      case 'vlm':
+        return 'gemma-4-e2b';
+      case 'vad':
+        return 'silero-vad';
+      case 'stt':
+        return 'moonshine-tiny';
+      case 'tts':
+        return 'inflect-nano';
+      case 's1':
+        return 's1-mini-q4';
+      default:
+        return entryId;
+    }
+  }
+
+  /// One-time migration from the old flat layout (`models/<file>`) to
+  /// per-model subfolders. Moves valid files instead of re-downloading.
+  Future<void> _migrateEntryFiles(LiteRtModelEntry entry) async {
+    try {
+      final d = await modelDir;
+      final target = await entryDir(entry);
+      final fresh = File('${target.path}/${entry.filename}');
+      if (await fresh.exists()) return;
+      final legacy = File('${d.path}/${entry.filename}');
+      if (await legacy.exists()) {
+        await legacy.rename(fresh.path);
+        debugPrint('[ModelDownloadService] Migrated ${entry.id} to subfolder.');
+      }
+    } catch (e) {
+      debugPrint('[ModelDownloadService] Migration notice: $e');
+    }
   }
 
   /// Core VLM model file (Gemma 4 only, zero fallbacks)
@@ -605,9 +650,9 @@ class ModelDownloadService {
 
   /// True if the full suite (core file + bundled + engine-managed) is ready
   Future<bool> isFullSuiteDownloaded() async {
-    final targetDir = await modelDir;
     for (final e in suiteEntries) {
       if (e.isBundled) continue;
+      await _migrateEntryFiles(e);
       if (e.isEngineManaged) {
         if (!await isEngineEntryReady(e)) return false;
         continue;
@@ -616,7 +661,7 @@ class ModelDownloadService {
         if (!await S1CleanupService().isReady()) return false;
         continue;
       }
-      final f = File('${targetDir.path}/${e.filename}');
+      final f = await getEntryFile(e);
       if (!await f.exists()) return false;
       final len = await _getFileBytes(f);
       if (len < (e.sizeBytes * 0.95)) return false;
@@ -649,7 +694,6 @@ class ModelDownloadService {
 
     await init();
 
-    final targetDir = await modelDir;
     int totalOnDisk = 0;
     bool allValid = true;
 
@@ -659,6 +703,7 @@ class ModelDownloadService {
         totalOnDisk += e.sizeBytes;
         continue;
       }
+      await _migrateEntryFiles(e);
       if (e.isEngineManaged) {
         final ready = await isEngineEntryReady(e);
         final len = ready ? e.sizeBytes : 0;
@@ -675,7 +720,7 @@ class ModelDownloadService {
         if (!ready) allValid = false;
         continue;
       }
-      final f = File('${targetDir.path}/${e.filename}');
+      final f = await getEntryFile(e);
       int len = 0;
       try {
         if (await f.exists()) {
@@ -863,6 +908,7 @@ class ModelDownloadService {
         await _installS1Entry(entry);
         return;
       }
+      await _migrateEntryFiles(entry);
       final file = await getEntryFile(entry);
       final exists = await file.exists();
       final len = exists ? await file.length() : 0;
@@ -925,26 +971,56 @@ class ModelDownloadService {
 
     try {
       if (entry.id == 'stt') {
-        var modelPct = 0;
-        var tokPct = 0;
-        const modelBytes = 109373140; // moonshine_tiny_5s_f32.tflite exact
-        void emit() => emitOverall(
-              ((modelPct / 100) * modelBytes +
-                      (tokPct / 100) * (entry.sizeBytes - modelBytes))
-                  .round(),
-            );
+        // STT via OUR http downloader into modelDir (proven path), then
+        // registered with the engine from local files. This avoids the
+        // engine installer's network layer, which verified 0-byte files
+        // on-device (shared background_downloader state).
+        final dir = await modelDir;
+        final sttDir = Directory('${dir.path}/moonshine-tiny');
+        if (!await sttDir.exists()) await sttDir.create(recursive: true);
+        // Migrate legacy flat files into the subfolder.
+        for (final legacyName in [
+          'moonshine_tiny_5s_f32.tflite',
+          'moonshine_tiny_tokenizer.json',
+        ]) {
+          final legacy = File('${dir.path}/$legacyName');
+          final fresh = File('${sttDir.path}/$legacyName');
+          try {
+            if (await legacy.exists() && !await fresh.exists()) {
+              await legacy.rename(fresh.path);
+            }
+          } catch (_) {}
+        }
+        final modelFile = File(
+          '${sttDir.path}/moonshine_tiny_5s_f32.tflite',
+        );
+        final tokFile = File('${sttDir.path}/moonshine_tiny_tokenizer.json');
+        const modelBytes = 109373140;
+        await _fetchUrl(
+          WhisperAsrService.modelUrl,
+          modelFile,
+          modelBytes,
+          (done, total) => emitOverall(
+            ((done / total) * modelBytes).round().clamp(0, entry.sizeBytes),
+          ),
+        );
+        await _fetchUrl(
+          WhisperAsrService.tokenizerUrl,
+          tokFile,
+          0, // tokenizer size varies by revision — accept non-empty JSON
+          (done, total) {
+            final mapped = modelBytes + done;
+            emitOverall(mapped > entry.sizeBytes ? entry.sizeBytes : mapped);
+          },
+        );
+        final tokText = await tokFile.readAsString();
+        if (!tokText.contains('"vocab"') && !tokText.contains('tokens')) {
+          throw StateError('Moonshine tokenizer failed validation');
+        }
         await FlutterGemma.installStt()
-            .modelFromNetwork(WhisperAsrService.modelUrl)
-            .tokenizerFromNetwork(WhisperAsrService.tokenizerUrl)
+            .modelFromFile(modelFile.path)
+            .tokenizerFromFile(tokFile.path)
             .ofType(SttModelType.moonshine)
-            .withModelProgress((p) {
-              modelPct = p;
-              emit();
-            })
-            .withTokenizerProgress((p) {
-              tokPct = p;
-              emit();
-            })
             .install();
       } else if (entry.id == 'tts') {
         await FlutterGemma.installTts()
@@ -1017,10 +1093,64 @@ class ModelDownloadService {
     }
   }
 
+  /// Plain-await http download with Range resume + size verify.
+  /// [expectedBytes] <= 0 skips the size check (revision-varying files).
+  Future<void> _fetchUrl(
+    String url,
+    File file,
+    int expectedBytes,
+    void Function(int done, int total)? onProgress,
+  ) async {
+    var start = 0;
+    if (await file.exists()) {
+      start = await file.length();
+      if (expectedBytes > 0 && start > expectedBytes) {
+        await file.delete();
+        start = 0;
+      } else if (expectedBytes > 0 && start == expectedBytes) {
+        onProgress?.call(expectedBytes, expectedBytes);
+        return;
+      }
+    }
+    final req = http.Request('GET', Uri.parse(url));
+    if (start > 0) req.headers['Range'] = 'bytes=$start-';
+    final client = http.Client();
+    try {
+      final resp = await client.send(req);
+      if (resp.statusCode != 200 && resp.statusCode != 206) {
+        throw HttpException('HTTP ${resp.statusCode} for $url');
+      }
+      final total = resp.contentLength != null && resp.contentLength! > 0
+          ? (resp.statusCode == 206 ? start : 0) + resp.contentLength!
+          : (expectedBytes > 0 ? expectedBytes : start + 1);
+      final sink = file.openWrite(
+        mode: start > 0 ? FileMode.append : FileMode.write,
+      );
+      var written = start;
+      onProgress?.call(written, total);
+      await for (final chunk in resp.stream) {
+        sink.add(chunk);
+        written += chunk.length;
+        onProgress?.call(written, total);
+      }
+      await sink.close();
+      if (expectedBytes > 0) {
+        final len = await file.length();
+        if ((len - expectedBytes).abs() > (expectedBytes * 0.05).ceil()) {
+          throw StateError('Size mismatch for $url: $len vs $expectedBytes');
+        }
+      } else if (await file.length() == 0) {
+        throw StateError('Empty download for $url');
+      }
+    } finally {
+      client.close();
+    }
+  }
+
   Future<void> _enqueueEntry(LiteRtModelEntry entry, {bool requireWifi = false}) async {
     try {
       _currentEntry = entry;
-      final targetDir = await modelDir;
+      final targetDir = await entryDir(entry);
       final taskId = 'repp-ai-${entry.id}';
       
       DownloadTask task = DownloadTask(

@@ -111,8 +111,18 @@ class S1CleanupService {
 
   Future<Directory> get bundleDir async {
     final models = await _modelsDir;
-    final dir = Directory('${models.path}/s1-q4');
-    if (!await dir.exists()) await dir.create(recursive: true);
+    final dir = Directory('${models.path}/s1-mini-q4');
+    if (!await dir.exists()) {
+      // Migrate the original s1-q4 folder (same files, new name).
+      final legacy = Directory('${models.path}/s1-q4');
+      try {
+        if (await legacy.exists()) {
+          await legacy.rename(dir.path);
+          return dir;
+        }
+      } catch (_) {}
+      await dir.create(recursive: true);
+    }
     return dir;
   }
 
@@ -186,6 +196,13 @@ class S1CleanupService {
     if (await file.exists()) {
       start = await file.length();
       if (start > spec.sizeBytes) {
+        await file.delete();
+        start = 0;
+      } else if (start == spec.sizeBytes) {
+        // Fully present — verify instead of requesting an unsatisfiable
+        // Range (server answers 416 when start == size). A corrupt full
+        // file fails verify below and is deleted for a fresh pull.
+        if (await _verifyFile(spec)) return;
         await file.delete();
         start = 0;
       }
