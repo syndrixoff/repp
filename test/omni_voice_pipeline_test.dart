@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:repp/ai/audio/silero_vad_service.dart';
+import 'package:repp/ai/audio/s1_cleanup_service.dart';
 import 'package:repp/ai/audio/whisper_asr_service.dart';
 import 'package:repp/ai/audio/omni_duplex_controller.dart';
 import 'package:repp/ai/tts/coach_tts_service.dart';
@@ -24,9 +25,9 @@ void main() {
   });
 
   group('ModelCatalog Suite tests', () {
-    test('contains moonshine STT and Inflect TTS engine entries (4 steps)', () {
+    test('contains moonshine STT, Inflect TTS and S1 engine entries (5 steps)', () {
       final entries = ModelDownloadService.suiteEntries;
-      expect(entries.length, 4);
+      expect(entries.length, 5);
 
       final vad = entries.firstWhere((e) => e.id == 'vad');
       expect(vad.name, contains('Silero VAD'));
@@ -43,6 +44,34 @@ void main() {
       expect(tts.name, contains('Inflect'));
       expect(tts.isEngineManaged, true);
       expect(tts.sizeBytes, 35710101);
+
+      final s1 = entries.firstWhere((e) => e.id == 's1');
+      expect(s1.name, contains('S1-mini'));
+      expect(s1.sizeBytes, 412495776);
+    });
+  });
+
+  group('S1CleanupService tests', () {
+    final s1 = S1CleanupService();
+
+    test('bundle spec lists Q4 graph + data + tokenizer + config', () {
+      expect(S1CleanupService.bundleFiles.length, 4);
+      expect(S1CleanupService.totalBytes, 412495776);
+      expect(
+        S1CleanupService.bundleFiles.map((f) => f.name),
+        containsAll([
+          'onnx/model_q4.onnx',
+          'onnx/model_q4.onnx_data',
+          'tokenizer.json',
+          'config.json',
+        ]),
+      );
+    });
+
+    test('uninstalled bundle reports not ready without network', () async {
+      // Fresh profile: no files on disk. isReady only stats files.
+      final ready = await s1.isReady();
+      expect(ready, isFalse);
     });
   });
 

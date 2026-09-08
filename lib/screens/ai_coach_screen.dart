@@ -1997,7 +1997,7 @@ class _ModelDownloadBannerState extends State<_ModelDownloadBanner>
                                       ? 'Gemma 4 E2B VLM + Moonshine + Inflect TTS'
                                       : (isDownloading
                                           ? '${prog?.currentModelName ?? "Loading..."} (${prog?.currentModelTag ?? "LiteRT"})'
-                                          : '3 On-Device Models · 2.66 GB · 100% Offline'),
+                                          : '4 On-Device Models · 3.05 GB · 100% Offline'),
                                   style: TextStyle(
                                     fontSize: 10.5,
                                     fontWeight: FontWeight.w500,
@@ -2199,7 +2199,7 @@ class _ModelDownloadBannerState extends State<_ModelDownloadBanner>
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Suite: $overallPct% (${prog?.downloadedFormatted ?? "0 MB"} / ${prog?.totalFormatted ?? "2.66 GB"})',
+                              'Suite: $overallPct% (${prog?.downloadedFormatted ?? "0 MB"} / ${prog?.totalFormatted ?? "3.05 GB"})',
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
@@ -2243,7 +2243,7 @@ class _ModelDownloadBannerState extends State<_ModelDownloadBanner>
                               Text(
                                 _showStepsDetails
                                     ? 'Hide Suite Model Details'
-                                    : 'View All 4 Model Files (VLM, VAD, STT, TTS)',
+                                    : 'View All 5 Model Files (VLM, VAD, STT, TTS, S1)',
                                 style: TextStyle(
                                   fontSize: 10.5,
                                   fontWeight: FontWeight.w600,

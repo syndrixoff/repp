@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:background_downloader/background_downloader.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'audio/whisper_asr_service.dart' show WhisperAsrService;
+import 'audio/s1_cleanup_service.dart' show S1CleanupService;
 import 'tts/gemma_speech_tts_service.dart' show GemmaSpeechTtsService;
 
 /// Multimodal input bundle for on-device Gemma 4 E2B inference
@@ -243,9 +244,21 @@ class ModelDownloadService {
       stepIndex: 4,
       isEngineManaged: true,
     ),
+    LiteRtModelEntry(
+      id: 's1',
+      name: 'S1-mini Q4 (ONNX)',
+      tag: 'Thinking Cleanup (onnxruntime)',
+      filename: 's1-q4-bundle',
+      url: 'https://huggingface.co/onnx-community/s1-mini-ONNX/resolve/main/',
+      // Exact file sum (HF blobs API): model_q4.onnx 369,635 +
+      // model_q4.onnx_data 403,007,488 + tokenizer.json 9,117,036 +
+      // config.json 1,617. SHA256-verified per file by S1CleanupService.
+      sizeBytes: 412495776, // ~394 MB bundle
+      stepIndex: 5,
+    ),
   ];
 
-  static const int estimatedTotalBytes = 2857081909; // ~2.66 GB
+  static const int estimatedTotalBytes = 3269577685; // ~3.05 GB
   static const int estimatedCoreBytes = 2708471808; // Core Gemma 4 E2B ~2.52 GB
 
   // Backward compatibility alias
@@ -563,6 +576,7 @@ class ModelDownloadService {
   Future<bool> verifyEntryIntegrity(LiteRtModelEntry entry) async {
     if (entry.isBundled) return true;
     if (entry.isEngineManaged) return isEngineEntryReady(entry);
+    if (entry.id == 's1') return S1CleanupService().isReady();
     final f = await getEntryFile(entry);
     if (!await f.exists()) return false;
     final len = await _getFileBytes(f);
@@ -596,6 +610,10 @@ class ModelDownloadService {
       if (e.isBundled) continue;
       if (e.isEngineManaged) {
         if (!await isEngineEntryReady(e)) return false;
+        continue;
+      }
+      if (e.id == 's1') {
+        if (!await S1CleanupService().isReady()) return false;
         continue;
       }
       final f = File('${targetDir.path}/${e.filename}');
@@ -649,6 +667,14 @@ class ModelDownloadService {
         if (!ready) allValid = false;
         continue;
       }
+      if (e.id == 's1') {
+        final ready = await S1CleanupService().isReady();
+        final len = ready ? e.sizeBytes : 0;
+        _downloadedBytesByEntryId[e.id] = len;
+        totalOnDisk += len;
+        if (!ready) allValid = false;
+        continue;
+      }
       final f = File('${targetDir.path}/${e.filename}');
       int len = 0;
       try {
@@ -673,8 +699,8 @@ class ModelDownloadService {
         currentFileDownloadedBytes: estimatedTotalBytes,
         currentFileTotalBytes: estimatedTotalBytes,
         progress: 1.0,
-        currentStep: 4,
-        totalSteps: 4,
+        currentStep: 5,
+        totalSteps: 5,
         currentPhase: 'All models verified on device',
         isCompleted: true,
       );
@@ -785,8 +811,8 @@ class ModelDownloadService {
         downloadedBytes: estimatedTotalBytes,
         totalBytes: estimatedTotalBytes,
         progress: 1.0,
-        currentStep: 4,
-        totalSteps: 4,
+        currentStep: 5,
+        totalSteps: 5,
         currentPhase: 'All models ready',
         isCompleted: true,
       ), immediate: true);
@@ -829,6 +855,14 @@ class ModelDownloadService {
         await _installEngineEntry(entry);
         return;
       }
+      if (entry.id == 's1') {
+        if (await S1CleanupService().isReady()) {
+          _downloadedBytesByEntryId[entry.id] = entry.sizeBytes;
+          continue;
+        }
+        await _installS1Entry(entry);
+        return;
+      }
       final file = await getEntryFile(entry);
       final exists = await file.exists();
       final len = exists ? await file.length() : 0;
@@ -851,8 +885,8 @@ class ModelDownloadService {
         currentFileDownloadedBytes: estimatedTotalBytes,
         currentFileTotalBytes: estimatedTotalBytes,
         progress: 1.0,
-        currentStep: 4,
-        totalSteps: 4,
+        currentStep: 5,
+        totalSteps: 5,
         currentPhase: 'All models ready',
         isCompleted: true,
       ),
@@ -920,6 +954,54 @@ class ModelDownloadService {
                 emitOverall(((p / 100) * entry.sizeBytes).round()))
             .install();
       }
+      _downloadedBytesByEntryId[entry.id] = entry.sizeBytes;
+      await _advanceQueue();
+    } catch (e) {
+      debugPrint('Error installing ${entry.name}: $e');
+      _isDownloading = false;
+      _statusController.add(false);
+      _emitProgress(ModelDownloadProgress(
+        downloadedBytes: _lastTotalDownloadedBytes,
+        totalBytes: estimatedTotalBytes,
+        error: e.toString(),
+        isDownloading: false,
+      ), immediate: true);
+    }
+  }
+
+  /// Installs the S1 Q4 bundle via S1CleanupService (multi-file, SHA256
+  /// per file), mapping progress into suite progress. Idempotent.
+  Future<void> _installS1Entry(LiteRtModelEntry entry) async {
+    _currentEntry = entry;
+    try {
+      final ok = await S1CleanupService().ensureInstalled(
+        onProgress: (done, total) {
+          _downloadedBytesByEntryId[entry.id] =
+              ((done / total) * entry.sizeBytes).round();
+          int grand = 0;
+          for (final e in suiteEntries) {
+            grand += _downloadedBytesByEntryId[e.id] ?? 0;
+          }
+          grand = grand.clamp(0, estimatedTotalBytes);
+          _lastTotalDownloadedBytes = grand;
+          _emitProgress(ModelDownloadProgress(
+            downloadedBytes: grand,
+            totalBytes: estimatedTotalBytes,
+            currentFileDownloadedBytes:
+                _downloadedBytesByEntryId[entry.id] ?? 0,
+            currentFileTotalBytes: entry.sizeBytes,
+            progress: (grand / estimatedTotalBytes).clamp(0.0, 1.0),
+            currentPhase:
+                'Installing ${entry.name} (${entry.stepIndex}/${suiteEntries.length})...',
+            currentModelName: entry.name,
+            currentModelTag: entry.tag,
+            currentStep: entry.stepIndex,
+            totalSteps: suiteEntries.length,
+            isDownloading: true,
+          ), immediate: true);
+        },
+      );
+      if (!ok) throw StateError(S1CleanupService().error ?? 'S1 install failed');
       _downloadedBytesByEntryId[entry.id] = entry.sizeBytes;
       await _advanceQueue();
     } catch (e) {
