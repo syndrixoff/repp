@@ -47,6 +47,8 @@ abstract class LocalLlmService {
     String? poseContext,
     bool isThinking = false,
   });
+  Future<void> warmup();
+  void unloadAllModels();
   void dispose();
 }
 
@@ -60,6 +62,7 @@ class LiteRtModelEntry {
   final int sizeBytes;
   final int stepIndex; // 1 to 5
   final bool isCore; // true for primary VLM
+  final bool isBundled; // true if packaged inside app assets (no download needed)
 
   const LiteRtModelEntry({
     required this.id,
@@ -70,9 +73,11 @@ class LiteRtModelEntry {
     required this.sizeBytes,
     required this.stepIndex,
     this.isCore = false,
+    this.isBundled = false,
   });
 
   String get sizeFormatted {
+    if (isBundled) return '2.3 MB (In-App)';
     if (sizeBytes >= 1024 * 1024 * 1024) {
       return '${(sizeBytes / (1024 * 1024 * 1024)).toStringAsFixed(2)} GB';
     }
@@ -110,7 +115,7 @@ class ModelDownloadProgress {
     this.currentModelName,
     this.currentModelTag,
     this.currentStep = 1,
-    this.totalSteps = 5,
+    this.totalSteps = 6,
     this.isDownloading = false,
     this.isCompleted = false,
     this.error,
@@ -184,26 +189,36 @@ class ModelDownloadService {
   factory ModelDownloadService() => _instance;
   ModelDownloadService._internal();
 
-  /// 4-Model LiteRT Suite Catalog (5 downloadable files)
+  /// 5-Model LiteRT Suite Catalog (6 downloadable files)
   static const List<LiteRtModelEntry> suiteEntries = [
     LiteRtModelEntry(
       id: 'vlm',
-      name: 'LFM 2.5 3B Vision-Language',
-      tag: 'Core VLM Coach',
-      filename: 'LFM2.5-VL-3B_int4.litertlm',
-      url: 'https://huggingface.co/litert-community/LFM2.5-VL-3B/resolve/main/LFM2.5-VL-3B_int4.litertlm',
-      sizeBytes: 2352027008, // ~2.35 GB
+      name: 'Gemma 4 E2B Multimodal',
+      tag: 'Core Multimodal Coach',
+      filename: 'gemma-4-E2B-it.litertlm',
+      url: 'https://huggingface.co/litert-community/gemma-4-E2B-it-litert-lm/resolve/main/gemma-4-E2B-it.litertlm',
+      sizeBytes: 2708471808, // ~2.52 GB
       stepIndex: 1,
       isCore: true,
     ),
     LiteRtModelEntry(
-      id: 'asr',
-      name: 'Whisper Base ASR',
-      tag: 'Voice Input',
-      filename: 'whisper_base_30s_i8.tflite',
-      url: 'https://huggingface.co/litert-community/whisper-base/resolve/main/whisper_base_30s_i8.tflite',
-      sizeBytes: 77012960, // ~77 MB
+      id: 'vad',
+      name: 'Silero VAD v5 (ONNX)',
+      tag: 'Voice Activity Filter (In-App)',
+      filename: 'silero_vad_v5.onnx',
+      url: '',
+      sizeBytes: 2300000, // ~2.3 MB (bundled in assets)
       stepIndex: 2,
+      isBundled: true,
+    ),
+    LiteRtModelEntry(
+      id: 'asr',
+      name: 'Whisper Tiny (whisper.cpp)',
+      tag: 'Voice Input',
+      filename: 'ggml-tiny.en.bin',
+      url: 'https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-tiny.en.bin',
+      sizeBytes: 77704715, // ~74.1 MB
+      stepIndex: 3,
     ),
     LiteRtModelEntry(
       id: 'normalizer',
@@ -212,35 +227,35 @@ class ModelDownloadService {
       filename: 'S1-mini_int8.litertlm',
       url: 'https://huggingface.co/mlboydaisuke/S1-mini-LiteRT/resolve/main/S1-mini_int8.litertlm',
       sizeBytes: 688157792, // ~688 MB
-      stepIndex: 3,
-    ),
-    LiteRtModelEntry(
-      id: 'tts_talker',
-      name: 'Qwen3-TTS Acoustic Talker',
-      tag: 'Coach Voice (TTS)',
-      filename: 'talker_int4.tflite',
-      url: 'https://huggingface.co/litert-community/Qwen3-TTS-12Hz-0.6B-Base/resolve/main/talker_int4.tflite',
-      sizeBytes: 255998768, // ~256 MB
       stepIndex: 4,
     ),
     LiteRtModelEntry(
-      id: 'tts_codec',
-      name: 'Qwen3-TTS Audio Codec',
-      tag: 'Voice Codec',
-      filename: 'codec_decoder_fp32.tflite',
-      url: 'https://huggingface.co/litert-community/Qwen3-TTS-12Hz-0.6B-Base/resolve/main/codec_decoder_fp32.tflite',
-      sizeBytes: 456820324, // ~457 MB
+      id: 'tts_talker',
+      name: 'Qwen3-TTS Acoustic Talker (GGUF)',
+      tag: 'Coach Voice (TTS)',
+      filename: 'qwen-talker-0.6b-base-Q4_K_M.gguf',
+      url: 'https://huggingface.co/Serveurperso/Qwen3-TTS-GGUF/resolve/main/qwen-talker-0.6b-base-Q4_K_M.gguf',
+      sizeBytes: 398458880, // ~380 MB
       stepIndex: 5,
+    ),
+    LiteRtModelEntry(
+      id: 'tts_tokenizer',
+      name: 'Qwen3-TTS Audio Tokenizer (GGUF)',
+      tag: 'Voice Tokenizer',
+      filename: 'qwen-tokenizer-12hz-Q4_K_M.gguf',
+      url: 'https://huggingface.co/Serveurperso/Qwen3-TTS-GGUF/resolve/main/qwen-tokenizer-12hz-Q4_K_M.gguf',
+      sizeBytes: 209715200, // ~200 MB
+      stepIndex: 6,
     ),
   ];
 
-  static const int estimatedTotalBytes = 3830016852; // ~3.83 GB
-  static const int estimatedCoreBytes = 2352027008; // Core VLM ~2.35 GB
+  static const int estimatedTotalBytes = 4047181216; // ~4.05 GB
+  static const int estimatedCoreBytes = 2708471808; // Core Gemma 4 E2B ~2.52 GB
 
   // Backward compatibility alias
-  static const String modelFileName = 'LFM2.5-VL-3B_int4.litertlm';
+  static const String modelFileName = 'gemma-4-E2B-it.litertlm';
   static const String modelUrl =
-      'https://huggingface.co/litert-community/LFM2.5-VL-3B/resolve/main/LFM2.5-VL-3B_int4.litertlm';
+      'https://huggingface.co/litert-community/gemma-4-E2B-it-litert-lm/resolve/main/gemma-4-E2B-it.litertlm';
 
   final StreamController<ModelDownloadProgress> _progressController =
       StreamController<ModelDownloadProgress>.broadcast();
@@ -271,8 +286,26 @@ class ModelDownloadService {
   int getDownloadedBytesForEntry(String id) => _downloadedBytesByEntryId[id] ?? 0;
 
   bool isEntryCompleted(LiteRtModelEntry entry) {
+    if (entry.isBundled) return true;
     final len = _downloadedBytesByEntryId[entry.id] ?? 0;
     return len >= (entry.sizeBytes * 0.95);
+  }
+
+  Future<void> _ensureAndroidPermissions() async {
+    if (!Platform.isAndroid) return;
+    try {
+      final notifStatus = await Permission.notification.status;
+      if (!notifStatus.isGranted) {
+        await Permission.notification.request();
+      }
+    } catch (_) {}
+
+    try {
+      final manageStatus = await Permission.manageExternalStorage.status;
+      if (!manageStatus.isGranted) {
+        await Permission.manageExternalStorage.request();
+      }
+    } catch (_) {}
   }
 
   Future<void> init() async {
@@ -371,11 +404,11 @@ class ModelDownloadService {
       progress: overallProg,
       speedBytesPerSecond: speedBytes,
       etaSeconds: etaSec,
-      currentPhase: '${entry.name} (${entry.stepIndex}/5)',
+      currentPhase: '${entry.name} (${entry.stepIndex}/6)',
       currentModelName: entry.name,
       currentModelTag: entry.tag,
       currentStep: entry.stepIndex,
-      totalSteps: 5,
+      totalSteps: 6,
       isDownloading: true,
     ));
   }
@@ -386,8 +419,10 @@ class ModelDownloadService {
 
     if (update.status == TaskStatus.complete) {
       _downloadedBytesByEntryId[entry.id] = entry.sizeBytes;
-      // Advance to next incomplete model in the suite
-      _advanceQueue();
+      unawaited(() async {
+        await _syncCompletedFile(entry);
+        await _advanceQueue();
+      }());
     } else if (update.status == TaskStatus.paused ||
         update.status == TaskStatus.canceled) {
       _isDownloading = false;
@@ -403,7 +438,7 @@ class ModelDownloadService {
           currentModelName: entry.name,
           currentModelTag: entry.tag,
           currentStep: entry.stepIndex,
-          totalSteps: 5,
+          totalSteps: 6,
           isDownloading: false,
         ),
         immediate: true,
@@ -419,7 +454,7 @@ class ModelDownloadService {
           currentModelName: entry.name,
           currentModelTag: entry.tag,
           currentStep: entry.stepIndex,
-          totalSteps: 5,
+          totalSteps: 6,
           isDownloading: false,
         ),
         immediate: true,
@@ -437,11 +472,11 @@ class ModelDownloadService {
           currentFileDownloadedBytes: _downloadedBytesByEntryId[entry.id] ?? 0,
           currentFileTotalBytes: entry.sizeBytes,
           progress: (_lastTotalDownloadedBytes / estimatedTotalBytes).clamp(0.0, 1.0),
-          currentPhase: '${entry.name} (${entry.stepIndex}/5)',
+          currentPhase: '${entry.name} (${entry.stepIndex}/6)',
           currentModelName: entry.name,
           currentModelTag: entry.tag,
           currentStep: entry.stepIndex,
-          totalSteps: 5,
+          totalSteps: 6,
           isDownloading: true,
         ),
         immediate: true,
@@ -449,14 +484,20 @@ class ModelDownloadService {
     }
   }
 
+  Directory? _cachedModelDir;
+
   /// Unified shared directory across Syndrix apps (REPP, InkVoice, etc.)
   Future<Directory> get modelDir async {
+    if (_cachedModelDir != null) {
+      return _cachedModelDir!;
+    }
     if (Platform.isAndroid) {
       try {
         final sharedDocs = Directory('/storage/emulated/0/Documents/Syndrix/models');
         if (!await sharedDocs.exists()) {
           await sharedDocs.create(recursive: true);
         }
+        _cachedModelDir = sharedDocs;
         return sharedDocs;
       } catch (_) {
         try {
@@ -464,6 +505,7 @@ class ModelDownloadService {
           if (!await sharedDownloads.exists()) {
             await sharedDownloads.create(recursive: true);
           }
+          _cachedModelDir = sharedDownloads;
           return sharedDownloads;
         } catch (_) {}
       }
@@ -471,6 +513,7 @@ class ModelDownloadService {
     final docs = await getApplicationDocumentsDirectory();
     final d = Directory('${docs.path}/models');
     if (!await d.exists()) await d.create(recursive: true);
+    _cachedModelDir = d;
     return d;
   }
 
@@ -479,12 +522,33 @@ class ModelDownloadService {
     return File('${d.path}/${entry.filename}');
   }
 
+  /// Core VLM model file (Gemma 4 only, zero fallbacks)
   Future<File> get coreVlmFile async {
     return getEntryFile(suiteEntries.first);
   }
 
   // Alias for backward compatibility
   Future<File> get modelFile => coreVlmFile;
+
+  Future<File> get vadFile async {
+    final entry = suiteEntries.firstWhere((e) => e.id == 'vad');
+    return getEntryFile(entry);
+  }
+
+  Future<File> get asrFile async {
+    final entry = suiteEntries.firstWhere((e) => e.id == 'asr');
+    return getEntryFile(entry);
+  }
+
+  Future<File> get ttsTalkerFile async {
+    final entry = suiteEntries.firstWhere((e) => e.id == 'tts_talker');
+    return getEntryFile(entry);
+  }
+
+  Future<File> get ttsTokenizerFile async {
+    final entry = suiteEntries.firstWhere((e) => e.id == 'tts_tokenizer');
+    return getEntryFile(entry);
+  }
 
   Future<int> _getFileBytes(File file) async {
     try {
@@ -495,29 +559,36 @@ class ModelDownloadService {
     return 0;
   }
 
-  /// True if at least the core VLM (2.35 GB) is present and ready for chat
-  Future<bool> isModelDownloaded({bool forceCheck = false}) async {
-    if (!forceCheck && _isDownloadedCache == true) return true;
-    final vlm = await coreVlmFile;
-    if (!await vlm.exists()) {
-      _isDownloadedCache = false;
-      return false;
-    }
-    final vlmLen = await vlm.length();
-    final isDone = vlmLen >= (estimatedCoreBytes * 0.95);
-    if (isDone) {
-      _isDownloadedCache = true;
-    }
-    return isDone;
+  /// Verify integrity of a specific model entry on disk
+  Future<bool> verifyEntryIntegrity(LiteRtModelEntry entry) async {
+    if (entry.isBundled) return true;
+    final f = await getEntryFile(entry);
+    if (!await f.exists()) return false;
+    final len = await _getFileBytes(f);
+    return len >= (entry.sizeBytes * 0.95);
   }
 
-  /// True if all 4 models (all 5 files) are downloaded
+  /// True if all 4 models in the suite (all 5 files) are present and verified on disk
+  Future<bool> isModelDownloaded({bool forceCheck = false}) async {
+    if (!forceCheck && _isDownloadedCache == true) return true;
+    final valid = await isFullSuiteDownloaded();
+    if (valid) {
+      _isDownloadedCache = true;
+      return true;
+    }
+    _isDownloadedCache = false;
+    return false;
+  }
+
+  /// True if all 4 models (all 5 files) are fully present on disk and valid
   Future<bool> isFullSuiteDownloaded() async {
+    final targetDir = await modelDir;
     for (final e in suiteEntries) {
-      final f = await getEntryFile(e);
-      if (!await f.exists() || (await f.length()) < (e.sizeBytes * 0.95)) {
-        return false;
-      }
+      if (e.isBundled) continue;
+      final f = File('${targetDir.path}/${e.filename}');
+      if (!await f.exists()) return false;
+      final len = await _getFileBytes(f);
+      if (len < (e.sizeBytes * 0.95)) return false;
     }
     return true;
   }
@@ -539,7 +610,7 @@ class ModelDownloadService {
     }
   }
 
-  /// Scan existing disk files and running background tasks on startup
+  /// Scan existing disk files (including existing models after app reinstall)
   Future<ModelDownloadProgress> getInitialProgress() async {
     if (_lastProgress != null) {
       return _lastProgress!;
@@ -547,59 +618,82 @@ class ModelDownloadService {
 
     await init();
 
+    final targetDir = await modelDir;
     int totalOnDisk = 0;
+    bool allValid = true;
+
     for (final e in suiteEntries) {
-      final f = await getEntryFile(e);
-      final len = await _getFileBytes(f);
+      if (e.isBundled) {
+        _downloadedBytesByEntryId[e.id] = e.sizeBytes;
+        totalOnDisk += e.sizeBytes;
+        continue;
+      }
+      final f = File('${targetDir.path}/${e.filename}');
+      int len = 0;
+      try {
+        if (await f.exists()) {
+          len = await f.length();
+        }
+      } catch (_) {}
       _downloadedBytesByEntryId[e.id] = len;
       totalOnDisk += len;
+      if (len < (e.sizeBytes * 0.95)) {
+        allValid = false;
+      }
     }
     _lastTotalDownloadedBytes = totalOnDisk;
 
-    if (await isFullSuiteDownloaded()) {
+    // If all models already exist on disk from previous install, mark ready instantly with 0 downloads needed
+    if (allValid) {
+      _isDownloadedCache = true;
       final completed = const ModelDownloadProgress(
         downloadedBytes: estimatedTotalBytes,
         totalBytes: estimatedTotalBytes,
         currentFileDownloadedBytes: estimatedTotalBytes,
         currentFileTotalBytes: estimatedTotalBytes,
         progress: 1.0,
-        currentStep: 5,
-        totalSteps: 5,
-        currentPhase: 'All models ready',
+        currentStep: 6,
+        totalSteps: 6,
+        currentPhase: 'All models verified on device',
         isCompleted: true,
       );
       _lastProgress = completed;
       return completed;
     }
 
-    // Check if any task is actively running
-    for (final e in suiteEntries) {
-      final taskId = 'repp-ai-${e.id}';
-      final rec = await FileDownloader().database.recordForId(taskId);
-      final active = await FileDownloader().taskForId(taskId);
-      if ((rec != null && (rec.status == TaskStatus.running || rec.status == TaskStatus.enqueued)) ||
-          active != null) {
-        _isDownloading = true;
-        _statusController.add(true);
-        _currentEntry = e;
+    // Check if any task is actively running with fast timeout so it never hangs
+    try {
+      for (final e in suiteEntries) {
+        if (e.isBundled) continue;
+        final taskId = 'repp-ai-${e.id}';
+        final rec = await FileDownloader()
+            .database
+            .recordForId(taskId)
+            .timeout(const Duration(milliseconds: 300), onTimeout: () => null);
+        if (rec != null &&
+            (rec.status == TaskStatus.running || rec.status == TaskStatus.enqueued)) {
+          _isDownloading = true;
+          _statusController.add(true);
+          _currentEntry = e;
 
-        final partial = ModelDownloadProgress(
-          downloadedBytes: totalOnDisk,
-          totalBytes: estimatedTotalBytes,
-          currentFileDownloadedBytes: _downloadedBytesByEntryId[e.id] ?? 0,
-          currentFileTotalBytes: e.sizeBytes,
-          progress: (totalOnDisk / estimatedTotalBytes).clamp(0.0, 1.0),
-          currentPhase: '${e.name} (${e.stepIndex}/5)',
-          currentModelName: e.name,
-          currentModelTag: e.tag,
-          currentStep: e.stepIndex,
-          totalSteps: 5,
-          isDownloading: true,
-        );
-        _emitProgress(partial, immediate: true);
-        return partial;
+          final partial = ModelDownloadProgress(
+            downloadedBytes: totalOnDisk,
+            totalBytes: estimatedTotalBytes,
+            currentFileDownloadedBytes: _downloadedBytesByEntryId[e.id] ?? 0,
+            currentFileTotalBytes: e.sizeBytes,
+            progress: (totalOnDisk / estimatedTotalBytes).clamp(0.0, 1.0),
+            currentPhase: '${e.name} (${e.stepIndex}/6)',
+            currentModelName: e.name,
+            currentModelTag: e.tag,
+            currentStep: e.stepIndex,
+            totalSteps: 6,
+            isDownloading: true,
+          );
+          _emitProgress(partial, immediate: true);
+          return partial;
+        }
       }
-    }
+    } catch (_) {}
 
     if (totalOnDisk > 0) {
       final prog = (totalOnDisk / estimatedTotalBytes).clamp(0.0, 1.0);
@@ -618,11 +712,11 @@ class ModelDownloadService {
         currentFileDownloadedBytes: _downloadedBytesByEntryId[current.id] ?? 0,
         currentFileTotalBytes: current.sizeBytes,
         progress: prog,
-        currentPhase: '${current.name} (${current.stepIndex}/5)',
+        currentPhase: '${current.name} (${current.stepIndex}/6)',
         currentModelName: current.name,
         currentModelTag: current.tag,
         currentStep: current.stepIndex,
-        totalSteps: 5,
+        totalSteps: 6,
         isDownloading: false,
       );
       _emitProgress(partial, immediate: true);
@@ -635,57 +729,81 @@ class ModelDownloadService {
       currentFileDownloadedBytes: 0,
       currentFileTotalBytes: suiteEntries.first.sizeBytes,
       progress: 0.0,
-      currentPhase: '${suiteEntries.first.name} (1/5)',
+      currentPhase: '${suiteEntries.first.name} (1/6)',
       currentModelName: suiteEntries.first.name,
       currentModelTag: suiteEntries.first.tag,
       currentStep: 1,
-      totalSteps: 5,
+      totalSteps: 6,
       isDownloading: false,
     );
     _emitProgress(zero, immediate: true);
     return zero;
   }
 
+  /// Rescan storage for models without deleting anything
+  Future<ModelDownloadProgress> rescanDisk() async {
+    _cachedModelDir = null;
+    _isDownloadedCache = null;
+    _lastProgress = null;
+    final prog = await getInitialProgress();
+    _emitProgress(prog, immediate: true);
+    return prog;
+  }
+
   /// Start downloading the LiteRT suite sequentially
   Future<void> startDownload({bool requireWifi = false}) async {
     if (_isDownloading) return;
+
+    if (Platform.isAndroid) {
+      await _ensureAndroidPermissions();
+    }
+
     if (await isFullSuiteDownloaded()) {
       _isDownloadedCache = true;
       _emitProgress(const ModelDownloadProgress(
         downloadedBytes: estimatedTotalBytes,
         totalBytes: estimatedTotalBytes,
         progress: 1.0,
-        currentStep: 5,
-        totalSteps: 5,
+        currentStep: 6,
+        totalSteps: 6,
         currentPhase: 'All models ready',
         isCompleted: true,
       ), immediate: true);
       return;
     }
 
-    if (Platform.isAndroid) {
-      try {
-        final status = await Permission.notification.status;
-        if (!status.isGranted) {
-          await Permission.notification.request();
-        }
-      } catch (_) {}
-    }
-
     await init();
     _isDownloading = true;
     _statusController.add(true);
+
+    // Immediate UI feedback
+    _emitProgress(ModelDownloadProgress(
+      downloadedBytes: _lastTotalDownloadedBytes,
+      totalBytes: estimatedTotalBytes,
+      currentFileDownloadedBytes: 0,
+      currentFileTotalBytes: suiteEntries.first.sizeBytes,
+      progress: (_lastTotalDownloadedBytes / estimatedTotalBytes).clamp(0.0, 1.0),
+      currentPhase: 'Connecting to Hugging Face...',
+      currentModelName: suiteEntries.first.name,
+      currentModelTag: suiteEntries.first.tag,
+      currentStep: 1,
+      totalSteps: 6,
+      isDownloading: true,
+    ), immediate: true);
 
     await _advanceQueue(requireWifi: requireWifi);
   }
 
   Future<void> _advanceQueue({bool requireWifi = false}) async {
     for (final entry in suiteEntries) {
+      if (entry.isBundled) {
+        _downloadedBytesByEntryId[entry.id] = entry.sizeBytes;
+        continue;
+      }
       final file = await getEntryFile(entry);
       final exists = await file.exists();
       final len = exists ? await file.length() : 0;
       if (!exists || len < (entry.sizeBytes * 0.95)) {
-        // Start this entry
         await _enqueueEntry(entry, requireWifi: requireWifi);
         return;
       } else {
@@ -704,8 +822,8 @@ class ModelDownloadService {
         currentFileDownloadedBytes: estimatedTotalBytes,
         currentFileTotalBytes: estimatedTotalBytes,
         progress: 1.0,
-        currentStep: 5,
-        totalSteps: 5,
+        currentStep: 6,
+        totalSteps: 6,
         currentPhase: 'All models ready',
         isCompleted: true,
       ),
@@ -718,7 +836,8 @@ class ModelDownloadService {
       _currentEntry = entry;
       final targetDir = await modelDir;
       final taskId = 'repp-ai-${entry.id}';
-      final task = DownloadTask(
+      
+      DownloadTask task = DownloadTask(
         taskId: taskId,
         url: entry.url,
         filename: entry.filename,
@@ -736,16 +855,57 @@ class ModelDownloadService {
       );
       _currentTask = task;
 
-      final record = await FileDownloader().database.recordForId(taskId);
-      if (record != null &&
-          (record.status == TaskStatus.paused || record.status == TaskStatus.failed)) {
-        final resumed = await FileDownloader().resume(task);
-        if (!resumed) {
-          await FileDownloader().enqueue(task);
+      bool enqueued = false;
+      try {
+        final record = await FileDownloader().database.recordForId(taskId);
+        if (record != null &&
+            (record.status == TaskStatus.paused || record.status == TaskStatus.failed)) {
+          final resumed = await FileDownloader().resume(task);
+          if (resumed) enqueued = true;
         }
-      } else {
-        await FileDownloader().enqueue(task);
+        if (!enqueued) {
+          enqueued = await FileDownloader().enqueue(task);
+        }
+      } catch (e) {
+        debugPrint('Direct enqueue notice: $e');
       }
+
+      if (!enqueued) {
+        debugPrint('BaseDirectory.root enqueue failed. Falling back to applicationDocuments...');
+        final fallbackTask = DownloadTask(
+          taskId: taskId,
+          url: entry.url,
+          filename: entry.filename,
+          directory: 'models',
+          baseDirectory: BaseDirectory.applicationDocuments,
+          updates: Updates.statusAndProgress,
+          requiresWiFi: requireWifi,
+          retries: 5,
+          allowPause: true,
+          priority: 0,
+          displayName: entry.name,
+          headers: {
+            'Known-Content-Length': '${entry.sizeBytes}',
+          },
+        );
+        _currentTask = fallbackTask;
+        enqueued = await FileDownloader().enqueue(fallbackTask);
+        debugPrint('Fallback enqueue result: $enqueued');
+      }
+
+      _emitProgress(ModelDownloadProgress(
+        downloadedBytes: _lastTotalDownloadedBytes,
+        totalBytes: estimatedTotalBytes,
+        currentFileDownloadedBytes: _downloadedBytesByEntryId[entry.id] ?? 0,
+        currentFileTotalBytes: entry.sizeBytes,
+        progress: (_lastTotalDownloadedBytes / estimatedTotalBytes).clamp(0.0, 1.0),
+        currentPhase: 'Downloading ${entry.name} (${entry.stepIndex}/6)...',
+        currentModelName: entry.name,
+        currentModelTag: entry.tag,
+        currentStep: entry.stepIndex,
+        totalSteps: 6,
+        isDownloading: true,
+      ), immediate: true);
     } catch (e) {
       debugPrint('Error enqueuing ${entry.name}: $e');
       if (!_isDownloading) return;
@@ -757,6 +917,23 @@ class ModelDownloadService {
         error: e.toString(),
         isDownloading: false,
       ), immediate: true);
+    }
+  }
+
+  Future<void> _syncCompletedFile(LiteRtModelEntry entry) async {
+    try {
+      final docs = await getApplicationDocumentsDirectory();
+      final localFile = File('${docs.path}/models/${entry.filename}');
+      final sharedFile = await getEntryFile(entry);
+      if (await localFile.exists() && localFile.path != sharedFile.path) {
+        if (!await sharedFile.parent.exists()) {
+          await sharedFile.parent.create(recursive: true);
+        }
+        await localFile.copy(sharedFile.path);
+        debugPrint('Synced ${entry.filename} to shared models directory');
+      }
+    } catch (e) {
+      debugPrint('Sync completed file notice: $e');
     }
   }
 
@@ -788,12 +965,12 @@ class ModelDownloadService {
       currentModelName: _currentEntry?.name,
       currentModelTag: _currentEntry?.tag,
       currentStep: _currentEntry?.stepIndex ?? 1,
-      totalSteps: 5,
+      totalSteps: 6,
       isDownloading: false,
     ), immediate: true);
   }
 
-  /// Clear all downloads and restart from 0%
+  /// Cancel any running tasks and restart download without deleting files
   Future<void> restartDownload() async {
     _isDownloading = false;
     _isDownloadedCache = false;
@@ -803,27 +980,12 @@ class ModelDownloadService {
       try {
         await FileDownloader().cancelTaskWithId('repp-ai-${e.id}');
       } catch (_) {}
-      try {
-        final f = await getEntryFile(e);
-        if (await f.exists()) await f.delete();
-      } catch (_) {}
     }
 
     _downloadedBytesByEntryId.clear();
     _lastProgress = null;
     _lastTotalDownloadedBytes = 0;
 
-    _emitProgress(ModelDownloadProgress(
-      downloadedBytes: 0,
-      totalBytes: estimatedTotalBytes,
-      progress: 0.0,
-      currentPhase: '${suiteEntries.first.name} (1/5)',
-      currentModelName: suiteEntries.first.name,
-      currentModelTag: suiteEntries.first.tag,
-      currentStep: 1,
-      totalSteps: 5,
-      isDownloading: false,
-    ), immediate: true);
     await startDownload();
   }
 }
@@ -838,52 +1000,131 @@ class GenkitGemmaService implements LocalLlmService {
   Genkit? _ai;
   bool _isInitializing = false;
   bool _isInstalled = false;
+  String? _installedModelPath;
+  String? _initError;
+  Timer? _idleTimer;
+  bool _isWarmedUp = false;
+
+  void _resetIdleTimer() {
+    _idleTimer?.cancel();
+    _idleTimer = Timer(const Duration(minutes: 10), () {
+      debugPrint('[GenkitGemmaService] 10 minutes idle elapsed without chat activity. Unloading models to free memory...');
+      unloadAllModels();
+    });
+  }
+
+  /// Cleans out internal channel tokens emitted by LiteRT-LM reasoning models
+  static String sanitizeChannelTokens(String text) {
+    if (text.isEmpty) return text;
+    return text
+        .replaceAll(RegExp(r'<\|?channel\|?>[<|channel>]*thought', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<\|?channel\|?>[<|channel>]*call', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<\|?channel\|?>[<|channel>]*response', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<\|?channel\|?>', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<channel\|?>', caseSensitive: false), '');
+  }
+
+  @override
+  Future<void> warmup() async {
+    _resetIdleTimer();
+    if (_isWarmedUp && _ai != null) return;
+
+    final ready = await isModelReady;
+    if (!ready) return;
+
+    if (_ai == null) {
+      await initialize();
+    }
+
+    if (_ai != null && !_isWarmedUp) {
+      try {
+        debugPrint('[GenkitGemmaService] Warming up Gemma engine session in background...');
+        final warmupStream = _ai!.generateStream(
+          model: flutterGemma.model('repp-ai-engine'),
+          prompt: 'hi',
+          config: FlutterGemmaModelOptions(
+            maxTokens: 1,
+            temperature: 0.1,
+            preferredBackend: 'gpu',
+          ),
+        );
+        await for (final _ in warmupStream) {
+          break;
+        }
+        _isWarmedUp = true;
+        debugPrint('[GenkitGemmaService] Gemma engine pre-warmed successfully.');
+      } catch (e) {
+        debugPrint('[GenkitGemmaService] Warmup notice: $e');
+      }
+    }
+  }
+
+  @override
+  void unloadAllModels() {
+    _idleTimer?.cancel();
+    _idleTimer = null;
+    _ai = null;
+    _isInstalled = false;
+    _installedModelPath = null;
+    _isWarmedUp = false;
+    debugPrint('[GenkitGemmaService] All on-device models successfully unloaded from memory.');
+  }
 
   @override
   Future<void> initialize() async {
     if (_ai != null || _isInitializing) return;
+
+    if (Platform.isAndroid) {
+      if (await Permission.manageExternalStorage.isDenied) {
+        await Permission.manageExternalStorage.request();
+      }
+      if (await Permission.storage.isDenied) {
+        await Permission.storage.request();
+      }
+    }
+
     final ready = await _dl.isModelDownloaded();
     if (!ready) {
       debugPrint('GenkitGemmaService: LiteRT model not downloaded yet');
       return;
     }
     _isInitializing = true;
+    _initError = null;
     try {
       final vlm = await _dl.coreVlmFile;
       debugPrint('GenkitGemmaService: Initializing LiteRT engine with ${vlm.path}...');
 
-      if (!_isInstalled) {
+      if (!_isInstalled || _installedModelPath != vlm.path) {
         try {
           await FlutterGemma.installModel(
             modelType: ModelType.general,
             fileType: ModelFileType.litertlm,
           ).fromFile(vlm.path).install();
           _isInstalled = true;
+          _installedModelPath = vlm.path;
         } catch (e) {
-          debugPrint('FlutterGemma installModel notice: $e (offline coach fallback ready)');
+          debugPrint('FlutterGemma installModel notice: $e');
         }
       }
 
-      try {
-        _ai = Genkit(
-          plugins: [
-            GenkitFlutterGemmaPlugin(
-              models: [
-                FlutterGemmaModelConfig(
-                  name: 'repp-ai-engine',
-                  modelType: ModelType.general,
-                  fileType: ModelFileType.litertlm,
-                ),
-              ],
-            ),
-          ],
-        );
-      } catch (e) {
-        debugPrint('Genkit plugin init notice: $e');
-      }
+      _ai = Genkit(
+        plugins: [
+          GenkitFlutterGemmaPlugin(
+            models: [
+              FlutterGemmaModelConfig(
+                name: 'repp-ai-engine',
+                modelType: ModelType.general,
+                fileType: ModelFileType.litertlm,
+              ),
+            ],
+          ),
+        ],
+      );
+      _resetIdleTimer();
       debugPrint('GenkitGemmaService: ready');
-    } catch (e) {
-      debugPrint('GenkitGemmaService init error: $e');
+    } catch (e, st) {
+      _initError = '$e';
+      debugPrint('GenkitGemmaService init error: $e\n$st');
     } finally {
       _isInitializing = false;
     }
@@ -904,208 +1145,117 @@ class GenkitGemmaService implements LocalLlmService {
     String? poseContext,
     bool isThinking = false,
   }) async* {
+    _resetIdleTimer();
+
     if (!await isModelReady) {
-      yield '⚠️ AI model is not ready yet. Please download it first from the AI Coach tab.';
+      yield '⚠️ AI model is not downloaded yet. Please download it from the banner at the top of AI Coach tab.';
       return;
     }
 
-    // If Genkit is ready and initialized, try runtime generation
-    if (_ai != null) {
-      try {
-        final fullPrompt = poseContext != null && poseContext.isNotEmpty
-            ? '[PoseContext: $poseContext]\n$prompt'
-            : prompt;
+    if (_ai == null) {
+      await initialize();
+    }
 
-        final stream = _ai!.generateStream(
-          model: flutterGemma.model('repp-ai-engine'),
-          prompt: fullPrompt,
-          config: FlutterGemmaModelOptions(
-            maxTokens: 1536,
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            preferredBackend: 'gpu',
-            enableSpeculativeDecoding: true,
-            supportImage: (imageBytes != null && imageBytes.isNotEmpty) ||
-                (videoFrames != null && videoFrames.isNotEmpty),
-            supportAudio: audioBytes != null && audioBytes.isNotEmpty,
-            isThinking: isThinking,
-            systemInstruction: systemPrompt,
-          ),
-        );
+    if (_ai == null) {
+      yield '⚠️ On-Device Inference Error: ${_initError ?? "Engine not initialized. Please ensure the model file is accessible."}';
+      return;
+    }
 
-        bool receivedAny = false;
-        await for (final chunk in stream) {
-          bool emitted = false;
-          for (final part in chunk.content) {
-            if (part is ReasoningPart && part.reasoning.isNotEmpty) {
-              yield '<thought>${part.reasoning}</thought>';
-              emitted = true;
+    try {
+      final vlm = await _dl.coreVlmFile;
+      final isGemma = vlm.path.toLowerCase().contains('gemma');
+
+      final fullPrompt = poseContext != null && poseContext.isNotEmpty
+          ? '[PoseContext: $poseContext]\n$prompt'
+          : prompt;
+
+      final stream = _ai!.generateStream(
+        model: flutterGemma.model('repp-ai-engine'),
+        prompt: fullPrompt,
+        config: FlutterGemmaModelOptions(
+          maxTokens: 1536,
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          preferredBackend: 'gpu',
+          enableSpeculativeDecoding: isGemma,
+          supportImage: (imageBytes != null && imageBytes.isNotEmpty) ||
+              (videoFrames != null && videoFrames.isNotEmpty),
+          supportAudio: audioBytes != null && audioBytes.isNotEmpty,
+          isThinking: isThinking,
+          systemInstruction: systemPrompt,
+        ),
+      );
+
+      bool inThoughtChannel = false;
+      bool receivedAny = false;
+
+      await for (final chunk in stream) {
+        bool handled = false;
+        for (final part in chunk.content) {
+          if (part is ReasoningPart && part.reasoning.isNotEmpty) {
+            final cleaned = sanitizeChannelTokens(part.reasoning);
+            if (cleaned.isNotEmpty) {
+              if (!inThoughtChannel) {
+                yield '<thought>';
+                inThoughtChannel = true;
+              }
+              yield cleaned;
+              handled = true;
               receivedAny = true;
-            } else if (part is TextPart && part.text.isNotEmpty) {
-              yield part.text;
-              emitted = true;
+            }
+          } else if (part is TextPart && part.text.isNotEmpty) {
+            if (inThoughtChannel) {
+              yield '</thought>\n\n';
+              inThoughtChannel = false;
+            }
+            final cleaned = sanitizeChannelTokens(part.text);
+            if (cleaned.isNotEmpty) {
+              yield cleaned;
+              handled = true;
               receivedAny = true;
             }
           }
-          if (!emitted && chunk.text.isNotEmpty) {
-            yield chunk.text;
+        }
+
+        if (!handled && chunk.text.isNotEmpty) {
+          final raw = chunk.text;
+          if (raw.contains('<|channel|>thought') ||
+              raw.contains('<channel|><|channel>thought') ||
+              raw.contains('<channel>thought')) {
+            if (!inThoughtChannel) {
+              yield '<thought>';
+              inThoughtChannel = true;
+            }
+          }
+
+          if (raw.contains('<|channel|>response') ||
+              raw.contains('<channel|>response') ||
+              raw.contains('<|channel|>call')) {
+            if (inThoughtChannel) {
+              yield '</thought>\n\n';
+              inThoughtChannel = false;
+            }
+          }
+
+          final cleaned = sanitizeChannelTokens(raw);
+          if (cleaned.isNotEmpty) {
+            yield cleaned;
             receivedAny = true;
           }
         }
-        if (receivedAny) return;
-      } catch (e) {
-        debugPrint('GenkitGemmaService engine notice: $e — using built-in offline coach');
-      }
-    }
-
-    // High-performance offline AI coach fallback (handles tool creation, form coaching, and advice)
-    yield* _offlineCoachGenerate(
-      prompt,
-      systemPrompt: systemPrompt,
-      poseContext: poseContext,
-      isThinking: isThinking,
-    );
-  }
-
-  /// Built-in intelligent coach engine for offline reliability & guaranteed tool generation
-  Stream<String> _offlineCoachGenerate(
-    String prompt, {
-    String? systemPrompt,
-    String? poseContext,
-    bool isThinking = false,
-  }) async* {
-    final lower = prompt.toLowerCase();
-
-    if (isThinking) {
-      yield '<thought>Evaluating user fitness goals, biomechanics, volume distribution, and exercise selection...</thought>\n\n';
-      await Future.delayed(const Duration(milliseconds: 150));
-    }
-
-    // Pose context feedback
-    if (poseContext != null && poseContext.isNotEmpty) {
-      yield 'I analyzed your movement in real-time:\n\n';
-      if (poseContext.contains('knee')) {
-        yield '• **Knee Path & Depth:** Good trajectory. Maintain even foot pressure through your heels and mid-foot.\n';
-      }
-      if (poseContext.contains('hip') || poseContext.contains('trunk')) {
-        yield '• **Torso Stability:** Keep your core braced as if preparing for a punch to protect your spine.\n';
-      }
-      yield '\nKeep up the strong tempo and stay consistent on each repetition!';
-      return;
-    }
-
-    // Check if user is asking to create a routine
-    final isRoutineRequest = lower.contains('routine') ||
-        lower.contains('workout plan') ||
-        lower.contains('program') ||
-        lower.contains('split') ||
-        lower.contains('push pull') ||
-        lower.contains('leg day') ||
-        lower.contains('chest day') ||
-        lower.contains('upper') ||
-        lower.contains('create') ||
-        lower.contains('generate');
-
-    if (isRoutineRequest) {
-      String routineName = 'Custom Strength Routine';
-      String goal = 'hypertrophy';
-      int days = 3;
-      List<Map<String, dynamic>> exercises = [];
-
-      if (lower.contains('push')) {
-        routineName = 'Push Day Power';
-        exercises = [
-          {'exerciseId': 'bench_press__barbell_', 'targetSets': 4, 'targetReps': 8},
-          {'exerciseId': 'overhead_press__barbell_', 'targetSets': 3, 'targetReps': 10},
-          {'exerciseId': 'incline_dumbbell_press', 'targetSets': 3, 'targetReps': 10},
-          {'exerciseId': 'dumbbell_lateral_raise', 'targetSets': 4, 'targetReps': 12},
-          {'exerciseId': 'triceps_pushdown', 'targetSets': 3, 'targetReps': 12},
-        ];
-      } else if (lower.contains('pull')) {
-        routineName = 'Pull Day Hypertrophy';
-        exercises = [
-          {'exerciseId': 'barbell_bent_over_row', 'targetSets': 4, 'targetReps': 8},
-          {'exerciseId': 'pull_up', 'targetSets': 3, 'targetReps': 8},
-          {'exerciseId': 'lat_pulldown__cable_', 'targetSets': 3, 'targetReps': 10},
-          {'exerciseId': 'face_pull', 'targetSets': 3, 'targetReps': 15},
-          {'exerciseId': 'bicep_curl__barbell_', 'targetSets': 3, 'targetReps': 10},
-        ];
-      } else if (lower.contains('leg')) {
-        routineName = 'Leg Day Builder';
-        exercises = [
-          {'exerciseId': 'squat__barbell_', 'targetSets': 4, 'targetReps': 8},
-          {'exerciseId': 'romanian_deadlift__barbell_', 'targetSets': 3, 'targetReps': 10},
-          {'exerciseId': 'leg_press', 'targetSets': 3, 'targetReps': 12},
-          {'exerciseId': 'walking_lunge', 'targetSets': 3, 'targetReps': 12},
-          {'exerciseId': 'standing_calf_raise', 'targetSets': 4, 'targetReps': 15},
-        ];
-      } else if (lower.contains('upper')) {
-        routineName = 'Upper Body Foundations';
-        exercises = [
-          {'exerciseId': 'bench_press__barbell_', 'targetSets': 4, 'targetReps': 8},
-          {'exerciseId': 'barbell_bent_over_row', 'targetSets': 4, 'targetReps': 8},
-          {'exerciseId': 'overhead_press__barbell_', 'targetSets': 3, 'targetReps': 10},
-          {'exerciseId': 'pull_up', 'targetSets': 3, 'targetReps': 8},
-          {'exerciseId': 'dips', 'targetSets': 3, 'targetReps': 10},
-        ];
-      } else {
-        routineName = 'Full Body Strength & Hypertrophy';
-        exercises = [
-          {'exerciseId': 'squat__barbell_', 'targetSets': 4, 'targetReps': 8},
-          {'exerciseId': 'bench_press__barbell_', 'targetSets': 4, 'targetReps': 8},
-          {'exerciseId': 'barbell_bent_over_row', 'targetSets': 3, 'targetReps': 10},
-          {'exerciseId': 'overhead_press__barbell_', 'targetSets': 3, 'targetReps': 10},
-          {'exerciseId': 'plank', 'targetSets': 3, 'targetReps': 45},
-        ];
       }
 
-      final intro = 'Here is your **$routineName**! Designed for optimal compound volume, progressive overload, and joint longevity.\n\n'
-          '### Workout Overview:\n'
-          '• **Frequency:** $days days/week\n'
-          '• **Primary Goal:** ${goal[0].toUpperCase()}${goal.substring(1)}\n'
-          '• **Rest Between Sets:** 90–120s on compounds, 60s on isolations\n\n'
-          'I have created this routine for you below. Tap **Save Routine** to add it to your routines list!\n\n';
-
-      for (final chunk in intro.split(' ')) {
-        yield '$chunk ';
-        await Future.delayed(const Duration(milliseconds: 12));
+      if (inThoughtChannel) {
+        yield '</thought>\n\n';
       }
 
-      // Output create_routine tool call
-      final exercisesJson = exercises.map((e) =>
-          '      {"exerciseId": "${e['exerciseId']}", "targetSets": ${e['targetSets']}, "targetReps": ${e['targetReps']}}'
-      ).join(',\n');
-
-      final toolBlock = '```json\n'
-          '{\n'
-          '  "tool": "create_routine",\n'
-          '  "arguments": {\n'
-          '    "name": "$routineName",\n'
-          '    "goal": "$goal",\n'
-          '    "days_per_week": $days,\n'
-          '    "exercises": [\n'
-          '$exercisesJson\n'
-          '    ]\n'
-          '  }\n'
-          '}\n'
-          '```';
-
-      yield toolBlock;
-      return;
-    }
-
-    // Informational response
-    final response = 'Consistency and progressive overload are the keystones of your progress. '
-        'For optimal hypertrophy and strength gains, focus on:\n\n'
-        '1. **Controlled Eccentrics:** Lower the weight with a 2–3 second negative.\n'
-        '2. **Full Range of Motion:** Train in the lengthened position where tension is highest.\n'
-        '3. **Rest & Recovery:** Give each major muscle group 48–72 hours before hitting it again.\n\n'
-        'Ask me if you would like me to build a custom routine for push, pull, legs, or full body!';
-
-    for (final chunk in response.split(' ')) {
-      yield '$chunk ';
-      await Future.delayed(const Duration(milliseconds: 14));
+      if (!receivedAny) {
+        yield '⚠️ On-device model produced no output for this prompt. Please retry.';
+      }
+    } catch (e, st) {
+      debugPrint('Genkit live inference error: $e\n$st');
+      yield '⚠️ Live On-Device Inference Error: $e';
     }
   }
 
@@ -1119,6 +1269,7 @@ class GenkitGemmaService implements LocalLlmService {
     String? poseContext,
     bool isThinking = false,
   }) async {
+    _resetIdleTimer();
     final buf = StringBuffer();
     await for (final c in generate(
       prompt,
@@ -1136,7 +1287,7 @@ class GenkitGemmaService implements LocalLlmService {
 
   @override
   void dispose() {
-    // Keep model resident in memory on standby
+    // Keep model resident in background memory; 10-minute idle timer handles cleanup
   }
 }
 

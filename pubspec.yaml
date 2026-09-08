@@ -60,8 +60,11 @@ dependencies:
   image_picker: ^1.2.3
   http: ^1.6.0
   html: ^0.15.7
-  speech_to_text: ^7.4.0
-  flutter_tts: ^4.2.5
+  whisper_cpp_flutter_plus: ^0.4.1
+  vad: ^0.0.8
+
+dependency_overrides:
+  record: ^7.1.1
 
 dev_dependencies:
   flutter_test:
@@ -76,3 +79,4 @@ flutter:
     - assets/data/
     - assets/media/exercises/
     - assets/pose_templates/
+    - assets/models/

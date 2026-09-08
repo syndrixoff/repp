@@ -72,17 +72,26 @@ class AiCoachProvider extends ChangeNotifier {
   }
 
   void _updateStreamingMessage(ChatMessage msg, String raw) {
-    if (raw.contains('<thought>')) {
-      final parts = raw.split('</thought>');
+    // 1. Sanitize any raw model channel tokens
+    String cleaned = raw
+        .replaceAll(RegExp(r'<\|?channel\|?>[<|channel>]*thought', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<\|?channel\|?>[<|channel>]*call', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<\|?channel\|?>[<|channel>]*response', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<\|?channel\|?>', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<channel\|?>', caseSensitive: false), '');
+
+    // 2. Extract and separate thinking block from final response
+    if (cleaned.contains('<thought>')) {
+      final parts = cleaned.split('</thought>');
       if (parts.length > 1) {
         msg.thinkingContent = parts[0].replaceAll('<thought>', '').trim();
-        msg.content = parts.sublist(1).join('</thought>').trimLeft();
+        msg.content = parts.sublist(1).join('').trimLeft();
       } else {
-        msg.thinkingContent = parts[0].replaceAll('<thought>', '');
+        msg.thinkingContent = parts[0].replaceAll('<thought>', '').trim();
         msg.content = '';
       }
     } else {
-      msg.content = raw;
+      msg.content = cleaned;
     }
   }
 
@@ -392,7 +401,11 @@ class AiCoachProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> send(String text, {List<Uint8List>? imageBytes}) async {
+  Future<void> send(
+    String text, {
+    List<Uint8List>? imageBytes,
+    void Function(String chunk)? onChunk,
+  }) async {
     if (text.trim().isEmpty || _agent == null) return;
     activeVoiceTranscript = null;
     final historyContext = List<ChatMessage>.from(messages);
@@ -428,6 +441,7 @@ class AiCoachProvider extends ChangeNotifier {
         buf.write(chunk);
         _updateStreamingMessage(assistantMsg, buf.toString());
         _recordChunkAndNotify(chunk);
+        onChunk?.call(chunk);
       }
 
       if (_cancelRequested) return;
@@ -476,18 +490,34 @@ class AiCoachProvider extends ChangeNotifier {
   }
 
   void _extractThinkingIfPresent(ChatMessage msg, String raw) {
-    final match = RegExp(r'<(?:thought|think)>([\s\S]*?)<\/(?:thought|think)>').firstMatch(raw);
+    String cleaned = raw
+        .replaceAll(RegExp(r'<\|?channel\|?>[<|channel>]*thought', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<\|?channel\|?>[<|channel>]*call', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<\|?channel\|?>[<|channel>]*response', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<\|?channel\|?>', caseSensitive: false), '')
+        .replaceAll(RegExp(r'<channel\|?>', caseSensitive: false), '');
+
+    final match = RegExp(r'<(?:thought|think)>([\s\S]*?)<\/(?:thought|think)>').firstMatch(cleaned);
     if (match != null) {
       msg.thinkingContent = match.group(1)?.trim();
-      final cleaned = raw.replaceAll(RegExp(r'<(?:thought|think)>[\s\S]*?<\/(?:thought|think)>'), '').trim();
+      final body = cleaned.replaceAll(RegExp(r'<(?:thought|think)>[\s\S]*?<\/(?:thought|think)>'), '').trim();
+      final cleanText = ToolCall.stripToolCall(body);
+      msg.content = cleanText;
+      if (msg.versions.isNotEmpty && msg.activeVersionIndex < msg.versions.length) {
+        msg.versions[msg.activeVersionIndex] = cleanText;
+      }
+    } else {
       final cleanText = ToolCall.stripToolCall(cleaned);
-      if (cleanText.isNotEmpty) {
-        msg.content = cleanText;
-        if (msg.versions.isNotEmpty && msg.activeVersionIndex < msg.versions.length) {
-          msg.versions[msg.activeVersionIndex] = cleanText;
-        }
+      msg.content = cleanText;
+      if (msg.versions.isNotEmpty && msg.activeVersionIndex < msg.versions.length) {
+        msg.versions[msg.activeVersionIndex] = cleanText;
       }
     }
+  }
+
+  /// Warms up the on-device Gemma model session in the background
+  Future<void> warmupModel() async {
+    await _llm?.warmup();
   }
 
   Future<void> applyTool(ChatMessage message) async {

@@ -244,7 +244,22 @@ class ToolCall {
 
   static ToolCall? tryParse(String llmOutput) {
     final text = llmOutput.trim();
-    // 1. Prefer fenced block (```json or ```)
+
+    // 1. Check for ChatML / Python style tool call:
+    // E.g. <|tool_call_start|>[create_routine(...)]<|tool_call_end|> or [create_routine(...)]
+    final chatMlMatch = RegExp(r'<\|tool_call_start\|>\s*(\[?[a-zA-Z0-9_]+\([\s\S]*?\)?\]?)\s*<\|tool_call_end\|>').firstMatch(text);
+    if (chatMlMatch != null) {
+      final parsed = _parsePythonCall(chatMlMatch.group(1)!);
+      if (parsed != null) return parsed;
+    }
+
+    final bracketCallMatch = RegExp(r'\[([a-zA-Z0-9_]+)\(([\s\S]*?)\)\]').firstMatch(text);
+    if (bracketCallMatch != null) {
+      final parsed = _parsePythonCall(bracketCallMatch.group(0)!);
+      if (parsed != null) return parsed;
+    }
+
+    // 2. Prefer fenced JSON block (```json or ```)
     final fenced = RegExp(r'```(?:json)?\s*(\{[\s\S]*?\})\s*```').firstMatch(text);
     final candidate =
         fenced != null ? fenced.group(1)!.trim() : _extractJsonObject(text);
@@ -295,14 +310,149 @@ class ToolCall {
     }
   }
 
-  /// Removes any tool JSON blocks (fenced or raw) from the assistant's conversational text
+  /// Removes any tool JSON blocks (fenced or raw) and ChatML tags from the assistant's conversational text
   static String stripToolCall(String text) {
-    var cleaned = text.replaceAll(RegExp(r'```(?:json)?\s*\{[\s\S]*?\}\s*```'), '');
+    var cleaned = text;
+    // Strip ChatML tool tags
+    cleaned = cleaned.replaceAll(RegExp(r'<\|tool_call_start\|>[\s\S]*?<\|tool_call_end\|>'), '');
+    cleaned = cleaned.replaceAll(RegExp(r'\[[a-zA-Z0-9_]+\([\s\S]*?\)\]'), '');
+    // Strip fenced code blocks
+    cleaned = cleaned.replaceAll(RegExp(r'```(?:json)?\s*\{[\s\S]*?\}\s*```'), '');
     final rawObj = _extractJsonObject(cleaned);
     if (rawObj != null) {
       cleaned = cleaned.replaceFirst(rawObj, '');
     }
     return cleaned.trim();
+  }
+
+  static ToolCall? _parsePythonCall(String rawText) {
+    final match = RegExp(r'\[?\s*([a-zA-Z0-9_]+)\s*\(([\s\S]*?)\)\s*\]?').firstMatch(rawText);
+    if (match == null) return null;
+    final tool = match.group(1);
+    final rawArgs = match.group(2)?.trim() ?? '';
+    if (tool == null || tool.isEmpty) return null;
+
+    final args = _parseKwargs(rawArgs);
+    return ToolCall(
+      tool: tool,
+      arguments: args,
+      raw: match.group(0) ?? rawText,
+    );
+  }
+
+  static Map<String, dynamic> _parseKwargs(String s) {
+    final result = <String, dynamic>{};
+    int i = 0;
+    while (i < s.length) {
+      while (i < s.length && (s[i] == ' ' || s[i] == '\t' || s[i] == '\n' || s[i] == '\r' || s[i] == ',')) {
+        i++;
+      }
+      if (i >= s.length) break;
+
+      final keyStart = i;
+      while (i < s.length && (RegExp(r'[a-zA-Z0-9_]').hasMatch(s[i]))) {
+        i++;
+      }
+      final key = s.substring(keyStart, i).trim();
+      if (key.isEmpty) break;
+
+      while (i < s.length && s[i] != '=') {
+        i++;
+      }
+      if (i < s.length && s[i] == '=') i++;
+
+      while (i < s.length && (s[i] == ' ' || s[i] == '\t' || s[i] == '\n' || s[i] == '\r')) {
+        i++;
+      }
+      if (i >= s.length) break;
+
+      final valStart = i;
+      if (s[i] == '"' || s[i] == "'") {
+        final quote = s[i];
+        i++;
+        final strBuf = StringBuffer();
+        while (i < s.length && s[i] != quote) {
+          if (s[i] == '\\' && i + 1 < s.length) {
+            strBuf.write(s[i + 1]);
+            i += 2;
+          } else {
+            strBuf.write(s[i]);
+            i++;
+          }
+        }
+        if (i < s.length) i++;
+        result[key] = strBuf.toString();
+      } else if (s[i] == '[' || s[i] == '{') {
+        final open = s[i];
+        final close = open == '[' ? ']' : '}';
+        int depth = 0;
+        bool inStr = false;
+        String strQuote = '';
+        while (i < s.length) {
+          final c = s[i];
+          if (inStr) {
+            if (c == strQuote && s[i - 1] != '\\') {
+              inStr = false;
+            }
+          } else {
+            if (c == '"' || c == "'") {
+              inStr = true;
+              strQuote = c;
+            } else if (c == open) {
+              depth++;
+            } else if (c == close) {
+              depth--;
+              if (depth == 0) {
+                i++;
+                break;
+              }
+            }
+          }
+          i++;
+        }
+        final rawSub = s.substring(valStart, i);
+        result[key] = _pythonLiteralToJson(rawSub);
+      } else {
+        while (i < s.length && s[i] != ',' && s[i] != ')') {
+          i++;
+        }
+        final rawSub = s.substring(valStart, i).trim();
+        if (rawSub.toLowerCase() == 'true') {
+          result[key] = true;
+        } else if (rawSub.toLowerCase() == 'false') {
+          result[key] = false;
+        } else if (rawSub.toLowerCase() == 'none' || rawSub.toLowerCase() == 'null') {
+          result[key] = null;
+        } else if (int.tryParse(rawSub) != null) {
+          result[key] = int.parse(rawSub);
+        } else if (double.tryParse(rawSub) != null) {
+          result[key] = double.parse(rawSub);
+        } else {
+          result[key] = rawSub;
+        }
+      }
+    }
+    return result;
+  }
+
+  static dynamic _pythonLiteralToJson(String raw) {
+    var formatted = raw
+        .replaceAll(RegExp(r'\bTrue\b'), 'true')
+        .replaceAll(RegExp(r'\bFalse\b'), 'false')
+        .replaceAll(RegExp(r'\bNone\b'), 'null');
+    formatted = formatted.replaceAllMapped(
+      RegExp(r"(?<!\\)'(.*?[^\\])?'"),
+      (match) {
+        final inside = match.group(1) ?? '';
+        final escaped = inside.replaceAll('"', '\\"');
+        return '"$escaped"';
+      },
+    );
+    try {
+      return jsonDecode(formatted);
+    } catch (_) {
+      return raw;
+    }
   }
 
   static String? _extractJsonObject(String s) {

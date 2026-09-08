@@ -4,8 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
-import 'package:flutter_tts/flutter_tts.dart';
+import '../ai/tts/qwen3_tts_service.dart';
+import '../ai/audio/omni_duplex_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import '../ai/local_llm_service.dart';
 import '../ai/gym_coach_agent.dart';
@@ -37,8 +37,8 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
 
   StreamSubscription<bool>? _downloadStatusSub;
 
-  final stt.SpeechToText _speech = stt.SpeechToText();
-  final FlutterTts _tts = FlutterTts();
+  final Qwen3TtsService _tts = Qwen3TtsService();
+  final OmniDuplexController _omniController = OmniDuplexController();
   bool _isListening = false;
   String? _currentlySpeakingMessageId;
 
@@ -46,6 +46,10 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
   bool _isOmniVoiceActive = false;
   double _currentSoundLevel = 0.0;
   String _liveSpokenText = '';
+  OmniDuplexState _omniState = OmniDuplexState.idle;
+  StreamSubscription<OmniDuplexState>? _omniStateSub;
+  StreamSubscription<double>? _omniSoundSub;
+  StreamSubscription<String>? _omniSpokenSub;
 
   // Multimodal Image Attachment State
   Uint8List? _attachedImageBytes;
@@ -64,11 +68,43 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
   }
 
   Future<void> _initSpeechAndTts() async {
-    await _tts.setLanguage('en-US');
-    await _tts.setSpeechRate(0.5);
-    _tts.setCompletionHandler(() {
+    await _tts.initialize();
+    _omniController.initialize(
+      sendPromptHandler: (prompt, onChunk) async {
+        if (!mounted) return;
+        final provider = context.read<AiCoachProvider>();
+        final img = _attachedImageBytes;
+        if (mounted) setState(() => _attachedImageBytes = null);
+        await provider.send(
+          prompt,
+          imageBytes: img != null ? [img] : null,
+        );
+      },
+    );
+
+    _omniStateSub = _omniController.stateStream.listen((state) {
       if (mounted) {
-        setState(() => _currentlySpeakingMessageId = null);
+        setState(() {
+          _omniState = state;
+          _isListening = state == OmniDuplexState.listening || state == OmniDuplexState.userSpeaking;
+          if (state == OmniDuplexState.speakingCoach) {
+            _currentlySpeakingMessageId = 'omni_speaking';
+          } else if (_currentlySpeakingMessageId == 'omni_speaking') {
+            _currentlySpeakingMessageId = null;
+          }
+        });
+      }
+    });
+
+    _omniSoundSub = _omniController.soundLevelStream.listen((level) {
+      if (mounted) {
+        setState(() => _currentSoundLevel = level);
+      }
+    });
+
+    _omniSpokenSub = _omniController.liveSpokenTextStream.listen((text) {
+      if (mounted) {
+        setState(() => _liveSpokenText = text);
       }
     });
   }
@@ -143,7 +179,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
 
   Future<void> _toggleOmniVoiceMode() async {
     if (_isOmniVoiceActive) {
-      await _speech.stop();
+      await _omniController.stopDuplexMode();
       await _tts.stop();
       if (mounted) {
         setState(() {
@@ -151,6 +187,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
           _isListening = false;
           _liveSpokenText = '';
           _currentSoundLevel = 0.0;
+          _currentlySpeakingMessageId = null;
         });
       }
       return;
@@ -161,67 +198,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
       _liveSpokenText = '';
       _currentSoundLevel = 0.0;
     });
-    _startListeningInOmniMode();
-  }
-
-  Future<void> _startListeningInOmniMode() async {
-    if (_isListening) return;
-    final available = await _speech.initialize(
-      onError: (val) {
-        if (mounted) setState(() => _isListening = false);
-      },
-      onStatus: (status) {
-        if (status == 'done' || status == 'notListening') {
-          if (mounted) setState(() => _isListening = false);
-        }
-      },
-    );
-
-    if (available) {
-      if (mounted) setState(() => _isListening = true);
-      _speech.listen(
-        onSoundLevelChange: (level) {
-          if (mounted) {
-            final norm = ((level + 30) / 40.0).clamp(0.0, 1.0);
-            setState(() => _currentSoundLevel = norm);
-          }
-        },
-        onResult: (val) {
-          if (mounted) {
-            setState(() {
-              _liveSpokenText = val.recognizedWords;
-            });
-            if (val.finalResult && val.recognizedWords.trim().isNotEmpty) {
-              _sendOmniVoice(val.recognizedWords.trim());
-            }
-          }
-        },
-      );
-    }
-  }
-
-  Future<void> _sendOmniVoice(String spokenText) async {
-    if (spokenText.trim().isEmpty) return;
-    await _speech.stop();
-    setState(() {
-      _isListening = false;
-      _liveSpokenText = spokenText;
-    });
-
-    if (!mounted) return;
-    final provider = context.read<AiCoachProvider>();
-    final img = _attachedImageBytes;
-    setState(() => _attachedImageBytes = null);
-
-    await _tts.stop();
-    await provider.send(spokenText, imageBytes: img != null ? [img] : null);
-
-    if (mounted && _isOmniVoiceActive && provider.messages.isNotEmpty) {
-      final lastMsg = provider.messages.last;
-      if (lastMsg.role == 'assistant' && lastMsg.content.isNotEmpty) {
-        _speak('omni_${lastMsg.hashCode}', lastMsg.content);
-      }
-    }
+    await _omniController.startDuplexMode();
   }
 
   Future<void> _speak(String messageId, String text) async {
@@ -232,12 +209,20 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
     }
     await _tts.stop();
     setState(() => _currentlySpeakingMessageId = messageId);
-    // Strip markdown formatting for cleaner speech
-    final cleanText = text
-        .replaceAll(RegExp(r'[*#_`~]'), '')
-        .replaceAll(RegExp(r'\[(.*?)\]\(.*?\)'), r'$1')
-        .trim();
-    await _tts.speak(cleanText);
+    _tts.speakText(text);
+  }
+
+  @override
+  void dispose() {
+    _downloadStatusSub?.cancel();
+    _omniStateSub?.cancel();
+    _omniSoundSub?.cancel();
+    _omniSpokenSub?.cancel();
+    _omniController.stopDuplexMode();
+    _tts.stop();
+    _ctrl.dispose();
+    _scrollCtrl.dispose();
+    super.dispose();
   }
 
   void _sendMessage(AiCoachProvider provider) {
@@ -255,9 +240,9 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
 
   Future<void> _checkModelStatus() async {
     _initialProgressFuture = _downloadService.getInitialProgress();
-    final downloaded = await _downloadService.isModelDownloaded();
+    final prog = await _initialProgressFuture!;
     if (mounted) {
-      setState(() => _isModelDownloaded = downloaded);
+      setState(() => _isModelDownloaded = prog.isCompleted);
     }
   }
 
@@ -349,15 +334,6 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
     return 'Tool result';
   }
 
-  @override
-  void dispose() {
-    _speech.stop();
-    _tts.stop();
-    _downloadStatusSub?.cancel();
-    _ctrl.dispose();
-    _scrollCtrl.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -1191,12 +1167,14 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
 
   Widget _buildOmniVoiceView(BuildContext context, AiCoachProvider provider, bool isDark) {
     VoiceOrbState orbState = VoiceOrbState.idle;
-    if (_isListening) {
+    if (_omniState == OmniDuplexState.userSpeaking) {
       orbState = VoiceOrbState.listening;
-    } else if (provider.phase == CoachGenerationPhase.thinking || provider.phase == CoachGenerationPhase.generating) {
+    } else if (_omniState == OmniDuplexState.thinking || provider.phase == CoachGenerationPhase.thinking || provider.phase == CoachGenerationPhase.generating) {
       orbState = VoiceOrbState.thinking;
-    } else if (_currentlySpeakingMessageId != null) {
+    } else if (_omniState == OmniDuplexState.speakingCoach || _currentlySpeakingMessageId != null) {
       orbState = VoiceOrbState.speaking;
+    } else if (_isListening) {
+      orbState = VoiceOrbState.listening;
     }
 
     ChatMessage? lastUserMsg;
@@ -1212,74 +1190,80 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
     }
 
     String statusLabel = 'Listening to you...';
-    if (!_isListening) {
-      if (provider.phase == CoachGenerationPhase.thinking) {
-        statusLabel = 'Analyzing & Thinking...';
-      } else if (provider.phase == CoachGenerationPhase.generating) {
-        statusLabel = 'Generating Response...';
-      } else if (_currentlySpeakingMessageId != null) {
-        statusLabel = 'Coach Speaking...';
-      } else {
-        statusLabel = 'Tap mic below to speak';
-      }
+    if (_omniState == OmniDuplexState.userSpeaking) {
+      statusLabel = 'Listening to you...';
+    } else if (_omniState == OmniDuplexState.thinking || provider.phase == CoachGenerationPhase.thinking) {
+      statusLabel = 'Analyzing & Thinking...';
+    } else if (provider.phase == CoachGenerationPhase.generating) {
+      statusLabel = 'Generating Response...';
+    } else if (_omniState == OmniDuplexState.speakingCoach || _currentlySpeakingMessageId != null) {
+      statusLabel = 'Coach Speaking...';
+    } else if (!_isListening) {
+      statusLabel = 'Tap mic below to start';
     }
 
-    return Column(
-      children: [
-        // Omni Voice Top Header
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back_rounded),
-                tooltip: 'Exit to Text Chat',
-                onPressed: _toggleOmniVoiceMode,
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: _isListening ? const Color(0xFF00E5FF) : Colors.grey,
-                      shape: BoxShape.circle,
-                      boxShadow: _isListening
-                          ? [
-                              BoxShadow(
-                                color: const Color(0xFF00E5FF).withValues(alpha: 0.6),
-                                blurRadius: 8,
-                                spreadRadius: 2,
-                              )
-                            ]
-                          : null,
+    return SafeArea(
+      child: Column(
+        children: [
+          // Omni Voice Top Header
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  tooltip: 'Exit to Text Chat',
+                  onPressed: _toggleOmniVoiceMode,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: _isListening ? const Color(0xFF00E5FF) : Colors.grey,
+                        shape: BoxShape.circle,
+                        boxShadow: _isListening
+                            ? [
+                                BoxShadow(
+                                  color: const Color(0xFF00E5FF).withValues(alpha: 0.6),
+                                  blurRadius: 8,
+                                  spreadRadius: 2,
+                                )
+                              ]
+                            : null,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Text(
-                    'OMNI VOICE',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 1.2,
-                      color: AppColors.primary,
+                    const SizedBox(width: 8),
+                    const Text(
+                      'OMNI VOICE',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 1.2,
+                        color: AppColors.primary,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              IconButton(
-                icon: Icon(_currentlySpeakingMessageId != null ? Icons.volume_up_rounded : Icons.volume_off_rounded),
-                tooltip: 'Stop Audio',
-                onPressed: () {
-                  _tts.stop();
-                  if (mounted) setState(() => _currentlySpeakingMessageId = null);
-                },
-              ),
-            ],
+                  ],
+                ),
+                IconButton(
+                  icon: Icon(OmniDuplexController().isTtsMuted ? Icons.volume_off_rounded : Icons.volume_up_rounded),
+                  tooltip: OmniDuplexController().isTtsMuted ? 'Unmute TTS' : 'Mute TTS',
+                  onPressed: () {
+                    setState(() {
+                      OmniDuplexController().isTtsMuted = !OmniDuplexController().isTtsMuted;
+                      if (OmniDuplexController().isTtsMuted) {
+                         _tts.stop();
+                         _currentlySpeakingMessageId = null;
+                      }
+                    });
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
 
         // 3D Fluid Glowing Spectrum Orb (Hero Section)
         Expanded(
@@ -1422,16 +1406,12 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
 
               // Big Center Mic Action Button
               GestureDetector(
-                onTap: () {
+                onTap: () async {
                   if (_isListening) {
-                    if (_liveSpokenText.trim().isNotEmpty) {
-                      _sendOmniVoice(_liveSpokenText.trim());
-                    } else {
-                      _speech.stop();
-                      setState(() => _isListening = false);
-                    }
+                    await _omniController.stopDuplexMode();
+                    if (mounted) setState(() => _isListening = false);
                   } else {
-                    _startListeningInOmniMode();
+                    await _omniController.startDuplexMode();
                   }
                 },
                 child: Container(
@@ -1470,7 +1450,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
                   if (provider.isThinking) {
                     provider.cancelGeneration();
                   }
-                  _speech.stop();
+                  _omniController.stopDuplexMode();
                   _tts.stop();
                   setState(() {
                     _isListening = false;
@@ -1484,6 +1464,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
           ),
         ),
       ],
+    ),
     );
   }
 }
