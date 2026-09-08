@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'silero_vad_service.dart';
 import 'whisper_asr_service.dart';
+import 's1_cleanup_service.dart';
 import '../tts/coach_tts_service.dart';
 
 /// Lifecycle state for full-duplex conversational voice mode
@@ -243,6 +244,7 @@ class OmniDuplexController {
     _vad.dispose();
     _whisper.dispose();
     _tts.dispose();
+    S1CleanupService().dispose();
     debugPrint('[OmniDuplex] Voice stack successfully unloaded. Reverted to State 1 (Gemma only).');
   }
 
@@ -283,8 +285,12 @@ class OmniDuplexController {
     final fullPrompt = _pendingUtterances.join('. ');
     _pendingUtterances.clear();
 
-    debugPrint('[OmniDuplex] Dispatching to Gemma: "$fullPrompt"');
-    _safeAddText(fullPrompt);
+    // Thinking cleanup (S1): self-corrections + fillers resolved before Gemma.
+    // Falls back to the raw transcript when S1 is unavailable.
+    final prompt = await S1CleanupService().cleanup(fullPrompt);
+
+    debugPrint('[OmniDuplex] Dispatching to Gemma: "$prompt"');
+    _safeAddText(prompt);
 
     bool isCancelled = false;
     _cancelGeneration = () {
@@ -294,7 +300,7 @@ class OmniDuplexController {
     try {
       if (onSendPrompt != null) {
         await onSendPrompt!(
-          fullPrompt,
+          prompt,
           (chunk) {
             if (!isCancelled && _state != OmniDuplexState.idle && !isTtsMuted) {
               _tts.appendChunk(chunk);
