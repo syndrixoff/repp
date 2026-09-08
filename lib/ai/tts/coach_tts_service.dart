@@ -5,15 +5,19 @@ import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'gemma_speech_tts_service.dart';
 
-/// Qwen3-TTS On-Device Speech Synthesis Service.
+/// Coach voice playback orchestrator (engine-agnostic).
 ///
 /// Synthesizes via the shared flutter_gemma engine
-/// ([GemmaSpeechTtsService], Qwen3-TTS 0.6B LiteRT) and streams playback
-/// through just_audio. Zero OS fallbacks.
-class Qwen3TtsService {
-  static final Qwen3TtsService _instance = Qwen3TtsService._internal();
-  factory Qwen3TtsService() => _instance;
-  Qwen3TtsService._internal();
+/// ([GemmaSpeechTtsService], Inflect-Nano-v2 LiteRT — fixed voice) and
+/// streams playback through just_audio. Zero OS fallbacks.
+///
+/// Persona note: the engine voice is fixed, so coaching energy lives in the
+/// LLM's wording ([gymTrainerVoicePrompt] documents that style), not in a
+/// voice-cloning prompt.
+class CoachTtsService {
+  static final CoachTtsService _instance = CoachTtsService._internal();
+  factory CoachTtsService() => _instance;
+  CoachTtsService._internal();
 
   final AudioPlayer _audioPlayer = AudioPlayer();
   final List<String> _sentenceQueue = [];
@@ -23,7 +27,7 @@ class Qwen3TtsService {
 
   void Function(bool isSpeaking)? onSpeakingStateChanged;
 
-  // Energetic, motivating gym trainer voice prompt for Qwen3-TTS
+  // Coaching style cue for the LLM's wording (fixed engine voice).
   static const String gymTrainerVoicePrompt =
       'Speak in an intense, authoritative, high-energy gym trainer voice with crisp commands, fierce motivation, and urgency. Push the athlete to stay locked in and maintain strict form.';
 
@@ -47,7 +51,7 @@ class Qwen3TtsService {
     try {
       await GemmaSpeechTtsService().initialize();
     } catch (e) {
-      debugPrint('[Qwen3TtsService] Engine init notice: $e');
+      debugPrint('[CoachTtsService] Engine init notice: $e');
     }
   }
 
@@ -150,18 +154,18 @@ class Qwen3TtsService {
       try {
         pcmBytes = await GemmaSpeechTtsService().synthesizePcm(sentence);
       } catch (e) {
-        debugPrint('[Qwen3TtsService] flutter_gemma TTS notice: $e');
+        debugPrint('[CoachTtsService] flutter_gemma TTS notice: $e');
       }
 
       if (pcmBytes != null && pcmBytes.isNotEmpty) {
         await _playPcmBytes(pcmBytes);
       } else {
-        debugPrint('[Qwen3TtsService] Qwen3-TTS bundle unavailable — skipping sentence.');
+        debugPrint('[CoachTtsService] TTS bundle unavailable — skipping sentence.');
         _isPlaying = false;
         _playNext();
       }
     } catch (e) {
-      debugPrint('[Qwen3TtsService] Synthesis error: $e');
+      debugPrint('[CoachTtsService] Synthesis error: $e');
       _isPlaying = false;
       _playNext();
     }
@@ -181,7 +185,7 @@ class Qwen3TtsService {
       // Clean up after playback
       tempFile.delete().catchError((_) => tempFile);
     } catch (e) {
-      debugPrint('[Qwen3TtsService] Playback error: $e');
+      debugPrint('[CoachTtsService] Playback error: $e');
       _isPlaying = false;
       _playNext();
     }

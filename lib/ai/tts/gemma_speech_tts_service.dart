@@ -2,17 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_gemma/flutter_gemma.dart';
 
 /// TTS-only speech synthesis via the shared flutter_gemma engine
-/// (Qwen3-TTS 0.6B LiteRT bundle, accelerated + iOS-capable).
+/// (Inflect-Nano-v2 LiteRT bundle — the demonstrated end-to-end path:
+/// VITS text-encoder + decoder straight to 24 kHz PCM, fixed voice).
 ///
-/// ASR + VAD keep their existing engines (moonshine STT via the same
-/// flutter_gemma engine, Silero `vad` package). This service is synthesis
+/// ASR keeps its existing engine (moonshine STT via the same flutter_gemma
+/// engine, Silero `vad` package for endpointing). This service is synthesis
 /// only. Zero OS fallbacks: no Android TextToSpeech anywhere.
 ///
-/// Bundle: `litert-community/Qwen3-TTS-12Hz-0.6B-Base` (talker_int4 +
-/// mtp_fp32 + codec_decoder_fp32 + tokenizer + tables + demo voice).
-/// Installed once via [FlutterGemma.installTts] (idempotent — skipped when
-/// already installed) and synthesized through a background isolate, so the
-/// UI isolate stays free.
+/// Bundle: `sasha-denisov/inflect-nano-v2-litert` (2 tflites + Matcha G2P
+/// side-cars, ~34MB). Installed once via [FlutterGemma.installTts]
+/// (idempotent — skipped when already installed) and synthesized through a
+/// background isolate, so the UI isolate stays free.
 class GemmaSpeechTtsService {
   static final GemmaSpeechTtsService _instance =
       GemmaSpeechTtsService._internal();
@@ -20,7 +20,7 @@ class GemmaSpeechTtsService {
   GemmaSpeechTtsService._internal();
 
   static const String bundleBaseUrl =
-      'https://huggingface.co/litert-community/Qwen3-TTS-12Hz-0.6B-Base/resolve/main/';
+      'https://huggingface.co/sasha-denisov/inflect-nano-v2-litert/resolve/main/';
 
   SpeechSynthesizer? _synth;
   bool _installAttempted = false;
@@ -32,7 +32,7 @@ class GemmaSpeechTtsService {
   String? lastError;
   bool get isAvailable => _synth != null;
 
-  /// 24kHz mono output — matches Qwen3TtsService playback path.
+  /// 24kHz mono output — matches CoachTtsService playback path.
   static const int sampleRate = 24000;
 
   Future<bool> initialize() async {
@@ -46,13 +46,13 @@ class GemmaSpeechTtsService {
       if (!autoInstall) return false;
       if (_installAttempted) return false;
       _installAttempted = true;
-      debugPrint('[GemmaSpeechTtsService] Installing Qwen3-TTS bundle (~1.9GB first run)...');
+      debugPrint('[GemmaSpeechTtsService] Installing Inflect-Nano-v2 bundle (~34MB first run)...');
       await FlutterGemma.installTts()
           .fromNetwork(bundleBaseUrl)
-          .ofType(TtsModelType.qwen3)
+          .ofType(TtsModelType.inflect)
           .install();
       _synth = await FlutterGemma.getActiveTts();
-      debugPrint('[GemmaSpeechTtsService] Qwen3-TTS ready via flutter_gemma engine.');
+      debugPrint('[GemmaSpeechTtsService] Inflect TTS ready via flutter_gemma engine.');
       return true;
     } catch (e) {
       lastError = e.toString();

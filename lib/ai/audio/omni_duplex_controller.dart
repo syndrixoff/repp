@@ -4,7 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'speech_normalizer_service.dart';
 import 'silero_vad_service.dart';
 import 'whisper_asr_service.dart';
-import '../tts/qwen3_tts_service.dart';
+import '../tts/coach_tts_service.dart';
 
 /// Lifecycle state for full-duplex conversational voice mode
 enum OmniDuplexState {
@@ -25,7 +25,7 @@ class OmniDuplexController {
   OmniDuplexController._internal();
 
   final SpeechNormalizerService _normalizer = SpeechNormalizerService();
-  final Qwen3TtsService _tts = Qwen3TtsService();
+  final CoachTtsService _tts = CoachTtsService();
   final SileroVadService _vad = SileroVadService();
   final WhisperAsrService _whisper = WhisperAsrService();
 

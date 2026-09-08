@@ -6,7 +6,7 @@ import 'package:repp/ai/audio/speech_normalizer_service.dart';
 import 'package:repp/ai/audio/silero_vad_service.dart';
 import 'package:repp/ai/audio/whisper_asr_service.dart';
 import 'package:repp/ai/audio/omni_duplex_controller.dart';
-import 'package:repp/ai/tts/qwen3_tts_service.dart';
+import 'package:repp/ai/tts/coach_tts_service.dart';
 import 'package:repp/ai/tts/gemma_speech_tts_service.dart';
 import 'package:repp/ai/local_llm_service.dart';
 
@@ -25,7 +25,7 @@ void main() {
   });
 
   group('ModelCatalog Suite tests', () {
-    test('contains moonshine STT and Qwen3-TTS engine entries (4 steps)', () {
+    test('contains moonshine STT and Inflect TTS engine entries (4 steps)', () {
       final entries = ModelDownloadService.suiteEntries;
       expect(entries.length, 4);
 
@@ -41,9 +41,9 @@ void main() {
       expect(stt.sizeBytes, 110600000);
 
       final tts = entries.firstWhere((e) => e.id == 'tts');
-      expect(tts.name, contains('Qwen3-TTS'));
+      expect(tts.name, contains('Inflect'));
       expect(tts.isEngineManaged, true);
-      expect(tts.sizeBytes, 1887781060);
+      expect(tts.sizeBytes, 35710101);
     });
   });
 
@@ -124,13 +124,13 @@ void main() {
     });
   });
 
-  group('Qwen3TtsService tests', () {
-    final tts = Qwen3TtsService();
+  group('CoachTtsService tests', () {
+    final tts = CoachTtsService();
 
     test('singleton instance exists and has gym trainer voice prompt', () {
       expect(tts, isNotNull);
-      expect(Qwen3TtsService.gymTrainerVoicePrompt, contains('gym trainer voice'));
-      expect(Qwen3TtsService.gymTrainerVoicePrompt, contains('authoritative'));
+      expect(CoachTtsService.gymTrainerVoicePrompt, contains('gym trainer voice'));
+      expect(CoachTtsService.gymTrainerVoicePrompt, contains('authoritative'));
     });
 
     test('appendChunk correctly ignores thinking and thought tags', () {

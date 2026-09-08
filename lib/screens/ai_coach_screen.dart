@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
-import '../ai/tts/qwen3_tts_service.dart';
+import '../ai/tts/coach_tts_service.dart';
 import '../ai/audio/omni_duplex_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import '../ai/local_llm_service.dart';
@@ -37,7 +37,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
 
   StreamSubscription<bool>? _downloadStatusSub;
 
-  final Qwen3TtsService _tts = Qwen3TtsService();
+  final CoachTtsService _tts = CoachTtsService();
   final OmniDuplexController _omniController = OmniDuplexController();
   bool _isListening = false;
   String? _currentlySpeakingMessageId;
@@ -1994,10 +1994,10 @@ class _ModelDownloadBannerState extends State<_ModelDownloadBanner>
                                 const SizedBox(height: 2),
                                 Text(
                                   isDone
-                                      ? 'Gemma 4 E2B VLM + Moonshine + Qwen3-TTS'
+                                      ? 'Gemma 4 E2B VLM + Moonshine + Inflect TTS'
                                       : (isDownloading
                                           ? '${prog?.currentModelName ?? "Loading..."} (${prog?.currentModelTag ?? "LiteRT"})'
-                                          : '3 On-Device Models · 4.39 GB · 100% Offline'),
+                                          : '3 On-Device Models · 2.66 GB · 100% Offline'),
                                   style: TextStyle(
                                     fontSize: 10.5,
                                     fontWeight: FontWeight.w500,
@@ -2199,7 +2199,7 @@ class _ModelDownloadBannerState extends State<_ModelDownloadBanner>
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Suite: $overallPct% (${prog?.downloadedFormatted ?? "0 MB"} / ${prog?.totalFormatted ?? "4.39 GB"})',
+                              'Suite: $overallPct% (${prog?.downloadedFormatted ?? "0 MB"} / ${prog?.totalFormatted ?? "2.66 GB"})',
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,

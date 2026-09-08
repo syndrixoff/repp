@@ -232,20 +232,20 @@ class ModelDownloadService {
     ),
     LiteRtModelEntry(
       id: 'tts',
-      name: 'Qwen3-TTS 0.6B (LiteRT)',
+      name: 'Inflect-Nano-v2 (LiteRT)',
       tag: 'Coach Voice (flutter_gemma engine)',
-      filename: 'qwen3-tts-bundle',
-      url: 'https://huggingface.co/litert-community/Qwen3-TTS-12Hz-0.6B-Base/resolve/main/',
-      // Exact manifest sum (HF blobs API): talker_int4 255,998,768 +
-      // mtp_fp32 440,526,692 + codec_decoder_fp32 456,820,324 +
-      // tokenizer.json 11,424,262 + tables 723,006,790 + demo voice 4,224
-      sizeBytes: 1887781060, // ~1.76 GB bundle
+      filename: 'inflect-nano-bundle',
+      url: 'https://huggingface.co/sasha-denisov/inflect-nano-v2-litert/resolve/main/',
+      // Exact manifest sum (HF blobs APIs): enc_fp16 1,782,268 +
+      // dec_fp16 6,375,948 + config 2,071 + dict.gz 1,762,038 +
+      // dp_g2p_fp16 25,785,872 + g2p_meta 1,904
+      sizeBytes: 35710101, // ~34 MB bundle
       stepIndex: 4,
       isEngineManaged: true,
     ),
   ];
 
-  static const int estimatedTotalBytes = 4709152868; // ~4.39 GB
+  static const int estimatedTotalBytes = 2857081909; // ~2.66 GB
   static const int estimatedCoreBytes = 2708471808; // Core Gemma 4 E2B ~2.52 GB
 
   // Backward compatibility alias
