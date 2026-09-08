@@ -15,6 +15,7 @@ import 'services/exercise_service.dart';
 import 'ai/local_llm_service.dart';
 import 'package:flutter_gemma/flutter_gemma.dart';
 import 'package:flutter_gemma_litertlm/flutter_gemma_litertlm.dart';
+import 'package:flutter_gemma_speech/flutter_gemma_speech.dart';
 import 'screens/home_screen.dart';
 import 'l10n/app_localizations.dart';
 import 'theme/light_theme.dart';
@@ -23,10 +24,13 @@ import 'theme/dark_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize on-device inference engine for local AI
+  // Initialize on-device inference engine for local AI (LLM + STT + TTS
+  // backends share the same LiteRT native bundle — zero OS fallbacks)
   try {
     await FlutterGemma.initialize(
       inferenceEngines: const [LiteRtLmEngine()],
+      sttBackends: const [LiteRtSttBackend()],
+      ttsBackends: const [LiteRtTtsBackend()],
     );
   } catch (e) {
     debugPrint('AI engine initialization warning: $e');

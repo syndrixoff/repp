@@ -7,7 +7,7 @@ import 'package:repp/ai/audio/silero_vad_service.dart';
 import 'package:repp/ai/audio/whisper_asr_service.dart';
 import 'package:repp/ai/audio/omni_duplex_controller.dart';
 import 'package:repp/ai/tts/qwen3_tts_service.dart';
-import 'package:repp/ai/tts/crisp_tts_service.dart';
+import 'package:repp/ai/tts/gemma_speech_tts_service.dart';
 import 'package:repp/ai/local_llm_service.dart';
 
 void main() {
@@ -19,38 +19,31 @@ void main() {
       (MethodCall methodCall) async => null,
     );
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
-      const MethodChannel('com.repp.repp/qwen3_tts'),
-      (MethodCall methodCall) async => null,
-    );
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
-      const MethodChannel('com.repp.repp/silero_vad'),
-      (MethodCall methodCall) async => null,
-    );
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
-      const MethodChannel('com.repp.repp/whisper_asr'),
-      (MethodCall methodCall) async => null,
-    );
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
       const MethodChannel('com.ryanheise.just_audio.methods'),
       (MethodCall methodCall) async => null,
     );
   });
 
   group('ModelCatalog Suite tests', () {
-    test('contains Whisper Tiny and Silero VAD v5 entries with 6 total steps', () {
+    test('contains moonshine STT and Qwen3-TTS engine entries (4 steps)', () {
       final entries = ModelDownloadService.suiteEntries;
-      expect(entries.length, 6);
+      expect(entries.length, 4);
 
       final vad = entries.firstWhere((e) => e.id == 'vad');
       expect(vad.name, contains('Silero VAD'));
       expect(vad.filename, 'silero_vad_v5.onnx');
       expect(vad.isBundled, true);
 
-      final asr = entries.firstWhere((e) => e.id == 'asr');
-      expect(asr.name, contains('Whisper Tiny'));
-      expect(asr.filename, 'ggml-tiny.en.bin');
-      expect(asr.url, contains('whisper.cpp'));
-      expect(asr.sizeBytes, 77704715);
+      final stt = entries.firstWhere((e) => e.id == 'stt');
+      expect(stt.name, contains('Moonshine'));
+      expect(stt.filename, 'moonshine_tiny_5s_f32.tflite');
+      expect(stt.isEngineManaged, true);
+      expect(stt.sizeBytes, 110600000);
+
+      final tts = entries.firstWhere((e) => e.id == 'tts');
+      expect(tts.name, contains('Qwen3-TTS'));
+      expect(tts.isEngineManaged, true);
+      expect(tts.sizeBytes, 1887781060);
     });
   });
 
@@ -147,15 +140,20 @@ void main() {
     });
   });
 
-  group('CrispTtsService tests', () {
-    final tts = CrispTtsService();
+  group('GemmaSpeechTtsService tests', () {
+    final tts = GemmaSpeechTtsService();
 
-    test('returns null for empty text without touching native lib', () async {
+    setUp(() {
+      GemmaSpeechTtsService.autoInstall = false;
+      WhisperAsrService.autoInstall = false;
+    });
+
+    test('returns null for empty text without touching the engine', () async {
       expect(await tts.synthesizePcm(''), isNull);
       expect(await tts.synthesizePcm('   '), isNull);
     });
 
-    test('singleton starts unavailable until model + native lib present', () {
+    test('singleton starts unavailable until bundle is installed', () {
       expect(tts.isAvailable, isFalse);
     });
   });

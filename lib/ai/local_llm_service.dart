@@ -7,6 +7,8 @@ import 'package:genkit_flutter_gemma/genkit_flutter_gemma.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:background_downloader/background_downloader.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'audio/whisper_asr_service.dart' show WhisperAsrService;
+import 'tts/gemma_speech_tts_service.dart' show GemmaSpeechTtsService;
 
 /// Multimodal input bundle for on-device Gemma 4 E2B inference
 class MultimodalInput {
@@ -60,9 +62,12 @@ class LiteRtModelEntry {
   final String filename;
   final String url;
   final int sizeBytes;
-  final int stepIndex; // 1 to 5
+  final int stepIndex; // 1-based position in the suite
   final bool isCore; // true for primary VLM
   final bool isBundled; // true if packaged inside app assets (no download needed)
+  final bool isEngineManaged; // true if installed via FlutterGemma builders
+  // into engine storage (not modelDir) — completion is checked via
+  // hasActiveStt()/hasActiveTts(), not file existence.
 
   const LiteRtModelEntry({
     required this.id,
@@ -74,6 +79,7 @@ class LiteRtModelEntry {
     required this.stepIndex,
     this.isCore = false,
     this.isBundled = false,
+    this.isEngineManaged = false,
   });
 
   String get sizeFormatted {
@@ -189,7 +195,9 @@ class ModelDownloadService {
   factory ModelDownloadService() => _instance;
   ModelDownloadService._internal();
 
-  /// 5-Model LiteRT Suite Catalog (6 downloadable files)
+  /// 3-Model on-device suite: Gemma 4 E2B core (file) + Silero VAD (bundled)
+  /// + moonshine STT + Qwen3-TTS (both engine-managed via FlutterGemma
+  /// builders into engine storage). Zero OS fallbacks.
   static const List<LiteRtModelEntry> suiteEntries = [
     LiteRtModelEntry(
       id: 'vlm',
@@ -212,44 +220,32 @@ class ModelDownloadService {
       isBundled: true,
     ),
     LiteRtModelEntry(
-      id: 'asr',
-      name: 'Whisper Tiny (whisper.cpp)',
-      tag: 'Voice Input',
-      filename: 'ggml-tiny.en.bin',
-      url: 'https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-tiny.en.bin',
-      sizeBytes: 77704715, // ~74.1 MB
+      id: 'stt',
+      name: 'Moonshine Tiny (STT)',
+      tag: 'Voice Input (flutter_gemma engine)',
+      filename: 'moonshine_tiny_5s_f32.tflite',
+      url: 'https://huggingface.co/litert-community/moonshine-tiny/resolve/main/moonshine_tiny_5s_f32.tflite',
+      // 109,373,140 model bytes exact (HF blobs API) + ~1.2MB tokenizer.json
+      sizeBytes: 110600000, // ~105 MB bundle
       stepIndex: 3,
+      isEngineManaged: true,
     ),
     LiteRtModelEntry(
-      id: 'normalizer',
-      name: 'S1-mini Dictation & Normalizer',
-      tag: 'Speech Cleaner',
-      filename: 'S1-mini_int8.litertlm',
-      url: 'https://huggingface.co/mlboydaisuke/S1-mini-LiteRT/resolve/main/S1-mini_int8.litertlm',
-      sizeBytes: 688157792, // ~688 MB
+      id: 'tts',
+      name: 'Qwen3-TTS 0.6B (LiteRT)',
+      tag: 'Coach Voice (flutter_gemma engine)',
+      filename: 'qwen3-tts-bundle',
+      url: 'https://huggingface.co/litert-community/Qwen3-TTS-12Hz-0.6B-Base/resolve/main/',
+      // Exact manifest sum (HF blobs API): talker_int4 255,998,768 +
+      // mtp_fp32 440,526,692 + codec_decoder_fp32 456,820,324 +
+      // tokenizer.json 11,424,262 + tables 723,006,790 + demo voice 4,224
+      sizeBytes: 1887781060, // ~1.76 GB bundle
       stepIndex: 4,
-    ),
-    LiteRtModelEntry(
-      id: 'tts_talker',
-      name: 'Qwen3-TTS Acoustic Talker (GGUF)',
-      tag: 'Coach Voice (TTS)',
-      filename: 'qwen-talker-0.6b-base-Q4_K_M.gguf',
-      url: 'https://huggingface.co/Serveurperso/Qwen3-TTS-GGUF/resolve/main/qwen-talker-0.6b-base-Q4_K_M.gguf',
-      sizeBytes: 398458880, // ~380 MB
-      stepIndex: 5,
-    ),
-    LiteRtModelEntry(
-      id: 'tts_tokenizer',
-      name: 'Qwen3-TTS Audio Tokenizer (GGUF)',
-      tag: 'Voice Tokenizer',
-      filename: 'qwen-tokenizer-12hz-Q4_K_M.gguf',
-      url: 'https://huggingface.co/Serveurperso/Qwen3-TTS-GGUF/resolve/main/qwen-tokenizer-12hz-Q4_K_M.gguf',
-      sizeBytes: 209715200, // ~200 MB
-      stepIndex: 6,
+      isEngineManaged: true,
     ),
   ];
 
-  static const int estimatedTotalBytes = 4047181216; // ~4.05 GB
+  static const int estimatedTotalBytes = 4709152868; // ~4.39 GB
   static const int estimatedCoreBytes = 2708471808; // Core Gemma 4 E2B ~2.52 GB
 
   // Backward compatibility alias
@@ -404,11 +400,11 @@ class ModelDownloadService {
       progress: overallProg,
       speedBytesPerSecond: speedBytes,
       etaSeconds: etaSec,
-      currentPhase: '${entry.name} (${entry.stepIndex}/6)',
+      currentPhase: '${entry.name} (${entry.stepIndex}/${suiteEntries.length})',
       currentModelName: entry.name,
       currentModelTag: entry.tag,
       currentStep: entry.stepIndex,
-      totalSteps: 6,
+      totalSteps: suiteEntries.length,
       isDownloading: true,
     ));
   }
@@ -438,7 +434,7 @@ class ModelDownloadService {
           currentModelName: entry.name,
           currentModelTag: entry.tag,
           currentStep: entry.stepIndex,
-          totalSteps: 6,
+          totalSteps: suiteEntries.length,
           isDownloading: false,
         ),
         immediate: true,
@@ -454,7 +450,7 @@ class ModelDownloadService {
           currentModelName: entry.name,
           currentModelTag: entry.tag,
           currentStep: entry.stepIndex,
-          totalSteps: 6,
+          totalSteps: suiteEntries.length,
           isDownloading: false,
         ),
         immediate: true,
@@ -472,11 +468,11 @@ class ModelDownloadService {
           currentFileDownloadedBytes: _downloadedBytesByEntryId[entry.id] ?? 0,
           currentFileTotalBytes: entry.sizeBytes,
           progress: (_lastTotalDownloadedBytes / estimatedTotalBytes).clamp(0.0, 1.0),
-          currentPhase: '${entry.name} (${entry.stepIndex}/6)',
+          currentPhase: '${entry.name} (${entry.stepIndex}/${suiteEntries.length})',
           currentModelName: entry.name,
           currentModelTag: entry.tag,
           currentStep: entry.stepIndex,
-          totalSteps: 6,
+          totalSteps: suiteEntries.length,
           isDownloading: true,
         ),
         immediate: true,
@@ -535,19 +531,23 @@ class ModelDownloadService {
     return getEntryFile(entry);
   }
 
-  Future<File> get asrFile async {
-    final entry = suiteEntries.firstWhere((e) => e.id == 'asr');
-    return getEntryFile(entry);
+  /// True when the engine-managed STT bundle (moonshine) is installed.
+  /// Guarded — FlutterGemma may be uninitialized (e.g. unit tests).
+  Future<bool> get isSttEngineReady async {
+    try {
+      return FlutterGemma.hasActiveStt();
+    } catch (_) {
+      return false;
+    }
   }
 
-  Future<File> get ttsTalkerFile async {
-    final entry = suiteEntries.firstWhere((e) => e.id == 'tts_talker');
-    return getEntryFile(entry);
-  }
-
-  Future<File> get ttsTokenizerFile async {
-    final entry = suiteEntries.firstWhere((e) => e.id == 'tts_tokenizer');
-    return getEntryFile(entry);
+  /// True when the engine-managed TTS bundle (Qwen3-TTS) is installed.
+  Future<bool> get isTtsEngineReady async {
+    try {
+      return FlutterGemma.hasActiveTts();
+    } catch (_) {
+      return false;
+    }
   }
 
   Future<int> _getFileBytes(File file) async {
@@ -562,10 +562,19 @@ class ModelDownloadService {
   /// Verify integrity of a specific model entry on disk
   Future<bool> verifyEntryIntegrity(LiteRtModelEntry entry) async {
     if (entry.isBundled) return true;
+    if (entry.isEngineManaged) return isEngineEntryReady(entry);
     final f = await getEntryFile(entry);
     if (!await f.exists()) return false;
     final len = await _getFileBytes(f);
     return len >= (entry.sizeBytes * 0.95);
+  }
+
+  /// Engine-managed entries (STT/TTS) live in flutter_gemma storage —
+  /// readiness is the active-model flag, not a file on disk.
+  Future<bool> isEngineEntryReady(LiteRtModelEntry entry) async {
+    if (entry.id == 'stt') return isSttEngineReady;
+    if (entry.id == 'tts') return isTtsEngineReady;
+    return false;
   }
 
   /// True if all 4 models in the suite (all 5 files) are present and verified on disk
@@ -580,11 +589,15 @@ class ModelDownloadService {
     return false;
   }
 
-  /// True if all 4 models (all 5 files) are fully present on disk and valid
+  /// True if the full suite (core file + bundled + engine-managed) is ready
   Future<bool> isFullSuiteDownloaded() async {
     final targetDir = await modelDir;
     for (final e in suiteEntries) {
       if (e.isBundled) continue;
+      if (e.isEngineManaged) {
+        if (!await isEngineEntryReady(e)) return false;
+        continue;
+      }
       final f = File('${targetDir.path}/${e.filename}');
       if (!await f.exists()) return false;
       final len = await _getFileBytes(f);
@@ -628,6 +641,14 @@ class ModelDownloadService {
         totalOnDisk += e.sizeBytes;
         continue;
       }
+      if (e.isEngineManaged) {
+        final ready = await isEngineEntryReady(e);
+        final len = ready ? e.sizeBytes : 0;
+        _downloadedBytesByEntryId[e.id] = len;
+        totalOnDisk += len;
+        if (!ready) allValid = false;
+        continue;
+      }
       final f = File('${targetDir.path}/${e.filename}');
       int len = 0;
       try {
@@ -652,8 +673,8 @@ class ModelDownloadService {
         currentFileDownloadedBytes: estimatedTotalBytes,
         currentFileTotalBytes: estimatedTotalBytes,
         progress: 1.0,
-        currentStep: 6,
-        totalSteps: 6,
+        currentStep: 4,
+        totalSteps: 4,
         currentPhase: 'All models verified on device',
         isCompleted: true,
       );
@@ -682,11 +703,11 @@ class ModelDownloadService {
             currentFileDownloadedBytes: _downloadedBytesByEntryId[e.id] ?? 0,
             currentFileTotalBytes: e.sizeBytes,
             progress: (totalOnDisk / estimatedTotalBytes).clamp(0.0, 1.0),
-            currentPhase: '${e.name} (${e.stepIndex}/6)',
+            currentPhase: '${e.name} (${e.stepIndex}/${suiteEntries.length})',
             currentModelName: e.name,
             currentModelTag: e.tag,
             currentStep: e.stepIndex,
-            totalSteps: 6,
+            totalSteps: suiteEntries.length,
             isDownloading: true,
           );
           _emitProgress(partial, immediate: true);
@@ -712,11 +733,11 @@ class ModelDownloadService {
         currentFileDownloadedBytes: _downloadedBytesByEntryId[current.id] ?? 0,
         currentFileTotalBytes: current.sizeBytes,
         progress: prog,
-        currentPhase: '${current.name} (${current.stepIndex}/6)',
+        currentPhase: '${current.name} (${current.stepIndex}/${suiteEntries.length})',
         currentModelName: current.name,
         currentModelTag: current.tag,
         currentStep: current.stepIndex,
-        totalSteps: 6,
+        totalSteps: suiteEntries.length,
         isDownloading: false,
       );
       _emitProgress(partial, immediate: true);
@@ -729,11 +750,11 @@ class ModelDownloadService {
       currentFileDownloadedBytes: 0,
       currentFileTotalBytes: suiteEntries.first.sizeBytes,
       progress: 0.0,
-      currentPhase: '${suiteEntries.first.name} (1/6)',
+      currentPhase: '${suiteEntries.first.name} (1/${suiteEntries.length})',
       currentModelName: suiteEntries.first.name,
       currentModelTag: suiteEntries.first.tag,
       currentStep: 1,
-      totalSteps: 6,
+      totalSteps: suiteEntries.length,
       isDownloading: false,
     );
     _emitProgress(zero, immediate: true);
@@ -764,8 +785,8 @@ class ModelDownloadService {
         downloadedBytes: estimatedTotalBytes,
         totalBytes: estimatedTotalBytes,
         progress: 1.0,
-        currentStep: 6,
-        totalSteps: 6,
+        currentStep: 4,
+        totalSteps: 4,
         currentPhase: 'All models ready',
         isCompleted: true,
       ), immediate: true);
@@ -787,7 +808,7 @@ class ModelDownloadService {
       currentModelName: suiteEntries.first.name,
       currentModelTag: suiteEntries.first.tag,
       currentStep: 1,
-      totalSteps: 6,
+      totalSteps: suiteEntries.length,
       isDownloading: true,
     ), immediate: true);
 
@@ -799,6 +820,14 @@ class ModelDownloadService {
       if (entry.isBundled) {
         _downloadedBytesByEntryId[entry.id] = entry.sizeBytes;
         continue;
+      }
+      if (entry.isEngineManaged) {
+        if (await isEngineEntryReady(entry)) {
+          _downloadedBytesByEntryId[entry.id] = entry.sizeBytes;
+          continue;
+        }
+        await _installEngineEntry(entry);
+        return;
       }
       final file = await getEntryFile(entry);
       final exists = await file.exists();
@@ -822,13 +851,88 @@ class ModelDownloadService {
         currentFileDownloadedBytes: estimatedTotalBytes,
         currentFileTotalBytes: estimatedTotalBytes,
         progress: 1.0,
-        currentStep: 6,
-        totalSteps: 6,
+        currentStep: 4,
+        totalSteps: 4,
         currentPhase: 'All models ready',
         isCompleted: true,
       ),
       immediate: true,
     );
+  }
+
+  /// Installs an engine-managed entry (STT/TTS) via FlutterGemma builders
+  /// into engine storage, mapping installer progress into suite progress.
+  /// Installs are idempotent — already-installed bundles are skipped.
+  Future<void> _installEngineEntry(LiteRtModelEntry entry) async {
+    _currentEntry = entry;
+
+    void emitOverall(int entryBytes) {
+      _downloadedBytesByEntryId[entry.id] = entryBytes;
+      int total = 0;
+      for (final e in suiteEntries) {
+        total += _downloadedBytesByEntryId[e.id] ?? 0;
+      }
+      total = total.clamp(0, estimatedTotalBytes);
+      _lastTotalDownloadedBytes = total;
+      _emitProgress(ModelDownloadProgress(
+        downloadedBytes: total,
+        totalBytes: estimatedTotalBytes,
+        currentFileDownloadedBytes: entryBytes,
+        currentFileTotalBytes: entry.sizeBytes,
+        progress: (total / estimatedTotalBytes).clamp(0.0, 1.0),
+        currentPhase: 'Installing ${entry.name} (${entry.stepIndex}/${suiteEntries.length})...',
+        currentModelName: entry.name,
+        currentModelTag: entry.tag,
+        currentStep: entry.stepIndex,
+        totalSteps: suiteEntries.length,
+        isDownloading: true,
+      ), immediate: true);
+    }
+
+    try {
+      if (entry.id == 'stt') {
+        var modelPct = 0;
+        var tokPct = 0;
+        const modelBytes = 109373140; // moonshine_tiny_5s_f32.tflite exact
+        void emit() => emitOverall(
+              ((modelPct / 100) * modelBytes +
+                      (tokPct / 100) * (entry.sizeBytes - modelBytes))
+                  .round(),
+            );
+        await FlutterGemma.installStt()
+            .modelFromNetwork(WhisperAsrService.modelUrl)
+            .tokenizerFromNetwork(WhisperAsrService.tokenizerUrl)
+            .ofType(SttModelType.moonshine)
+            .withModelProgress((p) {
+              modelPct = p;
+              emit();
+            })
+            .withTokenizerProgress((p) {
+              tokPct = p;
+              emit();
+            })
+            .install();
+      } else if (entry.id == 'tts') {
+        await FlutterGemma.installTts()
+            .fromNetwork(GemmaSpeechTtsService.bundleBaseUrl)
+            .ofType(TtsModelType.qwen3)
+            .withProgress((p) =>
+                emitOverall(((p / 100) * entry.sizeBytes).round()))
+            .install();
+      }
+      _downloadedBytesByEntryId[entry.id] = entry.sizeBytes;
+      await _advanceQueue();
+    } catch (e) {
+      debugPrint('Error installing ${entry.name}: $e');
+      _isDownloading = false;
+      _statusController.add(false);
+      _emitProgress(ModelDownloadProgress(
+        downloadedBytes: _lastTotalDownloadedBytes,
+        totalBytes: estimatedTotalBytes,
+        error: e.toString(),
+        isDownloading: false,
+      ), immediate: true);
+    }
   }
 
   Future<void> _enqueueEntry(LiteRtModelEntry entry, {bool requireWifi = false}) async {
@@ -899,11 +1003,11 @@ class ModelDownloadService {
         currentFileDownloadedBytes: _downloadedBytesByEntryId[entry.id] ?? 0,
         currentFileTotalBytes: entry.sizeBytes,
         progress: (_lastTotalDownloadedBytes / estimatedTotalBytes).clamp(0.0, 1.0),
-        currentPhase: 'Downloading ${entry.name} (${entry.stepIndex}/6)...',
+        currentPhase: 'Downloading ${entry.name} (${entry.stepIndex}/${suiteEntries.length})...',
         currentModelName: entry.name,
         currentModelTag: entry.tag,
         currentStep: entry.stepIndex,
-        totalSteps: 6,
+        totalSteps: suiteEntries.length,
         isDownloading: true,
       ), immediate: true);
     } catch (e) {
@@ -965,7 +1069,7 @@ class ModelDownloadService {
       currentModelName: _currentEntry?.name,
       currentModelTag: _currentEntry?.tag,
       currentStep: _currentEntry?.stepIndex ?? 1,
-      totalSteps: 6,
+      totalSteps: suiteEntries.length,
       isDownloading: false,
     ), immediate: true);
   }

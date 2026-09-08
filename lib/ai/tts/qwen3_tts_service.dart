@@ -1,21 +1,19 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
-import '../local_llm_service.dart';
-import 'crisp_tts_service.dart';
+import 'gemma_speech_tts_service.dart';
 
 /// Qwen3-TTS On-Device Speech Synthesis Service.
-/// Communicates with native Qwen3-TTS engine via MethodChannel and streams
-/// synthesized audio through just_audio.
+///
+/// Synthesizes via the shared flutter_gemma engine
+/// ([GemmaSpeechTtsService], Qwen3-TTS 0.6B LiteRT) and streams playback
+/// through just_audio. Zero OS fallbacks.
 class Qwen3TtsService {
   static final Qwen3TtsService _instance = Qwen3TtsService._internal();
   factory Qwen3TtsService() => _instance;
   Qwen3TtsService._internal();
-
-  static const MethodChannel _channel = MethodChannel('com.repp.repp/qwen3_tts');
 
   final AudioPlayer _audioPlayer = AudioPlayer();
   final List<String> _sentenceQueue = [];
@@ -30,62 +28,26 @@ class Qwen3TtsService {
       'Speak in an intense, authoritative, high-energy gym trainer voice with crisp commands, fierce motivation, and urgency. Push the athlete to stay locked in and maintain strict form.';
 
   bool _initialized = false;
-  bool _nativeEngineAvailable = false;
-  bool _engineInitialized = false;
-  bool get isNativeEngineAvailable => _nativeEngineAvailable;
 
-  Future<void> initialize({String? tokenizerPath, String? talkerPath}) async {
+  Future<void> initialize() async {
     // Allow re-init after soft dispose (5-min voice unload).
     _isDisposed = false;
     if (!_initialized) {
       _initialized = true;
 
-      // Listen for PCM/WAV playback completion (native Qwen3 path)
+      // Advance the sentence queue on WAV playback completion.
       _audioPlayer.playerStateStream.listen((state) {
         if (state.processingState == ProcessingState.completed) {
           _isPlaying = false;
           _playNext();
         }
       });
-
-      // Listen for native TTS completion via MethodChannel when each sentence finishes.
-      // Without this, _isPlaying is never reset and the sentence queue stalls silently.
-      _channel.setMethodCallHandler((call) async {
-        if (call.method == 'onTtsComplete') {
-          if (_isPlaying) {
-            _isPlaying = false;
-            _playNext();
-          }
-        }
-      });
     }
 
-    if (Platform.isAndroid && !_engineInitialized) {
-      try {
-        final available = await _channel.invokeMethod<bool>('isAvailable') ?? false;
-        _nativeEngineAvailable = available;
-
-        if (tokenizerPath == null || talkerPath == null) {
-          final talker = await ModelDownloadService().ttsTalkerFile;
-          final tokenizer = await ModelDownloadService().ttsTokenizerFile;
-          if (await talker.exists() && await tokenizer.exists()) {
-            tokenizerPath = tokenizer.path;
-            talkerPath = talker.path;
-          }
-        }
-
-        if (tokenizerPath != null && talkerPath != null) {
-          final res = await _channel.invokeMethod('init', {
-            'tokenizerPath': tokenizerPath,
-            'talkerPath': talkerPath,
-          });
-          if (res == true) {
-            _engineInitialized = true;
-          }
-        }
-      } catch (e) {
-        debugPrint('[Qwen3TtsService] Native engine init notice: $e');
-      }
+    try {
+      await GemmaSpeechTtsService().initialize();
+    } catch (e) {
+      debugPrint('[Qwen3TtsService] Engine init notice: $e');
     }
   }
 
@@ -181,26 +143,20 @@ class Qwen3TtsService {
     final sentence = _sentenceQueue.removeAt(0);
 
     try {
-      // 1. Preferred: crispasr TTS (TTS-only engine, Qwen3-TTS GGUF pair).
-      // 2. Legacy: native Qwen3-TTS Android bridge (stub .so for now).
+      // Qwen3-TTS via the shared flutter_gemma engine (accelerated, iOS-capable).
+      // Zero OS fallbacks — if the bundle is unavailable the sentence is
+      // skipped with a log, never spoken by an OS engine.
       Uint8List? pcmBytes;
       try {
-        pcmBytes = await CrispTtsService().synthesizePcm(sentence);
+        pcmBytes = await GemmaSpeechTtsService().synthesizePcm(sentence);
       } catch (e) {
-        debugPrint('[Qwen3TtsService] crispasr TTS notice: $e');
-      }
-      if ((pcmBytes == null || pcmBytes.isEmpty) && Platform.isAndroid) {
-        final result = await _channel.invokeMethod<Uint8List>('synthesize', {
-          'text': sentence,
-          'voicePrompt': gymTrainerVoicePrompt,
-        });
-        pcmBytes = result;
+        debugPrint('[Qwen3TtsService] flutter_gemma TTS notice: $e');
       }
 
       if (pcmBytes != null && pcmBytes.isNotEmpty) {
         await _playPcmBytes(pcmBytes);
       } else {
-        debugPrint('[Qwen3TtsService] Both crispasr + native synthesis unavailable — skipping sentence.');
+        debugPrint('[Qwen3TtsService] Qwen3-TTS bundle unavailable — skipping sentence.');
         _isPlaying = false;
         _playNext();
       }
@@ -270,12 +226,6 @@ class Qwen3TtsService {
     _sentenceQueue.clear();
     _isPlaying = false;
 
-    if (Platform.isAndroid) {
-      try {
-        await _channel.invokeMethod('stop');
-      } catch (_) {}
-    }
-
     try {
       await _audioPlayer.stop();
     } catch (_) {}
@@ -290,11 +240,9 @@ class Qwen3TtsService {
     // so the singleton can be re-initialized on next voice session.
     unawaited(stop());
     try {
-      CrispTtsService().dispose();
+      GemmaSpeechTtsService().dispose();
     } catch (_) {}
     _initialized = false;
-    _engineInitialized = false;
-    _nativeEngineAvailable = false;
   }
 
   void disposePlayer() {

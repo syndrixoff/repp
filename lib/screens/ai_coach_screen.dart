@@ -1979,7 +1979,7 @@ class _ModelDownloadBannerState extends State<_ModelDownloadBanner>
                                       isDone
                                           ? 'REPP LiteRT AI Suite Ready'
                                           : (isDownloading
-                                              ? 'Downloading AI Suite [Step $currentStep/5]'
+                                              ? 'Downloading AI Suite [Step $currentStep/${prog?.totalSteps ?? 4}]'
                                               : (hasPartial
                                                   ? 'AI Download Paused'
                                                   : 'REPP On-Device AI Suite')),
@@ -1994,10 +1994,10 @@ class _ModelDownloadBannerState extends State<_ModelDownloadBanner>
                                 const SizedBox(height: 2),
                                 Text(
                                   isDone
-                                      ? 'LFM 2.5 3B VLM + Whisper + S1-mini + Qwen3-TTS'
+                                      ? 'Gemma 4 E2B VLM + Moonshine + Qwen3-TTS'
                                       : (isDownloading
                                           ? '${prog?.currentModelName ?? "Loading..."} (${prog?.currentModelTag ?? "LiteRT"})'
-                                          : '4 On-Device Models · 3.83 GB · 100% Offline'),
+                                          : '3 On-Device Models · 4.39 GB · 100% Offline'),
                                   style: TextStyle(
                                     fontSize: 10.5,
                                     fontWeight: FontWeight.w500,
@@ -2123,7 +2123,7 @@ class _ModelDownloadBannerState extends State<_ModelDownloadBanner>
                             // Current Active File Downloaded
                             Expanded(
                               child: Text(
-                                'Step $currentStep/5: $filePct% (${prog?.currentFileDownloadedFormatted ?? "0 MB"} / ${prog?.currentFileTotalFormatted ?? "..."})',
+                                'Step $currentStep/${prog?.totalSteps ?? 4}: $filePct% (${prog?.currentFileDownloadedFormatted ?? "0 MB"} / ${prog?.currentFileTotalFormatted ?? "..."})',
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w700,
@@ -2199,7 +2199,7 @@ class _ModelDownloadBannerState extends State<_ModelDownloadBanner>
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Suite: $overallPct% (${prog?.downloadedFormatted ?? "0 MB"} / ${prog?.totalFormatted ?? "3.83 GB"})',
+                              'Suite: $overallPct% (${prog?.downloadedFormatted ?? "0 MB"} / ${prog?.totalFormatted ?? "4.39 GB"})',
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
@@ -2243,7 +2243,7 @@ class _ModelDownloadBannerState extends State<_ModelDownloadBanner>
                               Text(
                                 _showStepsDetails
                                     ? 'Hide Suite Model Details'
-                                    : 'View All 5 Model Files (VLM, ASR, S1, TTS)',
+                                    : 'View All 4 Model Files (VLM, VAD, STT, TTS)',
                                 style: TextStyle(
                                   fontSize: 10.5,
                                   fontWeight: FontWeight.w600,
