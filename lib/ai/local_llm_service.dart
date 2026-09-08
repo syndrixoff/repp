@@ -1045,7 +1045,24 @@ class ModelDownloadService {
         );
         final tokText = await tokFile.readAsString();
         if (!tokText.contains('"vocab"') && !tokText.contains('tokens')) {
-          throw StateError('Moonshine tokenizer failed validation');
+          // Stale/corrupt tokenizer (e.g. partial pre-fix download):
+          // delete once and pull fresh, then re-validate.
+          try {
+            await tokFile.delete();
+          } catch (_) {}
+          await _fetchUrl(
+            WhisperAsrService.tokenizerUrl,
+            tokFile,
+            0,
+          (done, total) => emitOverall(
+            done > entry.sizeBytes ? entry.sizeBytes : done,
+          ),
+          );
+          final retryText = await tokFile.readAsString();
+          if (!retryText.contains('"vocab"') &&
+              !retryText.contains('tokens')) {
+            throw StateError('Moonshine tokenizer failed validation');
+          }
         }
         await FlutterGemma.installStt()
             .modelFromFile(modelFile.path)
@@ -1124,7 +1141,8 @@ class ModelDownloadService {
   }
 
   /// Plain-await http download with Range resume + size verify.
-  /// [expectedBytes] <= 0 skips the size check (revision-varying files).
+  /// [expectedBytes] <= 0 skips the size check (revision-varying files) but
+  /// still resumes partial files; a complete local file is returned as-is.
   Future<void> _fetchUrl(
     String url,
     File file,
@@ -1134,12 +1152,14 @@ class ModelDownloadService {
     var start = 0;
     if (await file.exists()) {
       start = await file.length();
+      if (start > 0 && (expectedBytes <= 0 || start == expectedBytes)) {
+        // Complete (or revision-varying) file already on disk.
+        onProgress?.call(start, start);
+        return;
+      }
       if (expectedBytes > 0 && start > expectedBytes) {
         await file.delete();
         start = 0;
-      } else if (expectedBytes > 0 && start == expectedBytes) {
-        onProgress?.call(expectedBytes, expectedBytes);
-        return;
       }
     }
     final req = http.Request('GET', Uri.parse(url));
