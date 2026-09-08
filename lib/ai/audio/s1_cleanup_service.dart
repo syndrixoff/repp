@@ -9,15 +9,19 @@ import 'package:path_provider/path_provider.dart';
 import 's1_ort_ffi.dart';
 import 's1_tokenizer.dart';
 
-/// One file of the S1 Q4 ONNX bundle.
+/// One file of the S1 Q4 ONNX bundle. Empty [sha256] means HF publishes
+/// no content hash (small non-LFS files) — then [mustContain] substring
+/// plus exact size is the integrity check.
 class S1BundleFile {
   final String name;
   final int sizeBytes;
   final String sha256;
+  final String mustContain;
   const S1BundleFile({
     required this.name,
     required this.sizeBytes,
-    required this.sha256,
+    this.sha256 = '',
+    this.mustContain = '',
   });
 }
 
@@ -41,7 +45,7 @@ class S1CleanupService {
       name: 'onnx/model_q4.onnx',
       sizeBytes: 369635,
       sha256:
-          'be5f0d8d03ac387bdd2d2582e4e114ca3c23a33de522db60516f483fc94eaebec75',
+          'be5f0d8d03ac387bdd2d2582e4e114ca3c23a44b70bf03be609844542107745c',
     ),
     S1BundleFile(
       name: 'onnx/model_q4.onnx_data',
@@ -52,12 +56,12 @@ class S1CleanupService {
     S1BundleFile(
       name: 'tokenizer.json',
       sizeBytes: 9117036,
-      sha256: '1463e2eafe9285b80c6a5afb663c5cb58b525ed5',
+      mustContain: '"vocab"',
     ),
     S1BundleFile(
       name: 'config.json',
       sizeBytes: 1617,
-      sha256: '0b4663ce1aeaa592b785c59f5864762cd980f639',
+      mustContain: '"architectures"',
     ),
   ];
 
@@ -145,8 +149,20 @@ class S1CleanupService {
       final file = await fileFor(spec);
       if (!await file.exists()) return false;
       if (await file.length() != spec.sizeBytes) return false;
-      final digest = await sha256.bind(file.openRead()).first;
-      return digest.toString() == spec.sha256;
+      if (spec.sha256.isNotEmpty) {
+        final digest = await sha256.bind(file.openRead()).first;
+        if (digest.toString() != spec.sha256) return false;
+      }
+      if (spec.mustContain.isNotEmpty) {
+        // Small-file structural check (no published hash): read tail-safe
+        // prefix; both JSON files carry the marker in the first kilobytes.
+        final head = await file
+            .openRead(0, spec.sizeBytes > 65536 ? 65536 : spec.sizeBytes)
+            .fold<List<int>>([], (acc, c) => acc..addAll(c));
+        final text = utf8.decode(head, allowMalformed: true);
+        if (!text.contains(spec.mustContain)) return false;
+      }
+      return true;
     } catch (_) {
       return false;
     }
